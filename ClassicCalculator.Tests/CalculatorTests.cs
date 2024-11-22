@@ -3,6 +3,21 @@ namespace ClassicCalculator.Tests
     public class CalculatorTests
     {
         [Fact]
+        public void PerformOperationWithZeroAsFirstOperand_ShouldShowCorrectResult()
+        {
+            // Arrange
+            var calculator = new Calculator();
+
+            // Act
+            calculator.SetOperation(OperationType.Multiply);
+            calculator.AppendDigit("5");
+            calculator.Calculate();
+
+            // Assert
+            Assert.Equal("0", calculator.DisplayValue);
+        }
+
+        [Fact]
         public void AppendDecimal_WhenDisplayIsZero_ShouldShowZeroDecimal()
         {
             // Arrange
@@ -62,7 +77,7 @@ namespace ClassicCalculator.Tests
         }
 
         [Fact]
-        public void PerformAnyOperationTwice_ShouldReplaceFirstOperation()
+        public void PerformOperation_ShouldReplacePreviousOperation()
         {
             // Arrange
             var calculator = new Calculator();
@@ -194,6 +209,25 @@ namespace ClassicCalculator.Tests
 
             // Assert
             Assert.Equal("2", calculator.DisplayValue);
+        }
+
+        [Fact]
+        public void PerformMultipleOperations_ShouldShowCorrectResult()
+        {
+            // Arrange
+            var calculator = new Calculator();
+
+            // Act
+            calculator.AppendDigit("5");
+            calculator.SetOperation(OperationType.Add);
+            calculator.AppendDigit("3");
+            calculator.Calculate();
+            calculator.SetOperation(OperationType.Multiply);
+            calculator.AppendDigit("2");
+            calculator.Calculate();
+
+            // Assert
+            Assert.Equal("16", calculator.DisplayValue);
         }
     }
 }

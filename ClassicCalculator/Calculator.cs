@@ -56,6 +56,11 @@ public class Calculator
     {
         switch (state)
         {
+            case CalculatorState.Ready:
+                previousNumber = currentNumber;
+                currentOperation = operation;
+                state = CalculatorState.NewEntry;
+                break;
             case CalculatorState.EnteredNumber:
                 if (currentOperation.HasValue)
                 {
@@ -141,11 +146,3 @@ public class Calculator
         NewEntry
     }
 }
-
-
-
-
-
-
-
-
