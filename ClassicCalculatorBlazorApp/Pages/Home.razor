@@ -3,113 +3,34 @@
 @inject Calculator Calculator
 
 <div class="calculator">
-    <div class="display">
-        <input type="text" class="form-control" value="@Calculator.DisplayValue" readonly />
-    </div>
-    <div class="buttons">
-        <div class="row">
-            <button class="btn btn-secondary" @onclick="Calculator.ToggleSign">±</button>
-            <button class="btn btn-secondary" @onclick="Calculator.Clear">C</button>
-            <button class="btn btn-primary operation-btn" @onclick="() => Calculator.SetOperation(OperationType.Divide)">/</button>
-            <button class="btn btn-primary operation-btn" @onclick="() => Calculator.SetOperation(OperationType.Multiply)">*</button>
-        </div>
-        <div class="row">
-            @foreach (var digit in new[] { "7", "8", "9" })
-            {
-                <button class="btn btn-light digit-btn" @onclick="() => Calculator.AppendDigit(digit)">@digit</button>
-            }
-            <button class="btn btn-primary operation-btn" @onclick="() => Calculator.SetOperation(OperationType.Subtract)">-</button>
-        </div>
-        <div class="row">
-            @foreach (var digit in new[] { "4", "5", "6" })
-            {
-                <button class="btn btn-light digit-btn" @onclick="() => Calculator.AppendDigit(digit)">@digit</button>
-            }
-            <button class="btn btn-primary operation-btn" @onclick="() => Calculator.SetOperation(OperationType.Add)">+</button>
-        </div>
-        <div class="row">
-            @foreach (var digit in new[] { "1", "2", "3" })
-            {
-                <button class="btn btn-light digit-btn" @onclick="() => Calculator.AppendDigit(digit)">@digit</button>
-            }
-            <button class="btn btn-primary equals-btn" @onclick="Calculator.Calculate">=</button>
-        </div>
-        <div class="row">
-            <button class="btn btn-light digit-btn" @onclick=@(() => Calculator.AppendDigit("0"))>0</button>
-            <button class="btn btn-light digit-btn" @onclick="Calculator.AppendDecimal">.</button>
-            <button class="btn btn-secondary" @onclick="Calculator.CalculatePercentage">%</button>
-            <button class="btn btn-secondary" @onclick="Calculator.CalculateSquareRoot">√</button>
-        </div>
+    <div class="calculator-display">@Calculator.DisplayValue</div>
+    <div class="calculator-buttons">
+        <button class="calc-btn special" @onclick='() => Calculator.Clear()'>C</button>
+        <button class="calc-btn operation" @onclick='() => Calculator.CalculatePercentage()'>%</button>
+        <button class="calc-btn operation" @onclick='() => Calculator.CalculateSquareRoot()'>√</button>
+        <button class="calc-btn operation" @onclick='() => Calculator.SetOperation(OperationType.Divide)'>÷</button>
+
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("7")'>7</button>
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("8")'>8</button>
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("9")'>9</button>
+        <button class="calc-btn operation" @onclick='() => Calculator.SetOperation(OperationType.Multiply)'>×</button>
+
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("4")'>4</button>
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("5")'>5</button>
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("6")'>6</button>
+        <button class="calc-btn operation" @onclick='() => Calculator.SetOperation(OperationType.Subtract)'>-</button>
+
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("1")'>1</button>
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("2")'>2</button>
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("3")'>3</button>
+        <button class="calc-btn operation" @onclick='() => Calculator.SetOperation(OperationType.Add)'>+</button>
+
+        <button class="calc-btn digit" @onclick='() => Calculator.ToggleSign()'>+/-</button>
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("0")'>0</button>
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit(".")'>.</button>
+        <button class="calc-btn equals" @onclick='() => Calculator.Calculate()'>=</button>
     </div>
 </div>
 
-@code {
-}
-
-
-<style>
-    .calculator {
-        max-width: 320px;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 15px;
-        background-color: #f0f0f0;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .display {
-        margin-bottom: 20px;
-    }
-
-        .display input {
-            width: 100%;
-            height: 60px;
-            font-size: 28px;
-            text-align: right;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            background-color: #e0e0e0;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-    .buttons .row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
-
-    .buttons .btn {
-        width: 60px;
-        height: 60px;
-        font-size: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.3s, box-shadow 0.3s;
-    }
-
-        .buttons .btn:hover {
-            background-color: #d0d0d0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-    .digit-btn {
-        background-color: #f8f9fa;
-        color: #000;
-    }
-
-    .operation-btn {
-        background-color: #007bff;
-        color: #fff;
-    }
-
-    .equals-btn {
-        background-color: #28a745;
-        color: #fff;
-    }
-</style>
-
-
-
+<link href="css/Calculator.css" rel="stylesheet" />
 
