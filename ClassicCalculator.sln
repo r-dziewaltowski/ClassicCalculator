@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicCalculator", "ClassicCalculator\ClassicCalculator.csproj", "{10B1A1C7-9557-4A07-8728-B6DF33003EE6}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicCalculatorWpfApp", "ClassicCalculatorWpfApp\ClassicCalculatorWpfApp.csproj", "{8B85AD2B-C0C0-422B-A76B-B2BAD61553FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicCalculator.Tests", "ClassicCalculator.Tests\ClassicCalculator.Tests.csproj", "{9CAF84C7-8E5D-4183-AF60-6795532F9DB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicCalculatorBlazorApp.Tests", "ClassicCalculatorBlazorApp.Tests\ClassicCalculatorBlazorApp.Tests.csproj", "{E11FCA0E-58CD-4403-A39F-12BE7A9EF532}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9CAF84C7-8E5D-4183-AF60-6795532F9DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CAF84C7-8E5D-4183-AF60-6795532F9DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CAF84C7-8E5D-4183-AF60-6795532F9DB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E11FCA0E-58CD-4403-A39F-12BE7A9EF532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E11FCA0E-58CD-4403-A39F-12BE7A9EF532}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E11FCA0E-58CD-4403-A39F-12BE7A9EF532}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E11FCA0E-58CD-4403-A39F-12BE7A9EF532}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

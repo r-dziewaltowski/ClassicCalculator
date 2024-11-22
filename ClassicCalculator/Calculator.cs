@@ -1,6 +1,6 @@
 ﻿namespace ClassicCalculator;
 
-public class Calculator
+public class Calculator : ICalculator
 {
     private const string zeroDigit = "0";
     private string displayValue = zeroDigit;
