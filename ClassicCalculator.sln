@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicCalculator.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicCalculatorBlazorApp.Tests", "ClassicCalculatorBlazorApp.Tests\ClassicCalculatorBlazorApp.Tests.csproj", "{E11FCA0E-58CD-4403-A39F-12BE7A9EF532}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3DAC9083-A7F5-48FB-A1B0-FC1602BB9966}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{17219DE5-F127-43A3-BD1A-614F6330CF73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +46,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{10B1A1C7-9557-4A07-8728-B6DF33003EE6} = {17219DE5-F127-43A3-BD1A-614F6330CF73}
+		{975A2152-6DA0-434F-BBF4-BD626A2B660B} = {17219DE5-F127-43A3-BD1A-614F6330CF73}
+		{8B85AD2B-C0C0-422B-A76B-B2BAD61553FA} = {17219DE5-F127-43A3-BD1A-614F6330CF73}
+		{9CAF84C7-8E5D-4183-AF60-6795532F9DB2} = {3DAC9083-A7F5-48FB-A1B0-FC1602BB9966}
+		{E11FCA0E-58CD-4403-A39F-12BE7A9EF532} = {3DAC9083-A7F5-48FB-A1B0-FC1602BB9966}
 	EndGlobalSection
 EndGlobal
