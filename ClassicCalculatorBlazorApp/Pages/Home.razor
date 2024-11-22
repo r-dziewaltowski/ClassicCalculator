@@ -3,7 +3,7 @@
 @inject Calculator Calculator
 
 <div class="calculator">
-    <div class="calculator-display">@Calculator.DisplayValue</div>
+    <input type="text" class="calculator-display" value="@Calculator.DisplayValue" readonly tabindex="-1" />
     <div class="calculator-buttons">
         <button class="calc-btn special" @onclick='() => Calculator.Clear()'>C</button>
         <button class="calc-btn operation" @onclick='() => Calculator.CalculatePercentage()'>%</button>
@@ -27,10 +27,9 @@
 
         <button class="calc-btn digit" @onclick='() => Calculator.ToggleSign()'>+/-</button>
         <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit("0")'>0</button>
-        <button class="calc-btn digit" @onclick='() => Calculator.AppendDigit(".")'>.</button>
+        <button class="calc-btn digit" @onclick='() => Calculator.AppendDecimal()'>.</button>
         <button class="calc-btn equals" @onclick='() => Calculator.Calculate()'>=</button>
     </div>
 </div>
 
 <link href="css/Calculator.css" rel="stylesheet" />
-
