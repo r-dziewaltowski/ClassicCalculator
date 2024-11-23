@@ -1,7 +1,7 @@
 ﻿namespace ClassicCalculator
 {
     public class ReadyForFirstOperandState(
-        Calculator calculator,
+        ICalculator calculator,
         double? firstOperand,
         OperationType? currentOperation,
         double? secondOperand,  

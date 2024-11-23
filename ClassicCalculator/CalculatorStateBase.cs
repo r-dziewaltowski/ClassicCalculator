@@ -34,8 +34,10 @@
         {
         }
 
-        public virtual void Clear()
+        public void Clear()
         {
+            ResetDisplayValue();
+            _calculator.State = new InitialState(_calculator);
         }
 
         public virtual void SetOperation(OperationType operation)
@@ -44,6 +46,11 @@
 
         public virtual void ToggleSign()
         {
+        }
+
+        protected void ResetDisplayValue()
+        {
+            DisplayValue = "0";
         }
     }
 }

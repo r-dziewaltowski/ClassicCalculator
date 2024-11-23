@@ -14,14 +14,16 @@ namespace ClassicCalculator.Tests.UnitTests
             _state = new InitialState(_mockCalculator.Object);
         }
 
-        [Fact]
-        public void AppendDigit_ShouldUpdateDisplayValueAndSetState()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        public void AppendDigit_ShouldUpdateDisplayValueAndSetState(int digit)
         {
             // Act
-            _state.AppendDigit(1);
+            _state.AppendDigit(digit);
 
             // Assert
-            Assert.Equal("1", _state.DisplayValue);
+            Assert.Equal(digit.ToString(), _state.DisplayValue);
             _mockCalculator.VerifySet(c => c.State = It.IsAny<FirstOperandBeingEnteredState>(), Times.Once);
         }
 
