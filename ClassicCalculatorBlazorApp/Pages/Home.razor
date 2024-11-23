@@ -10,23 +10,23 @@
         <button id="sqrt-button" class="calc-btn operation" @onclick='() => Calculator.CalculateSquareRoot()'>√</button>
         <button id="divide-button" class="calc-btn operation" @onclick='() => Calculator.SetOperation(OperationType.Divide)'>÷</button>
 
-        <button id="digit-7-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit("7")'>7</button>
-        <button id="digit-8-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit("8")'>8</button>
-        <button id="digit-9-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit("9")'>9</button>
+        <button id="digit-7-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit(7)'>7</button>
+        <button id="digit-8-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit(8)'>8</button>
+        <button id="digit-9-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit(9)'>9</button>
         <button id="multiply-button" class="calc-btn operation" @onclick='() => Calculator.SetOperation(OperationType.Multiply)'>×</button>
 
-        <button id="digit-4-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit("4")'>4</button>
-        <button id="digit-5-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit("5")'>5</button>
-        <button id="digit-6-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit("6")'>6</button>
+        <button id="digit-4-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit(4)'>4</button>
+        <button id="digit-5-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit(5)'>5</button>
+        <button id="digit-6-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit(6)'>6</button>
         <button id="subtract-button" class="calc-btn operation" @onclick='() => Calculator.SetOperation(OperationType.Subtract)'>-</button>
 
-        <button id="digit-1-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit("1")'>1</button>
-        <button id="digit-2-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit("2")'>2</button>
-        <button id="digit-3-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit("3")'>3</button>
+        <button id="digit-1-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit(1)'>1</button>
+        <button id="digit-2-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit(2)'>2</button>
+        <button id="digit-3-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit(3)'>3</button>
         <button id="add-button" class="calc-btn operation" @onclick='() => Calculator.SetOperation(OperationType.Add)'>+</button>
 
         <button id="toggle-sign-button" class="calc-btn digit" @onclick='() => Calculator.ToggleSign()'>+/-</button>
-        <button id="digit-0-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit("0")'>0</button>
+        <button id="digit-0-button" class="calc-btn digit" @onclick='() => Calculator.AppendDigit(0)'>0</button>
         <button id="decimal-button" class="calc-btn digit" @onclick='() => Calculator.AppendDecimal()'>.</button>
         <button id="equals-button" class="calc-btn equals" @onclick='() => Calculator.Calculate()'>=</button>
     </div>

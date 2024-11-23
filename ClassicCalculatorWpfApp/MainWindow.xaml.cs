@@ -18,7 +18,7 @@ namespace WpfCalculatorApp
         private void Digit_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as System.Windows.Controls.Button;
-            calculator.AppendDigit(button.Content.ToString());
+            calculator.AppendDigit(int.Parse(button?.Content.ToString()!));
             Display.Text = calculator.DisplayValue;
         }
 

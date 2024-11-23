@@ -33,64 +33,20 @@ namespace ClassicCalculatorBlazorApp.Tests
             Assert.Equal("TestDisplayValue", display.GetAttribute("value"));
         }
 
-        [Fact]
-        public void ClickingDigit1Button_ShouldCallAppendDigit()
+        [Theory]
+        [InlineData("#digit-0-button", 0)]
+        [InlineData("#digit-1-button", 1)]
+        [InlineData("#digit-2-button", 2)]
+        [InlineData("#digit-3-button", 3)]
+        [InlineData("#digit-4-button", 4)]
+        [InlineData("#digit-5-button", 5)]
+        [InlineData("#digit-6-button", 6)]
+        [InlineData("#digit-7-button", 7)]
+        [InlineData("#digit-8-button", 8)]
+        [InlineData("#digit-9-button", 9)]
+        public void ClickingDigitButton_ShouldCallAppendDigit(string buttonId, int digit)
         {
-            VerifyDigitButtonClick("#digit-1-button", "1");
-        }
-
-        [Fact]
-        public void ClickingDigit2Button_ShouldCallAppendDigit()
-        {
-            VerifyDigitButtonClick("#digit-2-button", "2");
-        }
-
-        [Fact]
-        public void ClickingDigit3Button_ShouldCallAppendDigit()
-        {
-            VerifyDigitButtonClick("#digit-3-button", "3");
-        }
-
-        [Fact]
-        public void ClickingDigit4Button_ShouldCallAppendDigit()
-        {
-            VerifyDigitButtonClick("#digit-4-button", "4");
-        }
-
-        [Fact]
-        public void ClickingDigit5Button_ShouldCallAppendDigit()
-        {
-            VerifyDigitButtonClick("#digit-5-button", "5");
-        }
-
-        [Fact]
-        public void ClickingDigit6Button_ShouldCallAppendDigit()
-        {
-            VerifyDigitButtonClick("#digit-6-button", "6");
-        }
-
-        [Fact]
-        public void ClickingDigit7Button_ShouldCallAppendDigit()
-        {
-            VerifyDigitButtonClick("#digit-7-button", "7");
-        }
-
-        [Fact]
-        public void ClickingDigit8Button_ShouldCallAppendDigit()
-        {
-            VerifyDigitButtonClick("#digit-8-button", "8");
-        }
-
-        [Fact]
-        public void ClickingDigit9Button_ShouldCallAppendDigit()
-        {
-            VerifyDigitButtonClick("#digit-9-button", "9");
-        }
-
-        [Fact]
-        public void ClickingDigit0Button_ShouldCallAppendDigit()
-        {
-            VerifyDigitButtonClick("#digit-0-button", "0");
+            VerifyButtonClick(buttonId, c => c.AppendDigit(digit));
         }
 
         [Fact]
@@ -111,28 +67,14 @@ namespace ClassicCalculatorBlazorApp.Tests
             VerifyButtonClick("#sqrt-button", c => c.CalculateSquareRoot());
         }
 
-        [Fact]
-        public void ClickingDivideButton_ShouldCallSetOperation()
+        [Theory]
+        [InlineData("#multiply-button", OperationType.Multiply)]
+        [InlineData("#subtract-button", OperationType.Subtract)]
+        [InlineData("#add-button", OperationType.Add)]
+        [InlineData("#divide-button", OperationType.Divide)]
+        public void ClickingOperationButton_ShouldCallSetOperation(string buttonId, OperationType operationType)
         {
-            VerifyOperationButtonClick("#divide-button", OperationType.Divide);
-        }
-
-        [Fact]
-        public void ClickingMultiplyButton_ShouldCallSetOperation()
-        {
-            VerifyOperationButtonClick("#multiply-button", OperationType.Multiply);
-        }
-
-        [Fact]
-        public void ClickingSubtractButton_ShouldCallSetOperation()
-        {
-            VerifyOperationButtonClick("#subtract-button", OperationType.Subtract);
-        }
-
-        [Fact]
-        public void ClickingAddButton_ShouldCallSetOperation()
-        {
-            VerifyOperationButtonClick("#add-button", OperationType.Add);
+            VerifyButtonClick(buttonId, c => c.SetOperation(operationType));
         }
 
         [Fact]
@@ -163,16 +105,6 @@ namespace ClassicCalculatorBlazorApp.Tests
 
             // Assert
             _mockCalculator.Verify(verifyAction, Times.Once);
-        }
-
-        private void VerifyDigitButtonClick(string buttonId, string digit)
-        {
-            VerifyButtonClick(buttonId, c => c.AppendDigit(digit));
-        }
-
-        private void VerifyOperationButtonClick(string buttonId, OperationType operationType)
-        {
-            VerifyButtonClick(buttonId, c => c.SetOperation(operationType));
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace ClassicCalculator.Tests
+namespace ClassicCalculator.Tests.IntegrationTests
 {
     public class CalculatorTests
     {
@@ -10,7 +10,7 @@ namespace ClassicCalculator.Tests
 
             // Act
             calculator.SetOperation(OperationType.Multiply);
-            calculator.AppendDigit("5");
+            calculator.AppendDigit(5);
             calculator.Calculate();
 
             // Assert
@@ -37,9 +37,9 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("0");
-            calculator.AppendDigit("0");
-            calculator.AppendDigit("0");
+            calculator.AppendDigit(0);
+            calculator.AppendDigit(0);
+            calculator.AppendDigit(0);
 
             // Assert
             Assert.Equal("0", calculator.DisplayValue);
@@ -52,7 +52,7 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("5");
+            calculator.AppendDigit(5);
             calculator.AppendDecimal();
             calculator.SetOperation(OperationType.Add);
 
@@ -67,9 +67,9 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("5");
+            calculator.AppendDigit(5);
             calculator.SetOperation(OperationType.Divide);
-            calculator.AppendDigit("0");
+            calculator.AppendDigit(0);
             calculator.Calculate();
 
             // Assert
@@ -83,7 +83,7 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("5");
+            calculator.AppendDigit(5);
             calculator.SetOperation(OperationType.Add);
             calculator.SetOperation(OperationType.Subtract);
 
@@ -98,7 +98,7 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("50");
+            calculator.AppendDigit(50);
             calculator.CalculatePercentage();
 
             // Assert
@@ -112,7 +112,7 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("9");
+            calculator.AppendDigit(9);
             calculator.CalculateSquareRoot();
 
             // Assert
@@ -126,7 +126,7 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("5");
+            calculator.AppendDigit(5);
             calculator.ToggleSign();
 
             // Assert
@@ -140,7 +140,7 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("5");
+            calculator.AppendDigit(5);
             calculator.Clear();
 
             // Assert
@@ -154,9 +154,9 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("5");
+            calculator.AppendDigit(5);
             calculator.SetOperation(OperationType.Add);
-            calculator.AppendDigit("3");
+            calculator.AppendDigit(3);
             calculator.Calculate();
 
             // Assert
@@ -170,9 +170,9 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("5");
+            calculator.AppendDigit(5);
             calculator.SetOperation(OperationType.Subtract);
-            calculator.AppendDigit("3");
+            calculator.AppendDigit(3);
             calculator.Calculate();
 
             // Assert
@@ -186,9 +186,9 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("5");
+            calculator.AppendDigit(5);
             calculator.SetOperation(OperationType.Multiply);
-            calculator.AppendDigit("3");
+            calculator.AppendDigit(3);
             calculator.Calculate();
 
             // Assert
@@ -202,9 +202,9 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("6");
+            calculator.AppendDigit(6);
             calculator.SetOperation(OperationType.Divide);
-            calculator.AppendDigit("3");
+            calculator.AppendDigit(3);
             calculator.Calculate();
 
             // Assert
@@ -218,12 +218,12 @@ namespace ClassicCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit("5");
+            calculator.AppendDigit(5);
             calculator.SetOperation(OperationType.Add);
-            calculator.AppendDigit("3");
+            calculator.AppendDigit(3);
             calculator.Calculate();
             calculator.SetOperation(OperationType.Multiply);
-            calculator.AppendDigit("2");
+            calculator.AppendDigit(2);
             calculator.Calculate();
 
             // Assert
