@@ -160,13 +160,13 @@ namespace ClassicCalculator.Tests.UnitTests
         public void CalculateSquareRoot_ShouldUpdateDisplayValueAndSetState()
         {
             // Arrange
-            var state = new FirstOperandBeingEnteredState(_mockCalculator.Object, null, null, null, "1");
+            var state = new FirstOperandBeingEnteredState(_mockCalculator.Object, null, null, null, "9");
 
             // Act
             state.CalculateSquareRoot();
 
             // Assert
-            Assert.Equal(Math.Sqrt(1).ToString(), state.DisplayValue);
+            Assert.Equal("3", state.DisplayValue);
             _mockCalculator.VerifySet(c => c.State = It.IsAny<ReadyForFirstOperandState>(), Times.Once);
         }
 

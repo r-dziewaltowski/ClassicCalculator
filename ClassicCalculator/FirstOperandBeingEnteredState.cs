@@ -57,26 +57,10 @@
         public override void CalculateSquareRoot()
         {
             _firstOperand = ConvertDisplayValueToNumber();
-            DisplayValue = Math.Sqrt(_firstOperand.Value).ToString();
+            var result = CalculateSquareRoot(_firstOperand.Value);
+            UpdateDisplayValue(result);
             _calculator.State = new ReadyForFirstOperandState(
                 _calculator, _firstOperand, _currentOperation, _secondOperand, DisplayValue);
-        }
-
-        public override void ToggleSign()
-        {
-            if (DisplayValue == "0")
-            {
-                return;
-            }
-
-            DisplayValue = DisplayValue.StartsWith('-') ?
-                DisplayValue.Substring(1) : 
-                "-" + DisplayValue;
-        }
-
-        private double ConvertDisplayValueToNumber()
-        {
-            return double.Parse(DisplayValue);
         }
     }
 }
