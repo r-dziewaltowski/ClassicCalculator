@@ -59,7 +59,7 @@ cd .\ClassicCalculator\
 ```bash
 dotnet run --project ClassicCalculatorBlazorApp\
 ```
-Access http://localhost:5116/ in your browser
+Access http://localhost:5116/ or https://localhost:7201 in your browser
 
 - Desktop app:
 ```bash
