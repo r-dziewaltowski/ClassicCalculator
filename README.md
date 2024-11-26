@@ -40,6 +40,7 @@ Missing functionality:
 - Memory features (M+, M-, etc.)
 - CE (clear last entry)
 - Other features of more advanced calculators
+- There's no OFF button... :)
 
 ## Purpose
 This project was started to experiment with prompt engineering using GitHub Copilot.
