@@ -1,4 +1,7 @@
-﻿namespace ClassicCalculator
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+
+namespace ClassicCalculator
 {
     public abstract class CalculatorStateBase(
         ICalculator calculator,
@@ -36,7 +39,6 @@
 
         public void Clear()
         {
-            ResetDisplayValue();
             _calculator.State = new InitialState(_calculator);
         }
 
@@ -44,16 +46,46 @@
         {
         }
 
-        public void ToggleSign()
+        public virtual void ToggleSign()
         {
-            if (DisplayValue == "0")
+            if (ConvertDisplayValueToNumber() == 0)
             {
                 return;
             }
 
             DisplayValue = DisplayValue.StartsWith('-') ?
-                DisplayValue.Substring(1) :
+                DisplayValue[1..] :
                 "-" + DisplayValue;
+        }
+
+        protected static double PerformOperation(double firstOperand, OperationType operation, double secondOperand)
+        {
+            return operation switch
+            {
+                OperationType.Add => firstOperand + secondOperand,
+                OperationType.Subtract => firstOperand - secondOperand,
+                OperationType.Multiply => firstOperand * secondOperand,
+                OperationType.Divide => secondOperand != 0 ? firstOperand / secondOperand : throw new DivideByZeroException(),
+                _ => throw new InvalidOperationException("Invalid operation type")
+            };
+        }
+
+        protected static double CalculatePercentage(double firstOperand, OperationType operation, double secondOperand)
+        {
+            var percentage = secondOperand / 100;
+            return operation switch
+            {
+                OperationType.Add => firstOperand + firstOperand * percentage,
+                OperationType.Subtract => firstOperand - firstOperand * percentage,
+                OperationType.Multiply => firstOperand * percentage,
+                OperationType.Divide => firstOperand / percentage,
+                _ => throw new InvalidOperationException("Invalid operation type"),
+            };
+        }
+
+        protected static double CalculateSquareRoot(double value)
+        {
+            return Math.Sqrt(value);
         }
 
         protected void ResetDisplayValue()
@@ -63,17 +95,19 @@
 
         protected double ConvertDisplayValueToNumber()
         {
-            return double.Parse(DisplayValue);
-        }
-
-        protected static double CalculateSquareRoot(double value)
-        {
-            return Math.Sqrt(value);
+            var formattedDisplayValue = DisplayValue.EndsWith('.') ? DisplayValue[..^1] : DisplayValue;
+            return double.Parse(formattedDisplayValue, CultureInfo.InvariantCulture);
         }
 
         protected void UpdateDisplayValue(double value)
         {
-            DisplayValue = value.ToString();
+            DisplayValue = value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        [MemberNotNullWhen(true, nameof(_firstOperand), nameof(_currentOperation))]
+        protected bool FirstOperandAndOperationProvided()
+        {
+            return _firstOperand != null && _currentOperation != null;
         }
     }
 }

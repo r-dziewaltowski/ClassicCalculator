@@ -1,17 +1,12 @@
-using Moq;
-using Xunit;
-
 namespace ClassicCalculator.Tests.UnitTests
 {
-    public class InitialStateTests
+    public class InitialStateTests : StateTestsBase
     {
-        private readonly Mock<ICalculator> _mockCalculator;
         private readonly InitialState _state;
 
         public InitialStateTests()
         {
-            _mockCalculator = new Mock<ICalculator>();
-            _state = new InitialState(_mockCalculator.Object);
+            _state = new InitialState(MockCalculator.Object);
         }
 
         [Theory]
@@ -23,8 +18,7 @@ namespace ClassicCalculator.Tests.UnitTests
             _state.AppendDigit(digit);
 
             // Assert
-            Assert.Equal(digit.ToString(), _state.DisplayValue);
-            _mockCalculator.VerifySet(c => c.State = It.IsAny<FirstOperandBeingEnteredState>(), Times.Once);
+            VerifyStateSet<OperandInputInProgressState>(digit.ToString());
         }
 
         [Fact]
@@ -34,8 +28,7 @@ namespace ClassicCalculator.Tests.UnitTests
             _state.AppendDecimal();
 
             // Assert
-            Assert.Equal("0.", _state.DisplayValue);
-            _mockCalculator.VerifySet(c => c.State = It.IsAny<FirstOperandBeingEnteredState>(), Times.Once);
+            VerifyStateSet<OperandInputInProgressState>("0.");
         }
 
         [Theory]
@@ -49,8 +42,7 @@ namespace ClassicCalculator.Tests.UnitTests
             _state.SetOperation(operation);
 
             // Assert
-            Assert.Equal("0", _state.DisplayValue);
-            _mockCalculator.VerifySet(c => c.State = It.IsAny<ReadyForSecondOperandState>(), Times.Once);
+            VerifyStateSet<InvalidState>("0");
         }
 
         [Fact]
@@ -60,17 +52,7 @@ namespace ClassicCalculator.Tests.UnitTests
             _state.Calculate();
 
             // Assert
-            Assert.Equal("0", _state.DisplayValue);
-        }
-
-        [Fact]
-        public void Clear_ShouldUpdateDisplayValue()
-        {
-            // Act
-            _state.Clear();
-
-            // Assert
-            Assert.Equal("0", _state.DisplayValue);
+            VerifyStateSet<OperandInputNotInProgress>("0");
         }
 
         [Fact]
@@ -80,7 +62,7 @@ namespace ClassicCalculator.Tests.UnitTests
             _state.CalculatePercentage();
 
             // Assert
-            Assert.Equal("0", _state.DisplayValue);
+            VerifyStateSet<OperandInputNotInProgress>("0");
         }
 
         [Fact]
@@ -90,7 +72,7 @@ namespace ClassicCalculator.Tests.UnitTests
             _state.CalculateSquareRoot();
 
             // Assert
-            Assert.Equal("0", _state.DisplayValue);
+            VerifyStateSet<OperandInputNotInProgress>("0");
         }
 
         [Fact]
@@ -100,7 +82,17 @@ namespace ClassicCalculator.Tests.UnitTests
             _state.ToggleSign();
 
             // Assert
-            Assert.Equal("0", _state.DisplayValue);
+            VerifyStateSet<OperandInputNotInProgress>("0");
+        }
+
+        [Fact]
+        public void Clear_ShouldUpdateDisplayValue()
+        {
+            // Act
+            _state.Clear();
+
+            // Assert
+            VerifyStateSet<InitialState>("0");
         }
     }
 }
