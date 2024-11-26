@@ -17,83 +17,17 @@ namespace ClassicCalculator.CalculatorState
 
         public string DisplayValue { get; set; } = displayValue;
 
-        public virtual void AppendDecimal()
-        {
-        }
-
-        public virtual void AppendDigit(int digit)
-        {
-        }
-
-        public virtual void Calculate()
-        {
-        }
-
-        public virtual void CalculatePercentage()
-        {
-        }
-
-        public virtual void CalculateSquareRoot()
-        {
-        }
+        public abstract void AppendDigit(int digit);
+        public abstract void AppendDecimal();
+        public abstract void SetOperation(OperationType operation);
+        public abstract void Calculate();
+        public abstract void CalculatePercentage();
+        public abstract void CalculateSquareRoot();
+        public abstract void ToggleSign();
 
         public void Clear()
         {
             _calculator.State = new InitialState(_calculator);
-        }
-
-        public virtual void SetOperation(OperationType operation)
-        {
-        }
-
-        public virtual void ToggleSign()
-        {
-        }
-
-        protected static double PerformOperation(double firstOperand, OperationType operation, double secondOperand)
-        {
-            return operation switch
-            {
-                OperationType.Add => firstOperand + secondOperand,
-                OperationType.Subtract => firstOperand - secondOperand,
-                OperationType.Multiply => firstOperand * secondOperand,
-                OperationType.Divide => secondOperand != 0 ? firstOperand / secondOperand : throw new DivideByZeroException(),
-                _ => throw new InvalidOperationException("Invalid operation type")
-            };
-        }
-
-        protected static double CalculatePercentage(double firstOperand, OperationType operation, double secondOperand)
-        {
-            var percentage = secondOperand / 100;
-            return operation switch
-            {
-                OperationType.Add => firstOperand + firstOperand * percentage,
-                OperationType.Subtract => firstOperand - firstOperand * percentage,
-                OperationType.Multiply => firstOperand * percentage,
-                OperationType.Divide => firstOperand / percentage,
-                _ => throw new InvalidOperationException("Invalid operation type"),
-            };
-        }
-
-        protected static double CalculateSquareRoot(double value)
-        {
-            return Math.Sqrt(value);
-        }
-
-        protected void ResetDisplayValue()
-        {
-            DisplayValue = "0";
-        }
-
-        protected double ConvertDisplayValueToNumber()
-        {
-            var formattedDisplayValue = DisplayValue.EndsWith('.') ? DisplayValue[..^1] : DisplayValue;
-            return double.Parse(formattedDisplayValue, CultureInfo.InvariantCulture);
-        }
-
-        protected void UpdateDisplayValue(double value)
-        {
-            DisplayValue = value.ToString(CultureInfo.InvariantCulture);
         }
 
         [MemberNotNullWhen(true, nameof(_firstOperand), nameof(_currentOperation))]
@@ -106,6 +40,14 @@ namespace ClassicCalculator.CalculatorState
         protected bool OperandsAndOperationProvided()
         {
             return FirstOperandAndOperationProvided() && _secondOperand != null;
+        }
+
+        [MemberNotNull(nameof(_firstOperand))]
+        protected void SetFirstOperand(double value)
+        {
+            _firstOperand = value;
+            _currentOperation = null;
+            _secondOperand = null;
         }
     }
 }

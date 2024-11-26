@@ -1,6 +1,8 @@
-﻿namespace ClassicCalculator.CalculatorState
+﻿using System.Globalization;
+
+namespace ClassicCalculator.CalculatorState
 {
-    public class ValidStateBase(
+    public abstract class ValidStateBase(
             ICalculator calculator,
             double? firstOperand,
             OperationType? currentOperation,
@@ -27,8 +29,8 @@
         {
             if (!FirstOperandAndOperationProvided())
             {
-                _firstOperand = 0;
-                ResetDisplayValue();
+                SetFirstOperand(0);
+                DisplayValue = "0";
             }
             else
             {
@@ -42,16 +44,16 @@
 
         public override void CalculateSquareRoot()
         {
-            var result = CalculateSquareRoot(ConvertDisplayValueToNumber());
+            var result = Math.Sqrt(ConvertDisplayValueToNumber());
             if (double.IsNaN(result))
             {
                 TransitionToInvalidState("Invalid input");
                 return;
             }
 
-            if (!OperandsAndOperationProvided())
+            if (!FirstOperandAndOperationProvided())
             {
-                _firstOperand = result;
+                SetFirstOperand(result);
             }
             else
             {
@@ -75,13 +77,50 @@
                 "-" + DisplayValue;
         }
 
+        protected double ConvertDisplayValueToNumber()
+        {
+            var formattedDisplayValue = DisplayValue.EndsWith('.') ? DisplayValue[..^1] : DisplayValue;
+            return double.Parse(formattedDisplayValue, CultureInfo.InvariantCulture);
+        }
+
+        private static double PerformOperation(double firstOperand, OperationType operation, double secondOperand)
+        {
+            return operation switch
+            {
+                OperationType.Add => firstOperand + secondOperand,
+                OperationType.Subtract => firstOperand - secondOperand,
+                OperationType.Multiply => firstOperand * secondOperand,
+                OperationType.Divide => secondOperand != 0 ? firstOperand / secondOperand : throw new DivideByZeroException(),
+                _ => throw new InvalidOperationException("Invalid operation type")
+            };
+        }
+
+        private static double CalculatePercentage(double firstOperand, OperationType operation, double secondOperand)
+        {
+            var percentage = secondOperand / 100;
+            return operation switch
+            {
+                OperationType.Add => firstOperand + firstOperand * percentage,
+                OperationType.Subtract => firstOperand - firstOperand * percentage,
+                OperationType.Multiply => firstOperand * percentage,
+                OperationType.Divide => firstOperand / percentage,
+                _ => throw new InvalidOperationException("Invalid operation type"),
+            };
+        }
+
+        private void UpdateDisplayValue(double value)
+        {
+            DisplayValue = value.ToString(CultureInfo.InvariantCulture);
+        }
+
         private void SetOperationOrCalculate(OperationType? operation)
         {
             try
             {
-                _firstOperand = OperandsAndOperationProvided() ?
+                var value = OperandsAndOperationProvided() ?
                     PerformOperation(_firstOperand.Value, _currentOperation.Value, ConvertDisplayValueToNumber()) :
                     ConvertDisplayValueToNumber();
+                SetFirstOperand(value);
             }
             catch (DivideByZeroException)
             {
