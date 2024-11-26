@@ -1,4 +1,6 @@
-﻿namespace ClassicCalculator
+﻿using ClassicCalculator.CalculatorState;
+
+namespace ClassicCalculator
 {
     public class Calculator : ICalculator
     {

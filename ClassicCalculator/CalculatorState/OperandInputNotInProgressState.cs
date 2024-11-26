@@ -1,16 +1,16 @@
-﻿namespace ClassicCalculator
+﻿namespace ClassicCalculator.CalculatorState
 {
     public class OperandInputNotInProgressState(
         ICalculator calculator,
         double? firstOperand,
         OperationType? currentOperation,
-        double? secondOperand,  
+        double? secondOperand,
         string displayValue)
         : ValidStateBase(
-            calculator, 
+            calculator,
             firstOperand,
             currentOperation,
-            secondOperand,  
+            secondOperand,
             displayValue)
     {
         public override void AppendDigit(int digit)

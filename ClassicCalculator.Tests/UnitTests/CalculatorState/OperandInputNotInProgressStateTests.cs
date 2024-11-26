@@ -1,6 +1,7 @@
+using ClassicCalculator.CalculatorState;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace ClassicCalculator.Tests.UnitTests
+namespace ClassicCalculator.Tests.UnitTests.CalculatorState
 {
     public class OperandInputNotInProgressStateTests : StateTestsBase
     {

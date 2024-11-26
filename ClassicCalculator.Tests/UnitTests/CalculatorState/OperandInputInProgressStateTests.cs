@@ -1,4 +1,6 @@
-namespace ClassicCalculator.Tests.UnitTests
+using ClassicCalculator.CalculatorState;
+
+namespace ClassicCalculator.Tests.UnitTests.CalculatorState
 {
     public class OperandInputInProgressStateTests : StateTestsBase
     {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace ClassicCalculator
+namespace ClassicCalculator.CalculatorState
 {
     public abstract class CalculatorStateBase(
         ICalculator calculator,

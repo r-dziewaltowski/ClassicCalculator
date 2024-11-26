@@ -1,3 +1,4 @@
+using ClassicCalculator.CalculatorState;
 using Moq;
 
 namespace ClassicCalculator.Tests.UnitTests

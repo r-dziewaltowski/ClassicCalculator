@@ -1,6 +1,7 @@
-﻿using Moq;
+﻿using ClassicCalculator.CalculatorState;
+using Moq;
 
-namespace ClassicCalculator.Tests.UnitTests
+namespace ClassicCalculator.Tests.UnitTests.CalculatorState
 {
     public class StateTestsBase
     {
