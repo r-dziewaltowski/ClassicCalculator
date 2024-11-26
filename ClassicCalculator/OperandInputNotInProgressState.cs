@@ -1,12 +1,12 @@
 ﻿namespace ClassicCalculator
 {
-    public class OperandInputNotInProgress(
+    public class OperandInputNotInProgressState(
         ICalculator calculator,
         double? firstOperand,
         OperationType? currentOperation,
         double? secondOperand,  
         string displayValue)
-        : CalculatorStateBase(
+        : ValidStateBase(
             calculator, 
             firstOperand,
             currentOperation,
@@ -23,27 +23,6 @@
         {
             _calculator.State = new OperandInputInProgressState(
                 _calculator, _firstOperand, _currentOperation, _secondOperand, "0.");
-        }
-
-        public override void SetOperation(OperationType operation)
-        {
-            _calculator.State = new InvalidState(_calculator, DisplayValue);
-        }
-
-        public override void Calculate()
-        {
-        }
-
-        public override void CalculatePercentage()
-        {
-            ResetDisplayValue();
-        }
-
-        public override void CalculateSquareRoot()
-        {
-            var value = ConvertDisplayValueToNumber();
-            var result = CalculateSquareRoot(value);
-            UpdateDisplayValue(result);
         }
     }
 }

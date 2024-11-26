@@ -109,5 +109,11 @@ namespace ClassicCalculator
         {
             return _firstOperand != null && _currentOperation != null;
         }
+
+        [MemberNotNullWhen(true, nameof(_firstOperand), nameof(_currentOperation), nameof(_secondOperand))]
+        protected bool OperandsAndOperationProvided()
+        {
+            return FirstOperandAndOperationProvided() && _secondOperand != null;
+        }
     }
 }

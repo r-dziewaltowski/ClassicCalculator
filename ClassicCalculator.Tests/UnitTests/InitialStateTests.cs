@@ -12,7 +12,7 @@ namespace ClassicCalculator.Tests.UnitTests
         [Theory]
         [InlineData(0)]
         [InlineData(1)]
-        public void AppendDigit_ShouldUpdateDisplayValueAndSetState(int digit)
+        public void AppendDigit_ShouldUpdateDisplayValue_WhenInitialStateIsZero(int digit)
         {
             // Act
             _state.AppendDigit(digit);
@@ -22,7 +22,7 @@ namespace ClassicCalculator.Tests.UnitTests
         }
 
         [Fact]
-        public void AppendDecimal_ShouldUpdateDisplayValueAndSetState()
+        public void AppendDecimal_ShouldUpdateDisplayValue_WhenInitialStateIsOne()
         {
             // Act
             _state.AppendDecimal();
@@ -36,57 +36,57 @@ namespace ClassicCalculator.Tests.UnitTests
         [InlineData(OperationType.Subtract)]
         [InlineData(OperationType.Multiply)]
         [InlineData(OperationType.Divide)]
-        public void SetOperation_ShouldUpdateDisplayValueAndSetState(OperationType operation)
+        public void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne(OperationType operation)
         {
             // Act
             _state.SetOperation(operation);
 
             // Assert
-            VerifyStateSet<InvalidState>("0");
+            VerifyStateSet<OperandInputNotInProgressState>("0");
         }
 
         [Fact]
-        public void Calculate_ShouldUpdateDisplayValue()
+        public void Calculate_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne()
         {
             // Act
             _state.Calculate();
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgress>("0");
+            VerifyStateSet<OperandInputNotInProgressState>("0");
         }
 
         [Fact]
-        public void CalculatePercentage_ShouldUpdateDisplayValue()
+        public void CalculatePercentage_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne()
         {
             // Act
             _state.CalculatePercentage();
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgress>("0");
+            VerifyStateSet<OperandInputNotInProgressState>("0");
         }
 
         [Fact]
-        public void CalculateSquareRoot_ShouldUpdateDisplayValue()
+        public void CalculateSquareRoot_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsFour()
         {
             // Act
             _state.CalculateSquareRoot();
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgress>("0");
+            VerifyStateSet<OperandInputNotInProgressState>("0");
         }
 
         [Fact]
-        public void ToggleSign_ShouldUpdateDisplayValue()
+        public void ToggleSign_ShouldUpdateDisplayValue_WhenInitialStateIsOne()
         {
             // Act
             _state.ToggleSign();
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgress>("0");
+            Assert.Equal("0", _state.DisplayValue);
         }
 
         [Fact]
-        public void Clear_ShouldUpdateDisplayValue()
+        public void Clear_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne()
         {
             // Act
             _state.Clear();

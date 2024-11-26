@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace ClassicCalculator
+﻿namespace ClassicCalculator
 {
     public class OperandInputInProgressState(
             ICalculator calculator,
@@ -8,7 +6,7 @@ namespace ClassicCalculator
             OperationType? currentOperation,
             double? secondOperand,
             string displayValue)
-            : CalculatorStateBase(
+            : ValidStateBase(
                 calculator,
                 firstOperand,
                 currentOperation,
@@ -37,75 +35,24 @@ namespace ClassicCalculator
 
         public override void SetOperation(OperationType operation)
         {
-            SetOperationOrCalculate(operation);
+            SetSecondOperandIfWaitingForIt();
+
+            base.SetOperation(operation);
         }
 
         public override void Calculate()
         {
-            SetOperationOrCalculate(operation: null);
+            SetSecondOperandIfWaitingForIt();
+
+            base.Calculate();
         }
 
-        public override void CalculatePercentage()
+        private void SetSecondOperandIfWaitingForIt()
         {
-            if (!FirstOperandAndOperationProvided())
+            if (FirstOperandAndOperationProvided())
             {
-                ResetDisplayValue();
+                _secondOperand = ConvertDisplayValueToNumber();
             }
-            else
-            {
-                var result = CalculatePercentage(_firstOperand.Value, _currentOperation.Value, ConvertDisplayValueToNumber());
-                UpdateDisplayValue(result);
-            }
-
-            TransitionToOperandInputNotInProgressState();
-        }
-
-        public override void CalculateSquareRoot()
-        {
-            var result = CalculateSquareRoot(ConvertDisplayValueToNumber());
-            if (double.IsNaN(result))
-            {
-                TransitionToInvalidState("Invalid input");
-            }
-            else
-            {
-                UpdateDisplayValue(result);
-                TransitionToOperandInputNotInProgressState();
-            }
-        }
-
-        private void SetOperationOrCalculate(OperationType? operation)
-        {
-            try
-            {
-                _firstOperand = FirstOperandAndOperationProvided() ?
-                    PerformOperation(_firstOperand.Value, _currentOperation.Value, ConvertDisplayValueToNumber()) :
-                    ConvertDisplayValueToNumber();
-            }
-            catch (DivideByZeroException)
-            {
-                TransitionToInvalidState("Cannot divide by 0");
-                return;
-            }
-
-            if (operation != null)
-            {
-                _currentOperation = operation;
-            }
-
-            UpdateDisplayValue(_firstOperand.Value);
-            TransitionToOperandInputNotInProgressState();
-        }
-
-        private void TransitionToOperandInputNotInProgressState()
-        {
-            _calculator.State = new OperandInputNotInProgress(
-                _calculator, _firstOperand, _currentOperation, _secondOperand, DisplayValue);
-        }
-
-        private void TransitionToInvalidState(string displayValue)
-        {
-            _calculator.State = new InvalidState(_calculator, displayValue);
         }
     }
 }

@@ -73,7 +73,7 @@ namespace ClassicCalculator.Tests.IntegrationTests
             calculator.Calculate();
 
             // Assert
-            Assert.Equal("Cannot divide by zero", calculator.DisplayValue);
+            Assert.Equal("Cannot divide by 0", calculator.DisplayValue);
         }
 
         [Fact]
@@ -91,18 +91,26 @@ namespace ClassicCalculator.Tests.IntegrationTests
             Assert.Equal("5", calculator.DisplayValue);
         }
 
-        [Fact]
-        public void CalculatePercentage_ShouldShowCorrectResult()
+        [Theory]
+        [InlineData(OperationType.Add, "11")]
+        [InlineData(OperationType.Subtract, "9")]
+        [InlineData(OperationType.Multiply, "1")]
+        [InlineData(OperationType.Divide, "100")]
+        public void CalculatePercentage_ShouldShowCorrectResult(OperationType operation, string expectedDisplayValue)
         {
             // Arrange
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(50);
+            calculator.AppendDigit(1);
+            calculator.AppendDigit(0);
+            calculator.SetOperation(operation);
+            calculator.AppendDigit(1);
+            calculator.AppendDigit(0);
             calculator.CalculatePercentage();
 
             // Assert
-            Assert.Equal("0.5", calculator.DisplayValue);
+            Assert.Equal(expectedDisplayValue, calculator.DisplayValue);
         }
 
         [Fact]
@@ -117,6 +125,21 @@ namespace ClassicCalculator.Tests.IntegrationTests
 
             // Assert
             Assert.Equal("3", calculator.DisplayValue);
+        }
+
+        [Fact]
+        public void CalculateSquareRoot_ShouldShowInvalidInput()
+        {
+            // Arrange
+            var calculator = new Calculator();
+
+            // Act
+            calculator.AppendDigit(9);
+            calculator.ToggleSign();
+            calculator.CalculateSquareRoot();
+
+            // Assert
+            Assert.Equal("Invalid input", calculator.DisplayValue);
         }
 
         [Fact]
