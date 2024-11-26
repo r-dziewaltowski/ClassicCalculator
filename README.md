@@ -48,6 +48,22 @@ While initially it seemed that it can be written entirely just by providing prom
 
 Conclusions? Generative AI is a powerful tool and it can surely speed up the development and change the way we write code but it needs to be guided for more complicated tasks... Hopefully, it's a long way before it can replace the developers entirely :)
 
+## Usage
+```bash
+git clone https://github.com/r-dziewaltowski/ClassicCalculator.git
+cd .\ClassicCalculator\
+```
+
+Web application:
+```bash
+dotnet run --project ClassicCalculatorBlazorApp\
+```
+
+Desktop app:
+```bash
+dotnet run --project .\ClassicCalculatorWpfApp\
+```
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
