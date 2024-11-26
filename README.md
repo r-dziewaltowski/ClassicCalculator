@@ -3,9 +3,9 @@ It's a simple calculator giving a feel of using an old school physical calculato
 
 ## Table of Contents
 - [Description](#description)
-- [Usage](#usage)
 - [Features](#features)
 - [Purpose](#purpose)
+- [Usage](#usage)
 - [License](#license)
 
 ## Description
