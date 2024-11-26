@@ -26,92 +26,84 @@ namespace ClassicCalculator.Tests.UnitTests
         }
 
         [Fact]
-        public void AppendDigit_ShouldCallStateAppendDigit()
+        public void PressButton_ShouldCallStateAppendDigit()
         {
             // Act
-            _calculator.AppendDigit(5);
+            _calculator.PressButton(CalculatorButton.Five);
 
             // Assert
             _mockState.Verify(s => s.AppendDigit(5), Times.Once);
         }
 
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(10)]
-        public void AppendDigit_ShouldThrowException_WhenNumberIsNotDigit(int number)
-        {
-            // Act
-            void act() => _calculator.AppendDigit(number);
-
-            // Act & Assert
-            Assert.Throws<ArgumentOutOfRangeException>(act);
-        }
-
         [Fact]
-        public void AppendDecimal_ShouldCallStateAppendDecimal()
+        public void PressButton_ShouldCallStateAppendDecimal()
         {
             // Act
-            _calculator.AppendDecimal();
+            _calculator.PressButton(CalculatorButton.Decimal);
 
             // Assert
             _mockState.Verify(s => s.AppendDecimal(), Times.Once);
         }
 
-        [Fact]
-        public void SetOperation_ShouldCallStateSetOperation()
+        [Theory]
+        [InlineData(CalculatorButton.Add, OperationType.Add)]
+        [InlineData(CalculatorButton.Subtract, OperationType.Subtract)]
+        [InlineData(CalculatorButton.Multiply, OperationType.Multiply)]
+        [InlineData(CalculatorButton.Divide, OperationType.Divide)]
+        public void PressButton_ShouldCallStateSetOperation(CalculatorButton button, OperationType operation)
         {
             // Act
-            _calculator.SetOperation(OperationType.Add);
+            _calculator.PressButton(button);
 
             // Assert
-            _mockState.Verify(s => s.SetOperation(OperationType.Add), Times.Once);
+            _mockState.Verify(s => s.SetOperation(operation), Times.Once);
         }
 
         [Fact]
-        public void Calculate_ShouldCallStateCalculate()
+        public void PressButton_ShouldCallStateCalculate()
         {
             // Act
-            _calculator.Calculate();
+            _calculator.PressButton(CalculatorButton.Equals);
 
             // Assert
             _mockState.Verify(s => s.Calculate(), Times.Once);
         }
 
         [Fact]
-        public void Clear_ShouldCallStateClear()
+        public void PressButton_ShouldCallStateClear()
         {
             // Act
-            _calculator.Clear();
+            _calculator.PressButton(CalculatorButton.Clear);
 
             // Assert
             _mockState.Verify(s => s.Clear(), Times.Once);
         }
 
         [Fact]
-        public void CalculatePercentage_ShouldCallStateCalculatePercentage()
+        public void PressButton_ShouldCallStateCalculatePercentage()
         {
             // Act
-            _calculator.CalculatePercentage();
+            _calculator.PressButton(CalculatorButton.Percentage);
 
             // Assert
             _mockState.Verify(s => s.CalculatePercentage(), Times.Once);
         }
 
         [Fact]
-        public void CalculateSquareRoot_ShouldCallStateCalculateSquareRoot()
+        public void PressButton_ShouldCallStateCalculateSquareRoot()
         {
             // Act
-            _calculator.CalculateSquareRoot();
+            _calculator.PressButton(CalculatorButton.SquareRoot);
 
             // Assert
             _mockState.Verify(s => s.CalculateSquareRoot(), Times.Once);
         }
 
         [Fact]
-        public void ToggleSign_ShouldCallStateToggleSign()
+        public void PressButton_ShouldCallStateToggleSign()
         {
             // Act
-            _calculator.ToggleSign();
+            _calculator.PressButton(CalculatorButton.ToggleSign);
 
             // Assert
             _mockState.Verify(s => s.ToggleSign(), Times.Once);

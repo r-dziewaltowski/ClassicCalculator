@@ -9,9 +9,10 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.SetOperation(OperationType.Multiply);
-            calculator.AppendDigit(5);
-            calculator.Calculate();
+            calculator.PressButton(CalculatorButton.Zero);
+            calculator.PressButton(CalculatorButton.Multiply);
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.Equals);
 
             // Assert
             Assert.Equal("0", calculator.DisplayValue);
@@ -24,7 +25,7 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDecimal();
+            calculator.PressButton(CalculatorButton.Decimal);
 
             // Assert
             Assert.Equal("0.", calculator.DisplayValue);
@@ -37,9 +38,9 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(0);
-            calculator.AppendDigit(0);
-            calculator.AppendDigit(0);
+            calculator.PressButton(CalculatorButton.Zero);
+            calculator.PressButton(CalculatorButton.Zero);
+            calculator.PressButton(CalculatorButton.Zero);
 
             // Assert
             Assert.Equal("0", calculator.DisplayValue);
@@ -52,9 +53,9 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(5);
-            calculator.AppendDecimal();
-            calculator.SetOperation(OperationType.Add);
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.Decimal);
+            calculator.PressButton(CalculatorButton.Add);
 
             // Assert
             Assert.Equal("5", calculator.DisplayValue);
@@ -67,10 +68,10 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(5);
-            calculator.SetOperation(OperationType.Divide);
-            calculator.AppendDigit(0);
-            calculator.Calculate();
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.Divide);
+            calculator.PressButton(CalculatorButton.Zero);
+            calculator.PressButton(CalculatorButton.Equals);
 
             // Assert
             Assert.Equal("Cannot divide by 0", calculator.DisplayValue);
@@ -83,31 +84,31 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(5);
-            calculator.SetOperation(OperationType.Add);
-            calculator.SetOperation(OperationType.Subtract);
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.Add);
+            calculator.PressButton(CalculatorButton.Subtract);
 
             // Assert
             Assert.Equal("5", calculator.DisplayValue);
         }
 
         [Theory]
-        [InlineData(OperationType.Add, "11")]
-        [InlineData(OperationType.Subtract, "9")]
-        [InlineData(OperationType.Multiply, "1")]
-        [InlineData(OperationType.Divide, "100")]
-        public void CalculatePercentage_ShouldShowCorrectResult(OperationType operation, string expectedDisplayValue)
+        [InlineData(CalculatorButton.Add, "11")]
+        [InlineData(CalculatorButton.Subtract, "9")]
+        [InlineData(CalculatorButton.Multiply, "1")]
+        [InlineData(CalculatorButton.Divide, "100")]
+        public void CalculatePercentage_ShouldShowCorrectResult(CalculatorButton operation, string expectedDisplayValue)
         {
             // Arrange
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(1);
-            calculator.AppendDigit(0);
-            calculator.SetOperation(operation);
-            calculator.AppendDigit(1);
-            calculator.AppendDigit(0);
-            calculator.CalculatePercentage();
+            calculator.PressButton(CalculatorButton.One);
+            calculator.PressButton(CalculatorButton.Zero);
+            calculator.PressButton(operation);
+            calculator.PressButton(CalculatorButton.One);
+            calculator.PressButton(CalculatorButton.Zero);
+            calculator.PressButton(CalculatorButton.Percentage);
 
             // Assert
             Assert.Equal(expectedDisplayValue, calculator.DisplayValue);
@@ -120,8 +121,8 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(9);
-            calculator.CalculateSquareRoot();
+            calculator.PressButton(CalculatorButton.Nine);
+            calculator.PressButton(CalculatorButton.SquareRoot);
 
             // Assert
             Assert.Equal("3", calculator.DisplayValue);
@@ -134,9 +135,9 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(9);
-            calculator.ToggleSign();
-            calculator.CalculateSquareRoot();
+            calculator.PressButton(CalculatorButton.Nine);
+            calculator.PressButton(CalculatorButton.ToggleSign);
+            calculator.PressButton(CalculatorButton.SquareRoot);
 
             // Assert
             Assert.Equal("Invalid input", calculator.DisplayValue);
@@ -149,8 +150,8 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(5);
-            calculator.ToggleSign();
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.ToggleSign);
 
             // Assert
             Assert.Equal("-5", calculator.DisplayValue);
@@ -163,8 +164,8 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(5);
-            calculator.Clear();
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.Clear);
 
             // Assert
             Assert.Equal("0", calculator.DisplayValue);
@@ -177,10 +178,10 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(5);
-            calculator.SetOperation(OperationType.Add);
-            calculator.AppendDigit(3);
-            calculator.Calculate();
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.Add);
+            calculator.PressButton(CalculatorButton.Three);
+            calculator.PressButton(CalculatorButton.Equals);
 
             // Assert
             Assert.Equal("8", calculator.DisplayValue);
@@ -193,10 +194,10 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(5);
-            calculator.SetOperation(OperationType.Subtract);
-            calculator.AppendDigit(3);
-            calculator.Calculate();
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.Subtract);
+            calculator.PressButton(CalculatorButton.Three);
+            calculator.PressButton(CalculatorButton.Equals);
 
             // Assert
             Assert.Equal("2", calculator.DisplayValue);
@@ -209,10 +210,10 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(5);
-            calculator.SetOperation(OperationType.Multiply);
-            calculator.AppendDigit(3);
-            calculator.Calculate();
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.Multiply);
+            calculator.PressButton(CalculatorButton.Three);
+            calculator.PressButton(CalculatorButton.Equals);
 
             // Assert
             Assert.Equal("15", calculator.DisplayValue);
@@ -225,10 +226,10 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(6);
-            calculator.SetOperation(OperationType.Divide);
-            calculator.AppendDigit(3);
-            calculator.Calculate();
+            calculator.PressButton(CalculatorButton.Six);
+            calculator.PressButton(CalculatorButton.Divide);
+            calculator.PressButton(CalculatorButton.Three);
+            calculator.PressButton(CalculatorButton.Equals);
 
             // Assert
             Assert.Equal("2", calculator.DisplayValue);
@@ -241,13 +242,13 @@ namespace ClassicCalculator.Tests.IntegrationTests
             var calculator = new Calculator();
 
             // Act
-            calculator.AppendDigit(5);
-            calculator.SetOperation(OperationType.Add);
-            calculator.AppendDigit(3);
-            calculator.Calculate();
-            calculator.SetOperation(OperationType.Multiply);
-            calculator.AppendDigit(2);
-            calculator.Calculate();
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.Add);
+            calculator.PressButton(CalculatorButton.Three);
+            calculator.PressButton(CalculatorButton.Equals);
+            calculator.PressButton(CalculatorButton.Multiply);
+            calculator.PressButton(CalculatorButton.Two);
+            calculator.PressButton(CalculatorButton.Equals);
 
             // Assert
             Assert.Equal("16", calculator.DisplayValue);

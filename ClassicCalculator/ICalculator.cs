@@ -7,13 +7,6 @@ namespace ClassicCalculator
         string DisplayValue { get; }
         public ICalculatorState State { get; set; }
 
-        void AppendDigit(int number);
-        void AppendDecimal();
-        void SetOperation(OperationType operation);
-        void Calculate();
-        void Clear();
-        void CalculatePercentage();
-        void CalculateSquareRoot();
-        void ToggleSign(); 
+        public void PressButton(CalculatorButton button);
     }
 }
