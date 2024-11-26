@@ -63,6 +63,18 @@
             TransitionToOperandInputNotInProgressState();
         }
 
+        public override void ToggleSign()
+        {
+            if (ConvertDisplayValueToNumber() == 0)
+            {
+                return;
+            }
+
+            DisplayValue = DisplayValue.StartsWith('-') ?
+                DisplayValue[1..] :
+                "-" + DisplayValue;
+        }
+
         private void SetOperationOrCalculate(OperationType? operation)
         {
             try

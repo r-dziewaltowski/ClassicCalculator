@@ -48,14 +48,6 @@ namespace ClassicCalculator
 
         public virtual void ToggleSign()
         {
-            if (ConvertDisplayValueToNumber() == 0)
-            {
-                return;
-            }
-
-            DisplayValue = DisplayValue.StartsWith('-') ?
-                DisplayValue[1..] :
-                "-" + DisplayValue;
         }
 
         protected static double PerformOperation(double firstOperand, OperationType operation, double secondOperand)
