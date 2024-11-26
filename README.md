@@ -58,6 +58,7 @@ Web application:
 ```bash
 dotnet run --project ClassicCalculatorBlazorApp\
 ```
+Access http://localhost:5116/ in your browser
 
 Desktop app:
 ```bash
