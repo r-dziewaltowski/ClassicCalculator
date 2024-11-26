@@ -54,13 +54,13 @@ git clone https://github.com/r-dziewaltowski/ClassicCalculator.git
 cd .\ClassicCalculator\
 ```
 
-Web application:
+- Web application:
 ```bash
 dotnet run --project ClassicCalculatorBlazorApp\
 ```
 Access http://localhost:5116/ in your browser
 
-Desktop app:
+- Desktop app:
 ```bash
 dotnet run --project .\ClassicCalculatorWpfApp\
 ```
