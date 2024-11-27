@@ -6,6 +6,7 @@ WORKDIR /src
 
 # Copy the project files
 COPY ["ClassicCalculatorBlazorApp/ClassicCalculatorBlazorApp.csproj", "ClassicCalculatorBlazorApp/"]
+COPY ["ClassicCalculator/ClassicCalculator.csproj", "ClassicCalculator/"]
 
 # Restore the dependencies
 RUN dotnet restore "ClassicCalculatorBlazorApp/ClassicCalculatorBlazorApp.csproj"
