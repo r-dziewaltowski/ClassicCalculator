@@ -1,0 +1,8 @@
+services:
+  blazorapp:
+    build:
+      context: .
+      dockerfile: src/ClassicCalculatorBlazorApp/Dockerfile
+    ports:
+      - "80:80"
+    restart: always

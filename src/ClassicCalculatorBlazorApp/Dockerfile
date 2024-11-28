@@ -1,4 +1,7 @@
-﻿# Use the official Microsoft .NET SDK image to build the application
+﻿# From solution root:
+# docker build -f src/ClassicCalculatorBlazorApp/Dockerfile -t classiccalculatorblazorapp .
+
+# Use the official Microsoft .NET SDK image to build the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 # Set the working directory
