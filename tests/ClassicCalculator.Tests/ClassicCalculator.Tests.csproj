@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassicCalculator\ClassicCalculator.csproj" />
+    <ProjectReference Include="..\..\src\ClassicCalculator\ClassicCalculator.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,8 +5,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy the project files
-COPY ["ClassicCalculatorBlazorApp/ClassicCalculatorBlazorApp.csproj", "ClassicCalculatorBlazorApp/"]
-COPY ["ClassicCalculator/ClassicCalculator.csproj", "ClassicCalculator/"]
+COPY ["src/ClassicCalculatorBlazorApp/ClassicCalculatorBlazorApp.csproj", "ClassicCalculatorBlazorApp/"]
+COPY ["src/ClassicCalculator/ClassicCalculator.csproj", "ClassicCalculator/"]
 
 # Restore the dependencies
 RUN dotnet restore "ClassicCalculatorBlazorApp/ClassicCalculatorBlazorApp.csproj"
