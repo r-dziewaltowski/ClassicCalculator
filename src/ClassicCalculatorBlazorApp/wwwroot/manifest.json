@@ -454,7 +454,7 @@
       "sizes": "1024x1024"
     }
   ],
-  "start_url": "/"
+  "start_url": "/",
   "description": "It's a simple calculator giving a feel of using an old school physical calculator device.",
   "display_override": [
     "minimal-ui",
