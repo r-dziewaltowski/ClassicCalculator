@@ -11,7 +11,7 @@ It's a simple calculator giving a feel of using an old school physical calculato
 ## Description
 The solution consists of 3 projects:
 - ClassicCalculator - a class library containing all the busines logic of the calculator that is shared by the applications
-- ClassicCalculatorBlazorApp - a Blazor SPA web calculator application
+- ClassicCalculatorBlazorApp - a Blazor SPA web calculator application which is also a Progressive Web Application (PWA) which means that it can be installed on any device (e.g. Windows desktop, Android mobile) like a native app
 - ClassicCalculatorWpfApp - a WPF desktop calculator application
 
 The business logic is completely decoupled from the presentation layer provided by the applications. Any new application (e.g. a mobile app) can just reuse the existing logic. Also, the logic implementation could be easily replaced as long as an alternative adheres to the same interface.
@@ -51,7 +51,7 @@ All the commands below should be run from the root folder.
 
 <h3>Web application</h3>
 
-The application is deployed and avaialble at the following address: https://classiccalculator.onrender.com/. Plase note that when you try to access it it may be asleep and needs around a minute to wake up.
+The application is deployed and avaialble at the following address: https://classiccalculator.onrender.com/. Plase note that when you try to access it it may be asleep and needs around a minute to wake up. It's a Progressive Web Application (PWA) which means that it can be installed on any device (e.g. Windows desktop, Android mobile) like a native app.
 
 If you prefer to run it locally there's two options:
 - Run in Docker container:
