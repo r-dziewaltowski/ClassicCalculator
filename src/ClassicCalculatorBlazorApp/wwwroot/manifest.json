@@ -467,5 +467,9 @@
     "education",
     "productivity",
     "utilities"
-  ]
+  ],
+  "dir": "auto",
+  "lang": "en",
+  "display": "minimal-ui",
+  "orientation": "any"
 }
