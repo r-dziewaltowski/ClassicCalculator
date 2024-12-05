@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using ClassicCalculator;
 using System.Windows;
 
 namespace ClassicCalculatorWpfApp
@@ -9,6 +8,13 @@ namespace ClassicCalculatorWpfApp
     /// </summary>
     public partial class App : Application
     {
-    }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
 
+            var calculator = new Calculator();
+            var mainWindow = new MainWindow(calculator);
+            mainWindow.Show();
+        }
+    }
 }

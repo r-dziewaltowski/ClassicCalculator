@@ -1,7 +1,6 @@
-﻿<Application x:Class="WpfCalculatorApp.App"
+﻿<Application x:Class="ClassicCalculatorWpfApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <Style x:Key="CalculatorButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="60"/>
