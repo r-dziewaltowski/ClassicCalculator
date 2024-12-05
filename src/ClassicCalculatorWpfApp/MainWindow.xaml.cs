@@ -1,9 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using ClassicCalculator;
 
-namespace WpfCalculatorApp
+namespace ClassicCalculatorWpfApp
 {
     public partial class MainWindow : Window
     {
