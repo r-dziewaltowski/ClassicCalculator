@@ -26,6 +26,7 @@ namespace ClassicCalculatorWpfApp
         private static void ConfigureServices(ServiceCollection services)
         {
             services.AddTransient<ICalculator, Calculator>();
+            services.AddTransient<CalculatorViewModel>();
             services.AddTransient<MainWindow>();
         }
     }

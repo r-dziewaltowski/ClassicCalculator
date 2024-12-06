@@ -6,13 +6,13 @@ namespace ClassicCalculatorWpfApp
 {
     public partial class MainWindow : Window
     {
-        private readonly ICalculator _calculator;
+        private readonly CalculatorViewModel _calculatorViewModel;
 
-        public MainWindow(ICalculator calculator)
+        public MainWindow(CalculatorViewModel calculator)
         {
             InitializeComponent();
-            _calculator = calculator;
-            Display.Text = _calculator.DisplayValue;
+            _calculatorViewModel = calculator;
+            Display.Text = _calculatorViewModel.DisplayValue;
         }
 
         private void Digit_Click(object sender, RoutedEventArgs e)
@@ -74,8 +74,8 @@ namespace ClassicCalculatorWpfApp
 
         private void PressButton(CalculatorButton button)
         {
-            _calculator.PressButton(button);
-            Display.Text = _calculator.DisplayValue;
+            _calculatorViewModel.PressButton(button);
+            Display.Text = _calculatorViewModel.DisplayValue;
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
