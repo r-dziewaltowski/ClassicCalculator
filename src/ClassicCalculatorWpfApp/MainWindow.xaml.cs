@@ -1,18 +1,16 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using ClassicCalculator;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace ClassicCalculatorWpfApp
 {
     public partial class MainWindow : Window
     {
-        private readonly CalculatorViewModel _calculatorViewModel;
-
-        public MainWindow(CalculatorViewModel calculator)
+        public MainWindow()
         {
             InitializeComponent();
-            _calculatorViewModel = calculator;
-            Display.Text = _calculatorViewModel.DisplayValue;
+            DataContext = Ioc.Default.GetRequiredService<CalculatorViewModel>();
         }
 
         private void Digit_Click(object sender, RoutedEventArgs e)
@@ -74,8 +72,7 @@ namespace ClassicCalculatorWpfApp
 
         private void PressButton(CalculatorButton button)
         {
-            _calculatorViewModel.PressButton(button);
-            Display.Text = _calculatorViewModel.DisplayValue;
+            ((CalculatorViewModel)DataContext).PressButton(button);
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
