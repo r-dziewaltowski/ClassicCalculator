@@ -1,5 +1,7 @@
 using ClassicCalculator;
+using FluentAssertions;
 using Moq;
+using System.ComponentModel;
 
 namespace ClassicCalculatorWpfApp.Tests
 {
@@ -43,6 +45,40 @@ namespace ClassicCalculatorWpfApp.Tests
 
             // Assert
             _mockCalculator.Verify(c => c.PressButton(calculatorButton), Times.Once);
+        }
+
+        [Fact]
+        public void ExecutingPressButtonCommand_ShouldRaisePropertyChangedEventForDisplayValue()
+        {
+            // Arrange
+            var viewModel = new CalculatorViewModel(_mockCalculator.Object);
+            var mockEventHandler = new Mock<PropertyChangedEventHandler>();
+            viewModel.PropertyChanged += mockEventHandler.Object;
+
+            // Act
+            viewModel.PressButtonCommand.Execute(CalculatorButton.Clear);
+
+            // Assert
+            mockEventHandler.Verify(
+                handler => handler(
+                    It.IsAny<object>(), 
+                    It.Is<PropertyChangedEventArgs>(e => e.PropertyName == nameof(viewModel.DisplayValue))),
+                Times.Once);
+        }
+
+        [Fact]
+        public void DisplayValue_ShouldReturnCalculatorDisplayValue()
+        {
+            // Arrange
+            const string TestDisplayValue = "Test display value";
+            var viewModel = new CalculatorViewModel(_mockCalculator.Object);
+            _mockCalculator.Setup(c => c.DisplayValue).Returns(TestDisplayValue);
+
+            // Act
+            var displayValue = viewModel.DisplayValue;
+
+            // Assert
+            displayValue.Should().Be(TestDisplayValue);
         }
     }
 }
