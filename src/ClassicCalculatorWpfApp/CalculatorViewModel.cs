@@ -19,7 +19,7 @@ namespace ClassicCalculatorWpfApp
             PressButtonCommand = new RelayCommand<CalculatorButton>(PressButton);
         }
 
-        public void PressButton(CalculatorButton button)
+        private void PressButton(CalculatorButton button)
         {
             _calculator.PressButton(button);
             OnPropertyChanged(nameof(DisplayValue));
