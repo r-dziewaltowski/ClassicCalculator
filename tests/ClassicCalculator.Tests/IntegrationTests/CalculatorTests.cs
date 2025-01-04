@@ -16,6 +16,13 @@ namespace ClassicCalculator.Tests.IntegrationTests
             TestCalculator([CalculatorButton.Decimal], "0.");
 
         [Fact]
+        public void AppendMultipleDecimals_ShouldShowSingleDecimal() =>
+            TestCalculator([
+                CalculatorButton.Decimal,
+                CalculatorButton.Decimal
+            ], "0.");
+
+        [Fact]
         public void AppendZeroThreeTimes_ShouldShowZero() =>
             TestCalculator([
                 CalculatorButton.Zero,
