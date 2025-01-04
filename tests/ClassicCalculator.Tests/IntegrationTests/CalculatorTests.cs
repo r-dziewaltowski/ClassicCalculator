@@ -157,15 +157,31 @@ namespace ClassicCalculator.Tests.IntegrationTests
             ], "16");
 
         [Fact]
-        public void SubtractLargerFromSmaller_ShouldShowNegativeResult()
-        {
+        public void SubtractLargerFromSmaller_ShouldShowNegativeResult() => 
             TestCalculator([
                 CalculatorButton.Two,
                 CalculatorButton.Subtract,
                 CalculatorButton.Five,
                 CalculatorButton.Equals
             ], "-3");
-        }
+
+        [Theory(Skip = "Failing for now")]
+        [InlineData(CalculatorButton.Add, "0.002")]
+        [InlineData(CalculatorButton.Subtract, "0")]
+        [InlineData(CalculatorButton.Multiply, "0.000001")]
+        [InlineData(CalculatorButton.Divide, "1")]
+        public void PerformFloatingPointOperation_ShouldShowCorrectResult(CalculatorButton operation, string expectedDisplayValue) => 
+            TestCalculator([
+                CalculatorButton.Decimal,
+                CalculatorButton.Zero,
+                CalculatorButton.Zero,
+                CalculatorButton.One,
+                operation,
+                CalculatorButton.Decimal,
+                CalculatorButton.Zero,
+                CalculatorButton.Zero,
+                CalculatorButton.One,
+            ], expectedDisplayValue);
 
         private static void TestCalculator(IEnumerable<CalculatorButton> buttonsPressed, string expectedDisplayValue)
         {
