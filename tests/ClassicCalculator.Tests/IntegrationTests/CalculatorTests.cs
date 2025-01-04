@@ -149,6 +149,17 @@ namespace ClassicCalculator.Tests.IntegrationTests
                 CalculatorButton.Equals
             ], "16");
 
+        [Fact]
+        public void SubtractLargerFromSmaller_ShouldShowNegativeResult()
+        {
+            TestCalculator([
+                CalculatorButton.Two,
+                CalculatorButton.Subtract,
+                CalculatorButton.Five,
+                CalculatorButton.Equals
+            ], "-3");
+        }
+
         private static void TestCalculator(IEnumerable<CalculatorButton> buttonsPressed, string expectedDisplayValue)
         {
             // Arrange
