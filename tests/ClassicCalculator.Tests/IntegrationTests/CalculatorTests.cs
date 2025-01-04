@@ -62,6 +62,22 @@ namespace ClassicCalculator.Tests.IntegrationTests
         }
 
         [Fact]
+        public void AppendNumberThenDecimalThenZeroThenOperation_ShouldShowNumberWithoutDecimal()
+        {
+            // Arrange
+            var calculator = new Calculator();
+
+            // Act
+            calculator.PressButton(CalculatorButton.Five);
+            calculator.PressButton(CalculatorButton.Decimal);
+            calculator.PressButton(CalculatorButton.Zero);
+            calculator.PressButton(CalculatorButton.Add);
+
+            // Assert
+            Assert.Equal("5", calculator.DisplayValue);
+        }
+
+        [Fact]
         public void DivideByZero_ShouldShowCannotDivideByZero()
         {
             // Arrange
