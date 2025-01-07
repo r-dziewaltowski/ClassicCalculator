@@ -174,14 +174,17 @@ namespace ClassicCalculator.Tests.IntegrationTests
         public void PerformFloatingPointOperation_ShouldShowCorrectResult(CalculatorButton operation, string expectedDisplayValue)
         {
             const decimal SmallestFractionPossible = -0.0000000000000000000000000001m;
-            var operandButtons = ConvertNumberToButtonSequence(SmallestFractionPossible);
-            var buttonsPressed = 
-                operandButtons
-                .Concat([operation])
-                .Concat(operandButtons)
-                .Concat([CalculatorButton.Equals]);
+            TestFullOperationButtonSequence(SmallestFractionPossible, operation, expectedDisplayValue);
+        }
 
-            TestCalculator(buttonsPressed, expectedDisplayValue);
+        [Theory]
+        [InlineData(CalculatorButton.Add, "-20000000000000000000000000000")]
+        [InlineData(CalculatorButton.Subtract, "0")]
+        [InlineData(CalculatorButton.Divide, "1")]
+        public void PerformOperationOnLargeNumbers_ShouldShowCorrectResult(CalculatorButton operation, string expectedDisplayValue)
+        {
+            const decimal LargeNumber = -10000000000000000000000000000m;
+            TestFullOperationButtonSequence(LargeNumber, operation, expectedDisplayValue);
         }
 
         private static void TestCalculator(IEnumerable<CalculatorButton> buttonsPressed, string expectedDisplayValue)
@@ -227,6 +230,18 @@ namespace ClassicCalculator.Tests.IntegrationTests
             }
 
             return result;
+        }
+
+        private static void TestFullOperationButtonSequence(decimal operand, CalculatorButton operation, string expectedDisplayValue)
+        {
+            var operandButtons = ConvertNumberToButtonSequence(operand);
+            var buttonSequence =
+                operandButtons
+                .Concat([operation])
+                .Concat(operandButtons)
+                .Concat([CalculatorButton.Equals]);
+
+            TestCalculator(buttonSequence, expectedDisplayValue);
         }
     }
 }
