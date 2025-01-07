@@ -1,12 +1,13 @@
-﻿using System.Globalization;
+﻿using DecimalMath;
+using System.Globalization;
 
 namespace ClassicCalculator.CalculatorState
 {
     public abstract class ValidStateBase(
             ICalculator calculator,
-            double? firstOperand,
+            decimal? firstOperand,
             OperationType? currentOperation,
-            double? secondOperand,
+            decimal? secondOperand,
             string displayValue)
             : CalculatorStateBase(
                 calculator,
@@ -44,13 +45,14 @@ namespace ClassicCalculator.CalculatorState
 
         public override void CalculateSquareRoot()
         {
-            var result = Math.Sqrt(ConvertDisplayValueToNumber());
-            if (double.IsNaN(result))
+            var operand = ConvertDisplayValueToNumber();
+            if (operand < 0)
             {
                 TransitionToInvalidState("Invalid input");
                 return;
             }
 
+            var result = DecimalEx.Sqrt(operand);
             if (!FirstOperandAndOperationProvided())
             {
                 SetFirstOperand(result);
@@ -77,13 +79,13 @@ namespace ClassicCalculator.CalculatorState
                 "-" + DisplayValue;
         }
 
-        protected double ConvertDisplayValueToNumber()
+        protected decimal ConvertDisplayValueToNumber()
         {
             var formattedDisplayValue = DisplayValue.EndsWith('.') ? DisplayValue[..^1] : DisplayValue;
-            return double.Parse(formattedDisplayValue, CultureInfo.InvariantCulture);
+            return decimal.Parse(formattedDisplayValue, CultureInfo.InvariantCulture);
         }
 
-        private static double PerformOperation(double firstOperand, OperationType operation, double secondOperand)
+        private static decimal PerformOperation(decimal firstOperand, OperationType operation, decimal secondOperand)
         {
             return operation switch
             {
@@ -95,7 +97,7 @@ namespace ClassicCalculator.CalculatorState
             };
         }
 
-        private static double CalculatePercentage(double firstOperand, OperationType operation, double secondOperand)
+        private static decimal CalculatePercentage(decimal firstOperand, OperationType operation, decimal secondOperand)
         {
             var percentage = secondOperand / 100;
             return operation switch
@@ -108,9 +110,9 @@ namespace ClassicCalculator.CalculatorState
             };
         }
 
-        private void UpdateDisplayValue(double value)
+        private void UpdateDisplayValue(decimal value)
         {
-            DisplayValue = value.ToString(CultureInfo.InvariantCulture);
+            DisplayValue = value.ToString("0.#############################", CultureInfo.InvariantCulture);
         }
 
         private void SetOperationOrCalculate(OperationType? operation)

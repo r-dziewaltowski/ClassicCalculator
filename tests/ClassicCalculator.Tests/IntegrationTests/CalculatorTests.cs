@@ -165,7 +165,7 @@ namespace ClassicCalculator.Tests.IntegrationTests
                 CalculatorButton.Equals
             ], "-3");
 
-        [Theory(Skip = "Failing for now")]
+        [Theory]
         [InlineData(CalculatorButton.Add, "0.002")]
         [InlineData(CalculatorButton.Subtract, "0")]
         [InlineData(CalculatorButton.Multiply, "0.000001")]
@@ -181,6 +181,7 @@ namespace ClassicCalculator.Tests.IntegrationTests
                 CalculatorButton.Zero,
                 CalculatorButton.Zero,
                 CalculatorButton.One,
+                CalculatorButton.Equals
             ], expectedDisplayValue);
 
         private static void TestCalculator(IEnumerable<CalculatorButton> buttonsPressed, string expectedDisplayValue)

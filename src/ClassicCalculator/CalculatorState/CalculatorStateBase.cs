@@ -5,15 +5,15 @@ namespace ClassicCalculator.CalculatorState
 {
     public abstract class CalculatorStateBase(
         ICalculator calculator,
-        double? firstOperand,
+        decimal? firstOperand,
         OperationType? currentOperation,
-        double? secondOperand,
+        decimal? secondOperand,
         string displayValue) : ICalculatorState
     {
         protected readonly ICalculator _calculator = calculator;
-        protected double? _firstOperand = firstOperand;
+        protected decimal? _firstOperand = firstOperand;
         protected OperationType? _currentOperation = currentOperation;
-        protected double? _secondOperand = secondOperand;
+        protected decimal? _secondOperand = secondOperand;
 
         public string DisplayValue { get; set; } = displayValue;
 
@@ -43,7 +43,7 @@ namespace ClassicCalculator.CalculatorState
         }
 
         [MemberNotNull(nameof(_firstOperand))]
-        protected void SetFirstOperand(double value)
+        protected void SetFirstOperand(decimal value)
         {
             _firstOperand = value;
             _currentOperation = null;

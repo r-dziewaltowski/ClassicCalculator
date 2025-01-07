@@ -2,9 +2,9 @@
 {
     public class OperandInputInProgressState(
             ICalculator calculator,
-            double? firstOperand,
+            decimal? firstOperand,
             OperationType? currentOperation,
-            double? secondOperand,
+            decimal? secondOperand,
             string displayValue)
             : ValidStateBase(
                 calculator,
