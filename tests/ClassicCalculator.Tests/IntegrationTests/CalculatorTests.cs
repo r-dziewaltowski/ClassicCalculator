@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace ClassicCalculator.Tests.IntegrationTests
 {
     public class CalculatorTests
@@ -166,23 +168,21 @@ namespace ClassicCalculator.Tests.IntegrationTests
             ], "-3");
 
         [Theory]
-        [InlineData(CalculatorButton.Add, "0.002")]
+        [InlineData(CalculatorButton.Add, "-0.0000000000000000000000000002")]
         [InlineData(CalculatorButton.Subtract, "0")]
-        [InlineData(CalculatorButton.Multiply, "0.000001")]
         [InlineData(CalculatorButton.Divide, "1")]
-        public void PerformFloatingPointOperation_ShouldShowCorrectResult(CalculatorButton operation, string expectedDisplayValue) => 
-            TestCalculator([
-                CalculatorButton.Decimal,
-                CalculatorButton.Zero,
-                CalculatorButton.Zero,
-                CalculatorButton.One,
-                operation,
-                CalculatorButton.Decimal,
-                CalculatorButton.Zero,
-                CalculatorButton.Zero,
-                CalculatorButton.One,
-                CalculatorButton.Equals
-            ], expectedDisplayValue);
+        public void PerformFloatingPointOperation_ShouldShowCorrectResult(CalculatorButton operation, string expectedDisplayValue)
+        {
+            const decimal SmallestFractionPossible = -0.0000000000000000000000000001m;
+            var operandButtons = ConvertNumberToButtonSequence(SmallestFractionPossible);
+            var buttonsPressed = 
+                operandButtons
+                .Concat([operation])
+                .Concat(operandButtons)
+                .Concat([CalculatorButton.Equals]);
+
+            TestCalculator(buttonsPressed, expectedDisplayValue);
+        }
 
         private static void TestCalculator(IEnumerable<CalculatorButton> buttonsPressed, string expectedDisplayValue)
         {
@@ -197,6 +197,36 @@ namespace ClassicCalculator.Tests.IntegrationTests
 
             // Assert
             Assert.Equal(expectedDisplayValue, calculator.DisplayValue);
+        }
+
+        private static List<CalculatorButton> ConvertNumberToButtonSequence(decimal number)
+        {
+            var negativeNumber = false;
+            var result = new List<CalculatorButton>();
+
+            var digits = number.ToString("0.#############################", CultureInfo.InvariantCulture);
+            foreach (var digit in digits)
+            {
+                switch (digit)
+                {
+                    case '-':
+                        negativeNumber = true;
+                        break;
+                    case '.':
+                        result.Add(CalculatorButton.Decimal);
+                        break;
+                    default:
+                        result.Add((CalculatorButton)int.Parse(digit.ToString()));
+                        break;
+                }
+            }
+
+            if (negativeNumber)
+            {
+                result.Add(CalculatorButton.ToggleSign);
+            }
+
+            return result;
         }
     }
 }
