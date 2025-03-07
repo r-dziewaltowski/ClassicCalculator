@@ -4,9 +4,8 @@ namespace ClassicCalculator
 {
     public class Calculator : ICalculator
     {
-        public ICalculatorState State { get; set; }
-
         public string DisplayValue => State.DisplayValue;
+        internal ICalculatorState State { get; set; }
 
         public Calculator()
         {

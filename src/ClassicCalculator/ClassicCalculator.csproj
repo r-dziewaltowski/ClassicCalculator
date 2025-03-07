@@ -10,4 +10,8 @@
     <PackageReference Include="DecimalMath.DecimalEx" Version="1.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="ClassicCalculator.Tests" />
+  </ItemGroup>
+
 </Project>
