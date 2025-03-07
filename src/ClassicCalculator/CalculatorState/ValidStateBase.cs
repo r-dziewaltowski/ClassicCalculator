@@ -4,7 +4,7 @@ using System.Globalization;
 namespace ClassicCalculator.CalculatorState
 {
     public abstract class ValidStateBase(
-            ICalculator calculator,
+            Calculator calculator,
             decimal? firstOperand,
             OperationType? currentOperation,
             decimal? secondOperand,

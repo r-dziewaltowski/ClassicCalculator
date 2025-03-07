@@ -9,7 +9,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
 
         public InvalidStateTests()
         {
-            _state = new InvalidState(MockCalculator.Object, DisplayValue);
+            _state = new InvalidState(Calculator, DisplayValue);
         }
 
         [Theory]

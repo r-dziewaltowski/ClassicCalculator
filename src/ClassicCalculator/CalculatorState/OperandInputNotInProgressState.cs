@@ -1,7 +1,7 @@
 ﻿namespace ClassicCalculator.CalculatorState
 {
     public class OperandInputNotInProgressState(
-        ICalculator calculator,
+        Calculator calculator,
         decimal? firstOperand,
         OperationType? currentOperation,
         decimal? secondOperand,

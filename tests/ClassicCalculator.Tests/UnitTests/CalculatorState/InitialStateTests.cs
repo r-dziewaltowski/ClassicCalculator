@@ -8,7 +8,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
 
         public InitialStateTests()
         {
-            _state = new InitialState(MockCalculator.Object);
+            _state = new InitialState(Calculator);
         }
 
         [Theory]

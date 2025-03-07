@@ -4,13 +4,13 @@ using System.Globalization;
 namespace ClassicCalculator.CalculatorState
 {
     public abstract class CalculatorStateBase(
-        ICalculator calculator,
+        Calculator calculator,
         decimal? firstOperand,
         OperationType? currentOperation,
         decimal? secondOperand,
         string displayValue) : ICalculatorState
     {
-        protected readonly ICalculator _calculator = calculator;
+        protected readonly Calculator _calculator = calculator;
         protected decimal? _firstOperand = firstOperand;
         protected OperationType? _currentOperation = currentOperation;
         protected decimal? _secondOperand = secondOperand;

@@ -10,7 +10,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void AppendDigit_ShouldUpdateDisplayValue_WhenInitialStateIsZero(int digit)
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, "0");
+            var state = new OperandInputInProgressState(Calculator, null, null, null, "0");
 
             // Act
             state.AppendDigit(digit);
@@ -25,7 +25,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void AppendDigit_ShouldUpdateDisplayValue_WhenInitialStateIsOne(int digit, string expectedDisplayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, "1");
+            var state = new OperandInputInProgressState(Calculator, null, null, null, "1");
 
             // Act
             state.AppendDigit(digit);
@@ -40,7 +40,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void AppendDigit_ShouldUpdateDisplayValue_WhenInitialStateIsOneDecimal(int digit, string expectedDisplayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, "1.");
+            var state = new OperandInputInProgressState(Calculator, null, null, null, "1.");
 
             // Act
             state.AppendDigit(digit);
@@ -53,7 +53,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void AppendDecimal_ShouldUpdateDisplayValue_WhenInitialStateIsOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, "1");
+            var state = new OperandInputInProgressState(Calculator, null, null, null, "1");
 
             // Act
             state.AppendDecimal();
@@ -66,7 +66,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void AppendDecimal_ShouldNotChangeDisplayValue_WhenInitialStateIsOneDecimal()
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, "1.");
+            var state = new OperandInputInProgressState(Calculator, null, null, null, "1.");
 
             // Act
             state.AppendDecimal();
@@ -79,7 +79,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void AppendDecimal_ShouldNotChangeDisplayValue_WhenInitialStateIsZeroPointOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, "0.1");
+            var state = new OperandInputInProgressState(Calculator, null, null, null, "0.1");
 
             // Act
             state.AppendDecimal();
@@ -96,7 +96,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne(OperationType operation, string displayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, displayValue);
+            var state = new OperandInputInProgressState(Calculator, null, null, null, displayValue);
 
             // Act
             state.SetOperation(operation);
@@ -113,7 +113,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithOperation(OperationType operation, string expectedDisplayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, 1, operation, null, "2");
+            var state = new OperandInputInProgressState(Calculator, 1, operation, null, "2");
 
             // Act
             state.SetOperation(OperationType.Add);
@@ -126,7 +126,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithDivideByZero()
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, 1, OperationType.Divide, null, "0");
+            var state = new OperandInputInProgressState(Calculator, 1, OperationType.Divide, null, "0");
 
             // Act
             state.SetOperation(OperationType.Divide);
@@ -141,7 +141,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void Calculate_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne(string displayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, displayValue);
+            var state = new OperandInputInProgressState(Calculator, null, null, null, displayValue);
 
             // Act
             state.Calculate();
@@ -158,7 +158,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void Calculate_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithOperation(OperationType operation, string expectedDisplayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, 1, operation, null, "2");
+            var state = new OperandInputInProgressState(Calculator, 1, operation, null, "2");
 
             // Act
             state.Calculate();
@@ -171,7 +171,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void CalculatePercentage_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, "1");
+            var state = new OperandInputInProgressState(Calculator, null, null, null, "1");
 
             // Act
             state.CalculatePercentage();
@@ -189,7 +189,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
             OperationType operation, string currentDisplayValue, string expectedDisplayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, 10, operation, null, currentDisplayValue);
+            var state = new OperandInputInProgressState(Calculator, 10, operation, null, currentDisplayValue);
 
             // Act
             state.CalculatePercentage();
@@ -204,7 +204,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void CalculateSquareRoot_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsFour(string displayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, displayValue);
+            var state = new OperandInputInProgressState(Calculator, null, null, null, displayValue);
 
             // Act
             state.CalculateSquareRoot();
@@ -217,7 +217,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void CalculateSquareRoot_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithOperation()
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, 1, OperationType.Add, null, "4");
+            var state = new OperandInputInProgressState(Calculator, 1, OperationType.Add, null, "4");
 
             // Act
             state.CalculateSquareRoot();
@@ -230,7 +230,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void CalculateSquareRoot_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithNegativeOperation()
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, 1, OperationType.Add, null, "-4");
+            var state = new OperandInputInProgressState(Calculator, 1, OperationType.Add, null, "-4");
 
             // Act
             state.CalculateSquareRoot();
@@ -243,7 +243,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void ToggleSign_ShouldUpdateDisplayValue_WhenInitialStateIsOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, "1");
+            var state = new OperandInputInProgressState(Calculator, null, null, null, "1");
 
             // Act
             state.ToggleSign();
@@ -256,7 +256,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void ToggleSign_ShouldUpdateDisplayValue_WhenInitialStateIsNegativeOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, "-1");
+            var state = new OperandInputInProgressState(Calculator, null, null, null, "-1");
 
             // Act
             state.ToggleSign();
@@ -272,7 +272,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void ToggleSign_ShouldUpdateDisplayValue_WhenInitialStateIsZero(string displayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, displayValue);
+            var state = new OperandInputInProgressState(Calculator, null, null, null, displayValue);
 
             // Act
             state.ToggleSign();
@@ -285,7 +285,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         public void Clear_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(MockCalculator.Object, null, null, null, "1");
+            var state = new OperandInputInProgressState(Calculator, null, null, null, "1");
 
             // Act
             state.Clear();
