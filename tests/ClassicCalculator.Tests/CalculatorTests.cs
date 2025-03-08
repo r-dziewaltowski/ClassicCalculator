@@ -190,6 +190,25 @@ namespace ClassicCalculator.Tests
             TestFullOperationButtonSequence(LargeNumber, operation, expectedDisplayValue);
         }
 
+        [Fact]
+        public void PerformOperationOnLargeNumbers_ShouldDetectOverflow()
+        {
+            // Act
+            const decimal LargeNumber = 10000000000000000000000000000m;
+            var operandButtons = ConvertNumberToButtonSequence(LargeNumber);
+            foreach (var button in operandButtons)
+            {
+                Calculator.PressButton(button);
+            }
+            Calculator.PressButton(CalculatorButton.Multiply);
+            Calculator.PressButton(CalculatorButton.One);
+            Calculator.PressButton(CalculatorButton.Zero);
+            Calculator.PressButton(CalculatorButton.Equals);
+
+            // Assert
+            VerifyStateSet<InvalidState>("Overflow");
+        }
+
         private void TestCalculator(IEnumerable<CalculatorButton> buttonsPressed, string expectedDisplayValue)
         {
             // Act

@@ -153,10 +153,5 @@ namespace ClassicCalculator.CalculatorState
             _secondOperand = null;
             UpdateDisplayValueAndSetOperandInputNotInProgressState(_firstOperand.Value);
         }
-
-        private void SetInvalidState(string displayValue)
-        {
-            _calculator.State = new InvalidState(_calculator, displayValue);
-        }
     }
 }

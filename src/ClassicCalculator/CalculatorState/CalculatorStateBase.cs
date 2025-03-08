@@ -93,10 +93,20 @@ namespace ClassicCalculator.CalculatorState
                         throw new ArgumentOutOfRangeException(nameof(button), button, "Invalid calculator button.");
                 }
             }
+            catch (OverflowException ex)
+            {
+                _calculator.Logger.LogWarning(ex, "Overflow occurred");
+                SetInvalidState("Overflow");
+            }
+            //catch (DivideByZeroException ex)
+            //{
+            //    _calculator.Logger.LogError(ex, "Divide by zero occurred");
+            //    _calculator.State = new InvalidState(_calculator, "Divide by zero");
+            //}
             catch (Exception ex)
             {
                 _calculator.Logger.LogError(ex, "Unexpected error occurred");
-                _calculator.State = new InvalidState(_calculator, "Unexpected error");
+                SetInvalidState("Unexpected error");
             }
         }
 
@@ -123,6 +133,11 @@ namespace ClassicCalculator.CalculatorState
             _firstOperand = value;
             _currentOperation = null;
             _secondOperand = null;
+        }
+
+        protected void SetInvalidState(string displayValue)
+        {
+            _calculator.State = new InvalidState(_calculator, displayValue);
         }
 
         private void HandleDigit(int number)
