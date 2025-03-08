@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace ClassicCalculator.Tests.IntegrationTests
+namespace ClassicCalculator.Tests
 {
     public class CalculatorTests
     {

@@ -1,6 +1,6 @@
 ﻿using ClassicCalculator.CalculatorState;
 
-namespace ClassicCalculator.Tests.UnitTests.CalculatorState
+namespace ClassicCalculator.Tests.CalculatorState
 {
     public class StateTestsBase
     {
