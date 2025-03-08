@@ -2,7 +2,7 @@ using ClassicCalculator.CalculatorState;
 
 namespace ClassicCalculator.Tests.CalculatorState
 {
-    public class OperandInputNotInProgressStateTests : StateTestsBase
+    public class OperandInputNotInProgressStateTests : CalculatorTestsBase
     {
         [Theory]
         [InlineData(0)]

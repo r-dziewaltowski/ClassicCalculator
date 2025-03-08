@@ -2,7 +2,7 @@ using ClassicCalculator.CalculatorState;
 
 namespace ClassicCalculator.Tests.CalculatorState
 {
-    public class InvalidStateTests : StateTestsBase
+    public class InvalidStateTests : CalculatorTestsBase
     {
         private const string DisplayValue = "Test invalid state";
 

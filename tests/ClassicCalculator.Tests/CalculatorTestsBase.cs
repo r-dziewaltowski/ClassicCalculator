@@ -1,8 +1,8 @@
 ﻿using ClassicCalculator.CalculatorState;
 
-namespace ClassicCalculator.Tests.CalculatorState
+namespace ClassicCalculator.Tests
 {
-    public class StateTestsBase
+    public class CalculatorTestsBase
     {
         protected readonly Calculator Calculator = new();
 

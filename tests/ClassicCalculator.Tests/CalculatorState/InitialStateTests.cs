@@ -2,7 +2,7 @@ using ClassicCalculator.CalculatorState;
 
 namespace ClassicCalculator.Tests.CalculatorState
 {
-    public class InitialStateTests : StateTestsBase
+    public class InitialStateTests : CalculatorTestsBase
     {
         public InitialStateTests()
         {

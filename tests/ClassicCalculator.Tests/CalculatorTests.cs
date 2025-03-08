@@ -1,10 +1,9 @@
 using ClassicCalculator.CalculatorState;
-using ClassicCalculator.Tests.CalculatorState;
 using System.Globalization;
 
 namespace ClassicCalculator.Tests
 {
-    public class CalculatorTests : StateTestsBase
+    public class CalculatorTests : CalculatorTestsBase
     {
         [Fact]
         public void PerformOperationWithZeroAsFirstOperand_ShouldShowCorrectResult() =>
