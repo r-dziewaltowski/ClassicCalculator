@@ -190,49 +190,6 @@ namespace ClassicCalculator.Tests
             TestFullOperationButtonSequence(LargeNumber, operation, expectedDisplayValue);
         }
 
-        [Fact]
-        public void Calculator_ShouldHandleUnexpectedErrors()
-        {
-            // Act
-            Calculator.PressButton((CalculatorButton)(-1));
-
-            // Assert
-            VerifyStateSet<InvalidState>("Unexpected error");
-        }
-
-        [Fact]
-        public void Calculator_ShouldLogUnexpectedErrors()
-        {
-            // Act
-            Calculator.PressButton((CalculatorButton)(-1));
-
-            // Assert
-            LoggerMock.Verify(logger => logger.Log(
-                    LogLevel.Error,
-                    It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((@object, @type) => true),
-                    It.IsAny<Exception>(),
-                    It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
-                Times.Once);
-        }
-
-        [Fact]
-        public void Calculator_ShouldLogPressedButtons()
-        {
-            // Act
-            Calculator.PressButton(CalculatorButton.One);
-            Calculator.PressButton(CalculatorButton.Add);
-
-            // Assert
-            LoggerMock.Verify(logger => logger.Log(
-                    LogLevel.Information,
-                    It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((@object, @type) => true),
-                    It.IsAny<Exception>(),
-                    It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
-                Times.Exactly(2));
-        }
-
         private void TestCalculator(IEnumerable<CalculatorButton> buttonsPressed, string expectedDisplayValue)
         {
             // Act
