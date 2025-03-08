@@ -7,17 +7,19 @@ namespace ClassicCalculator
     public class Calculator : ICalculator
     {
         public string DisplayValue => State.DisplayValue;
+
         internal CalculatorStateBase State { get; set; }
-        private readonly ILogger<Calculator> _logger;
+        internal readonly ILogger<Calculator> Logger;
 
         public Calculator(ILogger<Calculator>? logger = null)
         {
-            _logger = logger ?? NullLogger<Calculator>.Instance;
+            Logger = logger ?? NullLogger<Calculator>.Instance;
             State = new InitialState(this);
         }
 
         public void PressButton(CalculatorButton button)
         {
+            Logger.LogInformation("Button pressed: {Button}", button);
             State.HandleButtonPressed(button);
         }
     }

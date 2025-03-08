@@ -1,10 +1,18 @@
 ﻿using ClassicCalculator.CalculatorState;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace ClassicCalculator.Tests
 {
     public class CalculatorTestsBase
     {
-        protected readonly Calculator Calculator = new();
+        protected readonly Mock<ILogger<Calculator>> LoggerMock = new();
+        protected readonly Calculator Calculator;
+
+        public CalculatorTestsBase()
+        {
+            Calculator = new(LoggerMock.Object);
+        }
 
         protected void PerformTest(
             CalculatorButton button, string expectedDisplayValue, Type expectedState) 

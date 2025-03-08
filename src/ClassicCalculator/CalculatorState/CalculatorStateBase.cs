@@ -1,20 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ClassicCalculator.CalculatorState
 {
-    internal abstract class CalculatorStateBase(
-        Calculator calculator,
-        decimal? firstOperand,
-        OperationType? currentOperation,
-        decimal? secondOperand,
-        string displayValue)
+    internal abstract class CalculatorStateBase
     {
-        protected readonly Calculator _calculator = calculator;
-        protected decimal? _firstOperand = firstOperand;
-        protected OperationType? _currentOperation = currentOperation;
-        protected decimal? _secondOperand = secondOperand;
-
-        public string DisplayValue { get; set; } = displayValue;
+        public string DisplayValue { get; set; }
 
         public abstract void AppendDigit(int digit);
         public abstract void AppendDecimal();
@@ -23,6 +14,32 @@ namespace ClassicCalculator.CalculatorState
         public abstract void CalculatePercentage();
         public abstract void CalculateSquareRoot();
         public abstract void ToggleSign();
+
+        protected readonly Calculator _calculator;
+        protected decimal? _firstOperand;
+        protected OperationType? _currentOperation;
+        protected decimal? _secondOperand;
+
+        public CalculatorStateBase(
+            Calculator calculator,
+            decimal? firstOperand,
+            OperationType? currentOperation,
+            decimal? secondOperand,
+            string displayValue)
+        {
+            DisplayValue = displayValue;
+            _calculator = calculator;
+            _firstOperand = firstOperand;
+            _currentOperation = currentOperation;
+            _secondOperand = secondOperand;
+
+            _calculator.Logger.LogDebug(
+                "Calculator state initialized with first operand: {FirstOperand}, current operation: {CurrentOperation}, second operand: {SecondOperand}, display value: {DisplayValue}",
+                _firstOperand,
+                _currentOperation,
+                _secondOperand,
+                DisplayValue);
+        }
 
         public void HandleButtonPressed(CalculatorButton button)
         {
@@ -76,8 +93,9 @@ namespace ClassicCalculator.CalculatorState
                         throw new ArgumentOutOfRangeException(nameof(button), "Invalid calculator button.");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _calculator.Logger.LogError(ex, "Unexpected error occurred");
                 _calculator.State = new InvalidState(_calculator, "Unexpected error");
             }
         }
