@@ -42,9 +42,9 @@ namespace ClassicCalculator.Tests
         }
 
         [Theory]
-        [InlineData(1)]
+        [InlineData(2)]
         [InlineData(10)]
-        [InlineData(Calculator.MaxDisplayLength)]
+        [InlineData(Calculator.MaxDisplayLength - 1)]
         public void Calculator_ShouldEnterInvalidStateWhenResultOfCalculationExceedsDisplayLength(int displayLength)
         {
             // Arrange

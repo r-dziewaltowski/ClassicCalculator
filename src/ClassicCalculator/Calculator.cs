@@ -6,7 +6,7 @@ namespace ClassicCalculator
 {
     public class Calculator : ICalculator
     {
-        public const int MaxDisplayLength = 28;
+        public const int MaxDisplayLength = 29;
 
         public string DisplayValue => State.DisplayValue;
         public int DisplayLength { get; }

@@ -15,7 +15,7 @@
     {
         public override void AppendDigit(int digit)
         {
-            var numberOfDigits = DisplayValue.Count(char.IsDigit);
+            var numberOfDigits = GetNumberOfDigits(DisplayValue);
             if (numberOfDigits == _calculator.DisplayLength)
             {
                 return;

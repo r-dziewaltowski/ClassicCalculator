@@ -28,19 +28,18 @@ namespace ClassicCalculator.CalculatorState
 
         public override void CalculatePercentage()
         {
+            decimal result = 0;
             if (!FirstOperandAndOperationProvided())
             {
-                SetFirstOperand(0);
-                DisplayValue = "0";
+                SetFirstOperand(result);
             }
             else
             {
-                var result = CalculatePercentage(_firstOperand.Value, _currentOperation.Value, ConvertDisplayValueToNumber());
+                result = CalculatePercentage(_firstOperand.Value, _currentOperation.Value, ConvertDisplayValueToNumber());
                 _secondOperand = result;
-                UpdateDisplayValue(result);
             }
 
-            TransitionToOperandInputNotInProgressState();
+            UpdateDisplayValueAndSetOperandInputNotInProgressState(result);
         }
 
         public override void CalculateSquareRoot()
@@ -48,7 +47,7 @@ namespace ClassicCalculator.CalculatorState
             var operand = ConvertDisplayValueToNumber();
             if (operand < 0)
             {
-                TransitionToInvalidState("Invalid input");
+                SetInvalidState("Invalid input");
                 return;
             }
 
@@ -63,8 +62,7 @@ namespace ClassicCalculator.CalculatorState
 
             }
 
-            UpdateDisplayValue(result);
-            TransitionToOperandInputNotInProgressState();
+            UpdateDisplayValueAndSetOperandInputNotInProgressState(result);
         }
 
         public override void ToggleSign()
@@ -83,6 +81,12 @@ namespace ClassicCalculator.CalculatorState
         {
             var formattedDisplayValue = DisplayValue.EndsWith('.') ? DisplayValue[..^1] : DisplayValue;
             return decimal.Parse(formattedDisplayValue, CultureInfo.InvariantCulture);
+        }
+
+        protected static int GetNumberOfDigits(string value)
+        {
+            var numberOfDigits = value.Count(char.IsDigit);
+            return numberOfDigits;
         }
 
         private static decimal PerformOperation(decimal firstOperand, OperationType operation, decimal secondOperand)
@@ -110,9 +114,20 @@ namespace ClassicCalculator.CalculatorState
             };
         }
 
-        private void UpdateDisplayValue(decimal value)
+        private void UpdateDisplayValueAndSetOperandInputNotInProgressState(decimal value)
         {
-            DisplayValue = value.ToString("0.#############################", CultureInfo.InvariantCulture);
+            var newValue = value.ToString("0.#############################", CultureInfo.InvariantCulture);
+            var numberOfDigits = GetNumberOfDigits(newValue);
+
+            if (numberOfDigits > _calculator.DisplayLength)
+            {
+                SetInvalidState("Number exceeds the display length");
+                return;
+            }
+
+            DisplayValue = newValue;
+            _calculator.State = new OperandInputNotInProgressState(
+                _calculator, _firstOperand, _currentOperation, _secondOperand, DisplayValue);
         }
 
         private void SetOperationOrCalculate(OperationType? operation)
@@ -126,7 +141,7 @@ namespace ClassicCalculator.CalculatorState
             }
             catch (DivideByZeroException)
             {
-                TransitionToInvalidState("Cannot divide by 0");
+                SetInvalidState("Cannot divide by 0");
                 return;
             }
 
@@ -136,17 +151,10 @@ namespace ClassicCalculator.CalculatorState
             }
 
             _secondOperand = null;
-            UpdateDisplayValue(_firstOperand.Value);
-            TransitionToOperandInputNotInProgressState();
+            UpdateDisplayValueAndSetOperandInputNotInProgressState(_firstOperand.Value);
         }
 
-        private void TransitionToOperandInputNotInProgressState()
-        {
-            _calculator.State = new OperandInputNotInProgressState(
-                _calculator, _firstOperand, _currentOperation, _secondOperand, DisplayValue);
-        }
-
-        private void TransitionToInvalidState(string displayValue)
+        private void SetInvalidState(string displayValue)
         {
             _calculator.State = new InvalidState(_calculator, displayValue);
         }
