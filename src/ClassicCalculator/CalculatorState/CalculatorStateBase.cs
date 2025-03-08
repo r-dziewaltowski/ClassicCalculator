@@ -7,7 +7,7 @@ namespace ClassicCalculator.CalculatorState
         decimal? firstOperand,
         OperationType? currentOperation,
         decimal? secondOperand,
-        string displayValue) : ICalculatorState
+        string displayValue)
     {
         protected readonly Calculator _calculator = calculator;
         protected decimal? _firstOperand = firstOperand;

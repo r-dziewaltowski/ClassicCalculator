@@ -17,7 +17,7 @@ namespace ClassicCalculator.Tests.CalculatorState
             Assert.IsType(expectedState, Calculator.State);
         }
 
-        internal void VerifyStateSet<TState>(string displayValue) where TState : ICalculatorState
+        internal void VerifyStateSet<TState>(string displayValue) where TState : CalculatorStateBase
         {
             Assert.Equal(displayValue, Calculator.DisplayValue);
             Assert.IsType<TState>(Calculator.State);
