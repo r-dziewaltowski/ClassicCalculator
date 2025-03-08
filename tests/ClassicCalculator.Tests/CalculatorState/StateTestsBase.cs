@@ -6,6 +6,17 @@ namespace ClassicCalculator.Tests.CalculatorState
     {
         protected readonly Calculator Calculator = new();
 
+        protected void PerformTest(
+            CalculatorButton button, string expectedDisplayValue, Type expectedState) 
+        {
+            // Act
+            Calculator.PressButton(button);
+
+            // Assert
+            Assert.Equal(expectedDisplayValue, Calculator.DisplayValue);
+            Assert.IsType(expectedState, Calculator.State);
+        }
+
         internal void VerifyStateSet<TState>(string displayValue) where TState : ICalculatorState
         {
             Assert.Equal(displayValue, Calculator.DisplayValue);

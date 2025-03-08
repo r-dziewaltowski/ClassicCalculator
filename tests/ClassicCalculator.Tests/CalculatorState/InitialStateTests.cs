@@ -4,97 +4,28 @@ namespace ClassicCalculator.Tests.CalculatorState
 {
     public class InitialStateTests : StateTestsBase
     {
-        private readonly InitialState _state;
-
         public InitialStateTests()
         {
-            _state = new InitialState(Calculator);
+            Calculator.State = new InitialState(Calculator);
         }
 
         [Theory]
-        [InlineData(0)]
-        [InlineData(1)]
-        public void AppendDigit_ShouldUpdateDisplayValue_WhenInitialStateIsZero(int digit)
+        [InlineData(CalculatorButton.Zero, "0", typeof(OperandInputInProgressState))]
+        [InlineData(CalculatorButton.One, "1", typeof(OperandInputInProgressState))]
+        [InlineData(CalculatorButton.Decimal, "0.", typeof(OperandInputInProgressState))]
+        [InlineData(CalculatorButton.Add, "0", typeof(OperandInputNotInProgressState))]
+        [InlineData(CalculatorButton.Subtract, "0", typeof(OperandInputNotInProgressState))]
+        [InlineData(CalculatorButton.Multiply, "0", typeof(OperandInputNotInProgressState))]
+        [InlineData(CalculatorButton.Divide, "0", typeof(OperandInputNotInProgressState))]
+        [InlineData(CalculatorButton.Equals, "0", typeof(OperandInputNotInProgressState))]
+        [InlineData(CalculatorButton.Percentage, "0", typeof(OperandInputNotInProgressState))]
+        [InlineData(CalculatorButton.SquareRoot, "0", typeof(OperandInputNotInProgressState))]
+        [InlineData(CalculatorButton.ToggleSign, "0", typeof(InitialState))]
+        [InlineData(CalculatorButton.Clear, "0", typeof(InitialState))]
+        public void HandleButtonPressed_ShouldUpdateDisplayValueAndSetStateIfNecessary(
+            CalculatorButton button, string expectedDisplayValue, Type expectedState)
         {
-            // Act
-            _state.AppendDigit(digit);
-
-            // Assert
-            VerifyStateSet<OperandInputInProgressState>(digit.ToString());
-        }
-
-        [Fact]
-        public void AppendDecimal_ShouldUpdateDisplayValue_WhenInitialStateIsOne()
-        {
-            // Act
-            _state.AppendDecimal();
-
-            // Assert
-            VerifyStateSet<OperandInputInProgressState>("0.");
-        }
-
-        [Theory]
-        [InlineData(OperationType.Add)]
-        [InlineData(OperationType.Subtract)]
-        [InlineData(OperationType.Multiply)]
-        [InlineData(OperationType.Divide)]
-        internal void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne(OperationType operation)
-        {
-            // Act
-            _state.SetOperation(operation);
-
-            // Assert
-            VerifyStateSet<OperandInputNotInProgressState>("0");
-        }
-
-        [Fact]
-        public void Calculate_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne()
-        {
-            // Act
-            _state.Calculate();
-
-            // Assert
-            VerifyStateSet<OperandInputNotInProgressState>("0");
-        }
-
-        [Fact]
-        public void CalculatePercentage_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne()
-        {
-            // Act
-            _state.CalculatePercentage();
-
-            // Assert
-            VerifyStateSet<OperandInputNotInProgressState>("0");
-        }
-
-        [Fact]
-        public void CalculateSquareRoot_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsFour()
-        {
-            // Act
-            _state.CalculateSquareRoot();
-
-            // Assert
-            VerifyStateSet<OperandInputNotInProgressState>("0");
-        }
-
-        [Fact]
-        public void ToggleSign_ShouldUpdateDisplayValue_WhenInitialStateIsOne()
-        {
-            // Act
-            _state.ToggleSign();
-
-            // Assert
-            Assert.Equal("0", _state.DisplayValue);
-        }
-
-        [Fact]
-        public void Clear_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne()
-        {
-            // Act
-            _state.Clear();
-
-            // Assert
-            VerifyStateSet<InitialState>("0");
+            PerformTest(button, expectedDisplayValue, expectedState);
         }
     }
 }
