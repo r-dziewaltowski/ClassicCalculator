@@ -1,8 +1,10 @@
+using ClassicCalculator.CalculatorState;
+using ClassicCalculator.Tests.CalculatorState;
 using System.Globalization;
 
 namespace ClassicCalculator.Tests
 {
-    public class CalculatorTests
+    public class CalculatorTests : StateTestsBase
     {
         [Fact]
         public void PerformOperationWithZeroAsFirstOperand_ShouldShowCorrectResult() =>
@@ -185,6 +187,16 @@ namespace ClassicCalculator.Tests
         {
             const decimal LargeNumber = -10000000000000000000000000000m;
             TestFullOperationButtonSequence(LargeNumber, operation, expectedDisplayValue);
+        }
+
+        [Fact]
+        public void PressButton_ShouldHandleUnexpectedErrors()
+        {
+            // Act
+            Calculator.PressButton((CalculatorButton)(-1));
+
+            // Assert
+            VerifyStateSet<InvalidState>("Unexpected error");
         }
 
         private static void TestCalculator(IEnumerable<CalculatorButton> buttonsPressed, string expectedDisplayValue)
