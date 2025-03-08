@@ -6,14 +6,25 @@ namespace ClassicCalculator
 {
     public class Calculator : ICalculator
     {
+        public const int MaxDisplayLength = 28;
+
         public string DisplayValue => State.DisplayValue;
+        public int DisplayLength { get; }
 
         internal CalculatorStateBase State { get; set; }
-        internal readonly ILogger<Calculator> Logger;
+        internal ILogger<Calculator> Logger { get; }
 
-        public Calculator(ILogger<Calculator>? logger = null)
+        public Calculator(int displayLength, ILogger<Calculator>? logger = null)
         {
             Logger = logger ?? NullLogger<Calculator>.Instance;
+
+            if (displayLength < 1 || displayLength > MaxDisplayLength)
+            {
+                Logger.LogError("Incorrect display length provided: {DisplayLength}", displayLength);
+                throw new ArgumentOutOfRangeException(nameof(displayLength), displayLength, $"Display length must be between 1 and {MaxDisplayLength}.");
+            }
+            DisplayLength = displayLength;
+
             State = new InitialState(this);
         }
 

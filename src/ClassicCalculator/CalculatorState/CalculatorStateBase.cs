@@ -90,7 +90,7 @@ namespace ClassicCalculator.CalculatorState
                         ToggleSign();
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(button), "Invalid calculator button.");
+                        throw new ArgumentOutOfRangeException(nameof(button), button, "Invalid calculator button.");
                 }
             }
             catch (Exception ex)
@@ -129,7 +129,7 @@ namespace ClassicCalculator.CalculatorState
         {
             if (number < 0 || number > 9)
             {
-                throw new ArgumentOutOfRangeException(nameof(number), "Number must be between 0 and 9.");
+                throw new ArgumentOutOfRangeException(nameof(number), number, "Number must be between 0 and 9.");
             }
 
             AppendDigit(number);

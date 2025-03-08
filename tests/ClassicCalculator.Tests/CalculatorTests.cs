@@ -233,19 +233,16 @@ namespace ClassicCalculator.Tests
                 Times.Exactly(2));
         }
 
-        private static void TestCalculator(IEnumerable<CalculatorButton> buttonsPressed, string expectedDisplayValue)
+        private void TestCalculator(IEnumerable<CalculatorButton> buttonsPressed, string expectedDisplayValue)
         {
-            // Arrange
-            var calculator = new Calculator();
-
             // Act
             foreach (var button in buttonsPressed)
             {
-                calculator.PressButton(button);
+                Calculator.PressButton(button);
             }
 
             // Assert
-            Assert.Equal(expectedDisplayValue, calculator.DisplayValue);
+            Assert.Equal(expectedDisplayValue, Calculator.DisplayValue);
         }
 
         private static List<CalculatorButton> ConvertNumberToButtonSequence(decimal number)
@@ -278,7 +275,7 @@ namespace ClassicCalculator.Tests
             return result;
         }
 
-        private static void TestFullOperationButtonSequence(decimal operand, CalculatorButton operation, string expectedDisplayValue)
+        private void TestFullOperationButtonSequence(decimal operand, CalculatorButton operation, string expectedDisplayValue)
         {
             var operandButtons = ConvertNumberToButtonSequence(operand);
             var buttonSequence =

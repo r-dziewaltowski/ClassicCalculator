@@ -11,7 +11,7 @@ namespace ClassicCalculator.Tests
 
         public CalculatorTestsBase()
         {
-            Calculator = new(LoggerMock.Object);
+            Calculator = new(Calculator.MaxDisplayLength, LoggerMock.Object);
         }
 
         protected void PerformTest(
