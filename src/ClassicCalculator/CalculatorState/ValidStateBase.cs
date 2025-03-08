@@ -3,18 +3,18 @@ using System.Globalization;
 
 namespace ClassicCalculator.CalculatorState
 {
-    public abstract class ValidStateBase(
-            Calculator calculator,
-            decimal? firstOperand,
-            OperationType? currentOperation,
-            decimal? secondOperand,
-            string displayValue)
-            : CalculatorStateBase(
-                calculator,
-                firstOperand,
-                currentOperation,
-                secondOperand,
-                displayValue)
+    internal abstract class ValidStateBase(
+        Calculator calculator,
+        decimal? firstOperand,
+        OperationType? currentOperation,
+        decimal? secondOperand,
+        string displayValue)
+        : CalculatorStateBase(
+            calculator,
+            firstOperand,
+            currentOperation,
+            secondOperand,
+            displayValue)
     {
         public override void SetOperation(OperationType operation)
         {

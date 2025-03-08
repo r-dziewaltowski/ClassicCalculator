@@ -93,7 +93,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         [InlineData(OperationType.Subtract, "1.")]
         [InlineData(OperationType.Multiply, "1")]
         [InlineData(OperationType.Divide, "1.")]
-        public void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne(OperationType operation, string displayValue)
+        internal void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne(OperationType operation, string displayValue)
         {
             // Arrange
             var state = new OperandInputInProgressState(Calculator, null, null, null, displayValue);
@@ -110,7 +110,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         [InlineData(OperationType.Subtract, "-1")]
         [InlineData(OperationType.Multiply, "2")]
         [InlineData(OperationType.Divide, "0.5")]
-        public void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithOperation(OperationType operation, string expectedDisplayValue)
+        internal void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithOperation(OperationType operation, string expectedDisplayValue)
         {
             // Arrange
             var state = new OperandInputInProgressState(Calculator, 1, operation, null, "2");
@@ -155,7 +155,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         [InlineData(OperationType.Subtract, "-1")]
         [InlineData(OperationType.Multiply, "2")]
         [InlineData(OperationType.Divide, "0.5")]
-        public void Calculate_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithOperation(OperationType operation, string expectedDisplayValue)
+        internal void Calculate_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithOperation(OperationType operation, string expectedDisplayValue)
         {
             // Arrange
             var state = new OperandInputInProgressState(Calculator, 1, operation, null, "2");
@@ -185,7 +185,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         [InlineData(OperationType.Subtract, "10.", "9")]
         [InlineData(OperationType.Multiply, "10", "1")]
         [InlineData(OperationType.Divide, "10.", "100")]
-        public void CalculatePercentage_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsTenWithOperation(
+        internal void CalculatePercentage_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsTenWithOperation(
             OperationType operation, string currentDisplayValue, string expectedDisplayValue)
         {
             // Arrange

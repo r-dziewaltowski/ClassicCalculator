@@ -1,6 +1,6 @@
 ﻿namespace ClassicCalculator.CalculatorState
 {
-    public class InvalidState(Calculator calculator, string displayValue)
+    internal class InvalidState(Calculator calculator, string displayValue)
         : CalculatorStateBase(
             calculator,
             null,

@@ -1,17 +1,17 @@
 ﻿namespace ClassicCalculator.CalculatorState
 {
-    public class OperandInputInProgressState(
-            Calculator calculator,
-            decimal? firstOperand,
-            OperationType? currentOperation,
-            decimal? secondOperand,
-            string displayValue)
-            : ValidStateBase(
-                calculator,
-                firstOperand,
-                currentOperation,
-                secondOperand,
-                displayValue)
+    internal class OperandInputInProgressState(
+        Calculator calculator,
+        decimal? firstOperand,
+        OperationType? currentOperation,
+        decimal? secondOperand,
+        string displayValue)
+        : ValidStateBase(
+            calculator,
+            firstOperand,
+            currentOperation,
+            secondOperand,
+            displayValue)
     {
         public override void AppendDigit(int digit)
         {

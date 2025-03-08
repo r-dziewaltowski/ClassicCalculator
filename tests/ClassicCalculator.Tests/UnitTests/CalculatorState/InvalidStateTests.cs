@@ -39,7 +39,7 @@ namespace ClassicCalculator.Tests.UnitTests.CalculatorState
         [InlineData(OperationType.Subtract)]
         [InlineData(OperationType.Multiply)]
         [InlineData(OperationType.Divide)]
-        public void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne(OperationType operation)
+        internal void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne(OperationType operation)
         {
             // Act
             _state.SetOperation(operation);

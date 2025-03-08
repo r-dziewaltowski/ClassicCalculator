@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace ClassicCalculator.CalculatorState
 {
-    public abstract class CalculatorStateBase(
+    internal abstract class CalculatorStateBase(
         Calculator calculator,
         decimal? firstOperand,
         OperationType? currentOperation,

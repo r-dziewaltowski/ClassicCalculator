@@ -1,6 +1,6 @@
 ﻿namespace ClassicCalculator.CalculatorState
 {
-    public interface ICalculatorState
+    internal interface ICalculatorState
     {
         string DisplayValue { get; }
 

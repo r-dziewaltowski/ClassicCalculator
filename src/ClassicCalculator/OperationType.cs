@@ -1,6 +1,6 @@
 namespace ClassicCalculator
 {
-    public enum OperationType
+    internal enum OperationType
     {
         Add,
         Subtract,

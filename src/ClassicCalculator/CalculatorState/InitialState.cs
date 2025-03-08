@@ -1,6 +1,6 @@
 ﻿namespace ClassicCalculator.CalculatorState
 {
-    public class InitialState(Calculator calculator) :
+    internal class InitialState(Calculator calculator) :
         OperandInputNotInProgressState(
             calculator,
             firstOperand: null,
