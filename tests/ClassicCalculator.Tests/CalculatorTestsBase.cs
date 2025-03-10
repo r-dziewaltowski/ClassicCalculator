@@ -1,5 +1,4 @@
-﻿using ClassicCalculator.CalculatorState;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace ClassicCalculator.Tests
@@ -7,28 +6,39 @@ namespace ClassicCalculator.Tests
     public class CalculatorTestsBase
     {
         protected readonly Mock<ILogger<Calculator>> LoggerMock = new();
-        protected readonly Calculator Calculator;
 
-        public CalculatorTestsBase()
+        protected Calculator CreateCalculator(int displayLength = Calculator.MaxDisplayLength)
         {
-            Calculator = new(Calculator.MaxDisplayLength, LoggerMock.Object);
+            return new Calculator(displayLength, LoggerMock.Object);
         }
 
-        protected void PerformTest(
-            CalculatorButton button, string expectedDisplayValue, Type expectedState) 
+        protected static void VerifyStateAndDisplayValue(Calculator calculator, string expectedDisplayValue, Type expectedState)
         {
-            // Act
-            Calculator.PressButton(button);
-
-            // Assert
-            Assert.Equal(expectedDisplayValue, Calculator.DisplayValue);
-            Assert.IsType(expectedState, Calculator.State);
+            Assert.Equal(expectedDisplayValue, calculator.DisplayValue);
+            Assert.IsType(expectedState, calculator.State);
         }
 
-        internal void VerifyStateSet<TState>(string displayValue) where TState : CalculatorStateBase
+        protected static void VerifyStateAndDisplayValue<TState>(Calculator calculator, string expectedDisplayValue)
         {
-            Assert.Equal(displayValue, Calculator.DisplayValue);
-            Assert.IsType<TState>(Calculator.State);
+            var type = typeof(TState);
+            VerifyStateAndDisplayValue(calculator, expectedDisplayValue, type);
+        }
+
+        protected static void PressButtons(Calculator calculator, string input)
+        {
+            var buttons = Parser.Parser.ParseInputToButtonSequence(input);
+            foreach (var button in buttons)
+            {
+                calculator.PressButton(button);
+            }
+        }
+
+        protected static void PressButton(Calculator calculator, CalculatorButton button, int numberOfPresses)
+        {
+            for (var i = 0; i < numberOfPresses; i++)
+            {
+                calculator.PressButton(button);
+            }
         }
     }
 }

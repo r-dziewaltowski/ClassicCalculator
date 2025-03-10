@@ -121,7 +121,7 @@ namespace ClassicCalculator.CalculatorState
 
             if (numberOfDigits > _calculator.DisplayLength)
             {
-                SetInvalidState("Number exceeds the display length");
+                SetInvalidState("Number exceeds display length");
                 return;
             }
 

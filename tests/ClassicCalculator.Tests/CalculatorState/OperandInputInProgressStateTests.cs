@@ -10,7 +10,8 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void AppendDigit_ShouldUpdateDisplayValue_WhenInitialStateIsZero(int digit)
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, "0");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, "0");
 
             // Act
             state.AppendDigit(digit);
@@ -25,7 +26,8 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void AppendDigit_ShouldUpdateDisplayValue_WhenInitialStateIsOne(int digit, string expectedDisplayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, "1");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, "1");
 
             // Act
             state.AppendDigit(digit);
@@ -40,7 +42,8 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void AppendDigit_ShouldUpdateDisplayValue_WhenInitialStateIsOneDecimal(int digit, string expectedDisplayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, "1.");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, "1.");
 
             // Act
             state.AppendDigit(digit);
@@ -53,7 +56,8 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void AppendDecimal_ShouldUpdateDisplayValue_WhenInitialStateIsOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, "1");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, "1");
 
             // Act
             state.AppendDecimal();
@@ -66,7 +70,8 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void AppendDecimal_ShouldNotChangeDisplayValue_WhenInitialStateIsOneDecimal()
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, "1.");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, "1.");
 
             // Act
             state.AppendDecimal();
@@ -79,7 +84,8 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void AppendDecimal_ShouldNotChangeDisplayValue_WhenInitialStateIsZeroPointOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, "0.1");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, "0.1");
 
             // Act
             state.AppendDecimal();
@@ -96,13 +102,14 @@ namespace ClassicCalculator.Tests.CalculatorState
         internal void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne(OperationType operation, string displayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, displayValue);
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, displayValue);
 
             // Act
             state.SetOperation(operation);
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgressState>("1");
+            VerifyStateAndDisplayValue<OperandInputNotInProgressState>(calculator, "1");
         }
 
         [Theory]
@@ -113,26 +120,28 @@ namespace ClassicCalculator.Tests.CalculatorState
         internal void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithOperation(OperationType operation, string expectedDisplayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, 1, operation, null, "2");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, 1, operation, null, "2");
 
             // Act
             state.SetOperation(OperationType.Add);
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgressState>(expectedDisplayValue);
+            VerifyStateAndDisplayValue<OperandInputNotInProgressState>(calculator, expectedDisplayValue);
         }
 
         [Fact]
         public void SetOperation_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithDivideByZero()
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, 1, OperationType.Divide, null, "0");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, 1, OperationType.Divide, null, "0");
 
             // Act
             state.SetOperation(OperationType.Divide);
 
             // Assert
-            VerifyStateSet<InvalidState>("Cannot divide by 0");
+            VerifyStateAndDisplayValue<InvalidState>(calculator, "Cannot divide by 0");
         }
 
         [Theory]
@@ -141,13 +150,14 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void Calculate_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne(string displayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, displayValue);
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, displayValue);
 
             // Act
             state.Calculate();
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgressState>("1");
+            VerifyStateAndDisplayValue<OperandInputNotInProgressState>(calculator, "1");
         }
 
         [Theory]
@@ -158,26 +168,28 @@ namespace ClassicCalculator.Tests.CalculatorState
         internal void Calculate_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithOperation(OperationType operation, string expectedDisplayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, 1, operation, null, "2");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, 1, operation, null, "2");
 
             // Act
             state.Calculate();
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgressState>(expectedDisplayValue);
+            VerifyStateAndDisplayValue<OperandInputNotInProgressState>(calculator, expectedDisplayValue);
         }
 
         [Fact]
         public void CalculatePercentage_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, "1");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, "1");
 
             // Act
             state.CalculatePercentage();
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgressState>("0");
+            VerifyStateAndDisplayValue<OperandInputNotInProgressState>(calculator, "0");
         }
 
         [Theory]
@@ -189,13 +201,14 @@ namespace ClassicCalculator.Tests.CalculatorState
             OperationType operation, string currentDisplayValue, string expectedDisplayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, 10, operation, null, currentDisplayValue);
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, 10, operation, null, currentDisplayValue);
 
             // Act
             state.CalculatePercentage();
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgressState>(expectedDisplayValue);
+            VerifyStateAndDisplayValue<OperandInputNotInProgressState>(calculator, expectedDisplayValue);
         }
 
         [Theory]
@@ -204,46 +217,50 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void CalculateSquareRoot_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsFour(string displayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, displayValue);
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, displayValue);
 
             // Act
             state.CalculateSquareRoot();
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgressState>("2");
+            VerifyStateAndDisplayValue<OperandInputNotInProgressState>(calculator, "2");
         }
 
         [Fact]
         public void CalculateSquareRoot_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithOperation()
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, 1, OperationType.Add, null, "4");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, 1, OperationType.Add, null, "4");
 
             // Act
             state.CalculateSquareRoot();
 
             // Assert
-            VerifyStateSet<OperandInputNotInProgressState>("2");
+            VerifyStateAndDisplayValue<OperandInputNotInProgressState>(calculator, "2");
         }
 
         [Fact]
         public void CalculateSquareRoot_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOneWithNegativeOperation()
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, 1, OperationType.Add, null, "-4");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, 1, OperationType.Add, null, "-4");
 
             // Act
             state.CalculateSquareRoot();
 
             // Assert
-            VerifyStateSet<InvalidState>("Invalid input");
+            VerifyStateAndDisplayValue<InvalidState>(calculator, "Invalid input");
         }
 
         [Fact]
         public void ToggleSign_ShouldUpdateDisplayValue_WhenInitialStateIsOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, "1");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, "1");
 
             // Act
             state.ToggleSign();
@@ -256,7 +273,8 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void ToggleSign_ShouldUpdateDisplayValue_WhenInitialStateIsNegativeOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, "-1");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, "-1");
 
             // Act
             state.ToggleSign();
@@ -272,7 +290,8 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void ToggleSign_ShouldUpdateDisplayValue_WhenInitialStateIsZero(string displayValue)
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, displayValue);
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, displayValue);
 
             // Act
             state.ToggleSign();
@@ -285,13 +304,14 @@ namespace ClassicCalculator.Tests.CalculatorState
         public void Clear_ShouldUpdateDisplayValueAndSetState_WhenInitialStateIsOne()
         {
             // Arrange
-            var state = new OperandInputInProgressState(Calculator, null, null, null, "1");
+            var calculator = CreateCalculator();
+            var state = new OperandInputInProgressState(calculator, null, null, null, "1");
 
             // Act
             state.Clear();
 
             // Assert
-            VerifyStateSet<InitialState>("0");
+            VerifyStateAndDisplayValue<InitialState>(calculator, "0");
         }
     }
 }

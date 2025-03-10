@@ -6,11 +6,6 @@ namespace ClassicCalculator.Tests.CalculatorState
     {
         private const string DisplayValue = "Test invalid state";
 
-        public InvalidStateTests()
-        {
-            Calculator.State = new InvalidState(Calculator, DisplayValue);
-        }
-
         [Theory]
         [InlineData(CalculatorButton.Zero)]
         [InlineData(CalculatorButton.One)]
@@ -23,15 +18,31 @@ namespace ClassicCalculator.Tests.CalculatorState
         [InlineData(CalculatorButton.Percentage)]
         [InlineData(CalculatorButton.SquareRoot)]
         [InlineData(CalculatorButton.ToggleSign)]
-        public void HandleButtonPressed_ShouldHaveNoEffect(CalculatorButton button)
+        public void ShouldIgnoreAllButtonsExceptClear(CalculatorButton button)
         {
-            PerformTest(button, DisplayValue, typeof(InvalidState));
+            // Arrange
+            var calculator = CreateCalculator();
+            calculator.State = new InvalidState(calculator, DisplayValue);
+
+            // Act
+            calculator.PressButton(button);
+
+            // Assert
+            VerifyStateAndDisplayValue<InvalidState>(calculator, DisplayValue);
         }
 
         [Fact]
-        public void ClearButton_ShouldResetCalculator()
+        public void ShouldReset_WhenClearButtonPressed()
         {
-            PerformTest(CalculatorButton.Clear, "0", typeof(InitialState));
+            // Arrange
+            var calculator = CreateCalculator();
+            calculator.State = new InvalidState(calculator, DisplayValue);
+
+            // Act
+            calculator.PressButton(CalculatorButton.Clear);
+
+            // Assert
+            VerifyStateAndDisplayValue<InitialState>(calculator, "0");
         }
     }
 }

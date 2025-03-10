@@ -2,19 +2,19 @@ using ClassicCalculator.CalculatorState;
 
 namespace ClassicCalculator.Tests
 {
-    public class DisplayLengthTests
+    public class DisplayLengthTests : CalculatorTestsBase
     {
         [Theory]
         [InlineData(1)]
         [InlineData(10)]
         [InlineData(Calculator.MaxDisplayLength)]
-        public void Calculator_ShouldIgnoreAnyDigitsExceedingDisplayLength(int displayLength)
+        public void ShouldIgnoreAnyDigitsExceedingDisplayLength(int displayLength)
         {
             // Arrange
-            var calculator = new Calculator(displayLength);
+            var calculator = CreateCalculator(displayLength);
 
             // Act
-            ExceedDisplayLength(calculator, 2);
+            PressButton(calculator, CalculatorButton.One, displayLength + 2);
 
             // Assert
             var expectedDisplayValue = new string('1', displayLength);
@@ -25,13 +25,13 @@ namespace ClassicCalculator.Tests
         [InlineData(1)]
         [InlineData(10)]
         [InlineData(Calculator.MaxDisplayLength)]
-        public void Calculator_ShouldNotCountMinusSignAndDecimalSignTowardsDisplayLength(int displayLength)
+        public void ShouldNotCountMinusSignAndDecimalSignTowardsDisplayLength(int displayLength)
         {
             // Arrange
-            var calculator = new Calculator(displayLength);
+            var calculator = CreateCalculator(displayLength);
 
             // Act
-            ExceedDisplayLength(calculator, 2);
+            PressButton(calculator, CalculatorButton.One, displayLength + 2);
             calculator.PressButton(CalculatorButton.Decimal);
             calculator.PressButton(CalculatorButton.ToggleSign);
 
@@ -45,29 +45,17 @@ namespace ClassicCalculator.Tests
         [InlineData(2)]
         [InlineData(10)]
         [InlineData(Calculator.MaxDisplayLength - 1)]
-        public void Calculator_ShouldEnterInvalidStateWhenResultOfCalculationExceedsDisplayLength(int displayLength)
+        public void ShouldSetInvalidState_WhenResultOfCalculationExceedsDisplayLength(int displayLength)
         {
             // Arrange
-            var calculator = new Calculator(displayLength);
+            var calculator = CreateCalculator(displayLength);
 
             // Act
-            ExceedDisplayLength(calculator, 0);
-            calculator.PressButton(CalculatorButton.Multiply);
-            calculator.PressButton(CalculatorButton.One);
-            calculator.PressButton(CalculatorButton.Zero);
-            calculator.PressButton(CalculatorButton.Equals);
+            PressButton(calculator, CalculatorButton.One, displayLength);
+            PressButtons(calculator, "* 10 =");
 
             // Assert
-            Assert.Equal("Number exceeds the display length", calculator.DisplayValue);
-            Assert.IsType<InvalidState>(calculator.State);
-        }
-
-        private static void ExceedDisplayLength(Calculator calculator, int extraPresses)
-        {
-            for (var i = 0; i < calculator.DisplayLength + extraPresses; i++)
-            {
-                calculator.PressButton(CalculatorButton.One);
-            }
+            VerifyStateAndDisplayValue<InvalidState>(calculator, "Number exceeds display length");
         }
     }
 }

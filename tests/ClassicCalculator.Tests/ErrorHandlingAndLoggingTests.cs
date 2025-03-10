@@ -9,10 +9,10 @@ namespace ClassicCalculator.Tests
         [Theory]
         [InlineData(0)]
         [InlineData(Calculator.MaxDisplayLength + 1)]
-        public void Calculator_ShouldThrowAndLogWhenIncorrectDisplayLengthProvided(int displayLength)
+        public void ShouldThrowAndLog_WhenIncorrectDisplayLengthProvided(int displayLength)
         {
             // Act
-            var act = () => new Calculator(displayLength, LoggerMock.Object);
+            var act = () => CreateCalculator(displayLength);
 
             // Assert
             Assert.Throws<ArgumentOutOfRangeException>(act);
@@ -20,36 +20,45 @@ namespace ClassicCalculator.Tests
         }
 
         [Fact]
-        public void Calculator_ShouldHandleUnexpectedErrors()
+        public void ShouldHandleUnexpectedErrors()
         {
+            // Arrange
+            var calculator = CreateCalculator();
+
             // Act
-            Calculator.PressButton((CalculatorButton)(-1));
+            calculator.PressButton((CalculatorButton)(-1));
 
             // Assert
-            VerifyStateSet<InvalidState>("Unexpected error");
+            VerifyStateAndDisplayValue<InvalidState>(calculator, "Unexpected error");
         }
 
         [Fact]
-        public void Calculator_ShouldLogUnexpectedErrors()
+        public void ShouldLogUnexpectedErrors()
         {
-            // Act
+            // Arrange
+            var calculator = CreateCalculator();
             LoggerMock.Invocations.Clear();
-            Calculator.PressButton((CalculatorButton)(-1));
+
+            // Act
+            calculator.PressButton((CalculatorButton)(-1));
 
             // Assert
             VerifyLogging(LogLevel.Error, 1);
         }
 
         [Fact]
-        public void Calculator_ShouldLogPressedButtons()
+        public void ShouldLogPressedButtonsAndDisplayValue()
         {
-            // Act
+            // Arrange
+            var calculator = CreateCalculator();
             LoggerMock.Invocations.Clear();
-            Calculator.PressButton(CalculatorButton.One);
-            Calculator.PressButton(CalculatorButton.Add);
+
+            // Act
+            calculator.PressButton(CalculatorButton.One);
+            calculator.PressButton(CalculatorButton.Add);
 
             // Assert
-            VerifyLogging(LogLevel.Information, 2);
+            VerifyLogging(LogLevel.Information, 4);
         }
 
         private void VerifyLogging(LogLevel logLevel, int times)

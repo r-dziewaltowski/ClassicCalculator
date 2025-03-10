@@ -32,6 +32,7 @@ namespace ClassicCalculator
         {
             Logger.LogInformation("Button pressed: {Button}", button);
             State.HandleButtonPressed(button);
+            Logger.LogInformation("Display value: {DisplayValue}", DisplayValue);
         }
     }
 }
