@@ -7,8 +7,8 @@ namespace ClassicCalculator.CalculatorState
     {
         public string DisplayValue { get; set; }
 
-        protected abstract void AppendDigit(int digit);
-        protected abstract void AppendDecimal();
+        protected abstract void HandleDigit(int digit);
+        protected abstract void HandleDecimal();
         protected abstract void SetOperation(OperationType operation);
         protected abstract void Calculate();
         protected abstract void CalculatePercentage();
@@ -87,10 +87,10 @@ namespace ClassicCalculator.CalculatorState
                 case CalculatorButton.Seven:
                 case CalculatorButton.Eight:
                 case CalculatorButton.Nine:
-                    HandleDigit((int)button);
+                    ValidateDigit((int)button);
                     break;
                 case CalculatorButton.Decimal:
-                    AppendDecimal();
+                    HandleDecimal();
                     break;
                 case CalculatorButton.Add:
                     SetOperation(OperationType.Add);
@@ -135,14 +135,14 @@ namespace ClassicCalculator.CalculatorState
             _calculator.State = new InvalidState(_calculator, displayValue);
         }
 
-        private void HandleDigit(int number)
+        private void ValidateDigit(int number)
         {
             if (number < 0 || number > 9)
             {
                 throw new ArgumentOutOfRangeException(nameof(number), number, "Number must be between 0 and 9.");
             }
 
-            AppendDigit(number);
+            HandleDigit(number);
         }
     }
 }

@@ -10,36 +10,14 @@
             secondOperand: null,
             displayValue)
     {
-        protected override void AppendDigit(int digit)
+        protected override void HandleDigit(int digit)
         {
-            var numberOfDigits = GetNumberOfDigits(DisplayValue);
-            if (numberOfDigits == _calculator.DisplayLength)
-            {
-                return;
-            }
-
-            if (DisplayValue == "0")
-            {
-                DisplayValue = digit.ToString();
-            }
-            else
-            {
-                DisplayValue += digit.ToString();
-            }
+            AppendDigit(digit);
         }
 
-        protected override void AppendDecimal()
+        protected override void HandleDecimal()
         {
-            var numberOfDigits = GetNumberOfDigits(DisplayValue);
-            if (numberOfDigits == _calculator.DisplayLength)
-            {
-                return;
-            }
-
-            if (!DisplayValue.Contains('.'))
-            {
-                DisplayValue += ".";
-            }
+            AppendDecimal();
         }
 
         protected override void SetOperation(OperationType operation)

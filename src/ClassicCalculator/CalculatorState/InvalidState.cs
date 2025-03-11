@@ -8,12 +8,12 @@
             secondOperand: null,
             displayValue)
     {
-        protected override void AppendDecimal()
+        protected override void HandleDecimal()
         {
             // Ignore
         }
 
-        protected override void AppendDigit(int digit)
+        protected override void HandleDigit(int digit)
         {
             // Ignore
         }

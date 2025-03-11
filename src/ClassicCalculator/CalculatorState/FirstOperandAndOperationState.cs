@@ -12,13 +12,13 @@
             secondOperand: null,
             displayValue)
     {
-        protected override void AppendDigit(int digit)
+        protected override void HandleDigit(int digit)
         {
             _calculator.State = new SecondOperandInputInProgressState(
                 _calculator, _firstOperand!.Value, _currentOperation!.Value, digit.ToString());
         }
 
-        protected override void AppendDecimal()
+        protected override void HandleDecimal()
         {
             _calculator.State = new SecondOperandInputInProgressState(
                 _calculator, _firstOperand!.Value, _currentOperation!.Value, "0.");

@@ -24,6 +24,36 @@ namespace ClassicCalculator.CalculatorState
                 "-" + DisplayValue;
         }
 
+        protected void AppendDigit(int digit)
+        {
+            if (IsDisplayLengthReached())
+            {
+                return;
+            }
+
+            if (DisplayValue == "0")
+            {
+                DisplayValue = digit.ToString();
+            }
+            else
+            {
+                DisplayValue += digit.ToString();
+            }
+        }
+
+        protected void AppendDecimal()
+        {
+            if (IsDisplayLengthReached())
+            {
+                return;
+            }
+
+            if (!DisplayValue.Contains('.'))
+            {
+                DisplayValue += ".";
+            }
+        }
+
         protected decimal ConvertDisplayValueToNumber()
         {
             var formattedDisplayValue = DisplayValue.EndsWith('.') ? DisplayValue[..^1] : DisplayValue;
@@ -122,6 +152,12 @@ namespace ClassicCalculator.CalculatorState
             // Some results may have to be adjusted to fit the display length
             var adjustedResult = ConvertDisplayValueToNumber();
             return adjustedResult;
+        }
+
+        private bool IsDisplayLengthReached()
+        {
+            var numberOfDigits = GetNumberOfDigits(DisplayValue);
+            return numberOfDigits == _calculator.DisplayLength;
         }
     }
 }
