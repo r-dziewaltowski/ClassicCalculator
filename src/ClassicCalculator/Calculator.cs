@@ -1,6 +1,7 @@
 ﻿using ClassicCalculator.CalculatorState;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using System;
 
 namespace ClassicCalculator
 {

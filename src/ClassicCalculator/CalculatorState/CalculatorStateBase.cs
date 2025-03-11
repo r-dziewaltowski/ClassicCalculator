@@ -1,5 +1,6 @@
 ﻿using ClassicCalculator.CalculatorState.Exceptions;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace ClassicCalculator.CalculatorState
 {

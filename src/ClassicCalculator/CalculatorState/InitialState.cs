@@ -1,10 +1,12 @@
 ﻿namespace ClassicCalculator.CalculatorState
 {
-    internal class InitialState(Calculator calculator)
-        : FirstOperandState(
+    internal class InitialState : FirstOperandState
+    {
+        public InitialState(Calculator calculator) : base(
             calculator,
             0,
             "0")
-    {
+        {
+        }
     }
 }

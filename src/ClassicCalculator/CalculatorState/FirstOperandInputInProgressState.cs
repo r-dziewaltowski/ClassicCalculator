@@ -1,15 +1,18 @@
 ﻿namespace ClassicCalculator.CalculatorState
 {
-    internal class FirstOperandInputInProgressState(
-        Calculator calculator,
-        string displayValue) :
-        ValidStateBase(
-            calculator,
-            firstOperand : null,
-            currentOperation: null,
-            secondOperand: null,
-            displayValue)
+    internal class FirstOperandInputInProgressState : ValidStateBase
     {
+        public FirstOperandInputInProgressState(
+            Calculator calculator,
+            string displayValue) : base(
+                calculator,
+                firstOperand : null,
+                currentOperation: null,
+                secondOperand: null,
+                displayValue)
+        {
+        }
+
         protected override void HandleDigit(int digit)
         {
             AppendDigit(digit);

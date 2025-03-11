@@ -1,22 +1,27 @@
 ﻿using ClassicCalculator.CalculatorState.Exceptions;
 using DecimalMath;
+using System;
 using System.Globalization;
+using System.Linq;
 
 namespace ClassicCalculator.CalculatorState
 {
-    internal abstract class ValidStateBase(
-        Calculator calculator,
-        decimal? firstOperand,
-        OperationType? currentOperation,
-        decimal? secondOperand,
-        string displayValue)
-        : CalculatorStateBase(
-            calculator,
-            firstOperand,
-            currentOperation,
-            secondOperand,
-            displayValue)
+    internal abstract class ValidStateBase : CalculatorStateBase
     {
+        public ValidStateBase(
+            Calculator calculator,
+            decimal? firstOperand,
+            OperationType? currentOperation,
+            decimal? secondOperand,
+            string displayValue) : base(
+                calculator,
+                firstOperand,
+                currentOperation,
+                secondOperand,
+                displayValue)
+        {
+        }
+
         protected override void ToggleSign()
         {
             DisplayValue = DisplayValue.StartsWith('-') ?

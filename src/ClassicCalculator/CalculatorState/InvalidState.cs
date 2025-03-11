@@ -1,13 +1,16 @@
 ﻿namespace ClassicCalculator.CalculatorState
 {
-    internal class InvalidState(Calculator calculator, string displayValue)
-        : CalculatorStateBase(
+    internal class InvalidState : CalculatorStateBase
+    {
+        public InvalidState(Calculator calculator, string displayValue) : base(
             calculator,
             firstOperand: null,
             currentOperation: null,
             secondOperand: null,
             displayValue)
-    {
+        {
+        }
+
         protected override void HandleDecimal()
         {
             // Ignore
