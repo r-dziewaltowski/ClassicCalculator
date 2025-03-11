@@ -76,5 +76,20 @@ namespace ClassicCalculator.Tests
             // Assert
             Assert.Equal(expectedDisplayValue, calculator.DisplayValue);
         }
+
+        [Theory]
+        [InlineData(10, "3 / 9 * 3 =", "0.999999999")]
+        [InlineData(2, "0.1 / 10 * 10 =", "0")]
+        public void ShouldUseTheTrimmedValueInTheNextOperation(int displayLength, string input, string expectedDisplayValue)
+        {
+            // Arrange
+            var calculator = CreateCalculator(displayLength);
+
+            // Act
+            PressButtons(calculator, input);
+
+            // Assert
+            Assert.Equal(expectedDisplayValue, calculator.DisplayValue);
+        }
     }
 }

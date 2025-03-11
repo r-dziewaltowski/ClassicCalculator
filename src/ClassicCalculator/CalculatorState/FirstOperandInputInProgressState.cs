@@ -62,7 +62,6 @@
         {
             var operand = ConvertDisplayValueToNumber();
             var result = CalculateSquareRoot(operand);
-            UpdateDisplayValue(result);
             _calculator.State = new FirstOperandState(_calculator, result, DisplayValue);
         }
     }

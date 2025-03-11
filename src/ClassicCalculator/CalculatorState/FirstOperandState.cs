@@ -43,7 +43,6 @@
         {
             var result = CalculateSquareRoot(_firstOperand!.Value);
             _firstOperand = result;
-            UpdateDisplayValue(result);
         }
     }
 }

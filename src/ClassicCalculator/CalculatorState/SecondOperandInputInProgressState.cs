@@ -42,16 +42,14 @@
         {
             var secondOperand = ConvertDisplayValueToNumber();
             var result = PerformOperation(_firstOperand!.Value, _currentOperation!.Value, secondOperand);
-            UpdateDisplayValue(result);
             _calculator.State = new FirstOperandAndOperationState(
-                _calculator, result, _currentOperation!.Value, DisplayValue);
+                _calculator, result, operation, DisplayValue);
         }
 
         protected override void Calculate()
         {
             var secondOperand = ConvertDisplayValueToNumber();
             var result = PerformOperation(_firstOperand!.Value, _currentOperation!.Value, secondOperand);
-            UpdateDisplayValue(result);
             _calculator.State = new FirstOperandState(_calculator, result, DisplayValue);
         }
 
@@ -59,7 +57,6 @@
         {
             var secondOperand = ConvertDisplayValueToNumber();
             var result = CalculatePercentage(_firstOperand!.Value, _currentOperation!.Value, secondOperand);
-            UpdateDisplayValue(result);
             _calculator.State = new FirstOperandState(_calculator, result, DisplayValue);
         }
 
@@ -67,7 +64,6 @@
         {
             var operand = ConvertDisplayValueToNumber();
             var result = CalculateSquareRoot(operand);
-            UpdateDisplayValue(result);
             _calculator.State = new BothOperandsAndOperationState(
                 _calculator, _firstOperand!.Value, _currentOperation!.Value, result, DisplayValue);
         }

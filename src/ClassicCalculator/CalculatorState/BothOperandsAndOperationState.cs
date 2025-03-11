@@ -28,21 +28,18 @@
         protected override void SetOperation(OperationType operation)
         {
             var result = PerformOperation(_firstOperand!.Value, _currentOperation!.Value, _secondOperand!.Value);
-            UpdateDisplayValue(result);
-            _calculator.State = new FirstOperandAndOperationState(_calculator, result, _currentOperation!.Value, DisplayValue);
+            _calculator.State = new FirstOperandAndOperationState(_calculator, result, operation, DisplayValue);
         }
 
         protected override void Calculate()
         {
             var result = PerformOperation(_firstOperand!.Value, _currentOperation!.Value, _secondOperand!.Value);
-            UpdateDisplayValue(result);
             _calculator.State = new FirstOperandState(_calculator, result, DisplayValue);
         }
 
         protected override void CalculatePercentage()
         {
             var result = CalculatePercentage(_firstOperand!.Value, _currentOperation!.Value, _secondOperand!.Value);
-            UpdateDisplayValue(result);
             _calculator.State = new FirstOperandState(_calculator, result, DisplayValue);
         }
 
@@ -50,7 +47,6 @@
         {
             var result = CalculateSquareRoot(_secondOperand!.Value);
             _secondOperand = result;
-            UpdateDisplayValue(result);
         }
     }
 }

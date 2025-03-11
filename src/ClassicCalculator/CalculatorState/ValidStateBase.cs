@@ -75,9 +75,9 @@ namespace ClassicCalculator.CalculatorState
             return numberOfDigits;
         }
 
-        protected static decimal PerformOperation(decimal firstOperand, OperationType operation, decimal secondOperand)
+        protected decimal PerformOperation(decimal firstOperand, OperationType operation, decimal secondOperand)
         {
-            return operation switch
+            var result = operation switch
             {
                 OperationType.Add => firstOperand + secondOperand,
                 OperationType.Subtract => firstOperand - secondOperand,
@@ -85,12 +85,14 @@ namespace ClassicCalculator.CalculatorState
                 OperationType.Divide => secondOperand != 0 ? firstOperand / secondOperand : throw new DivideByZeroException(),
                 _ => throw new ArgumentOutOfRangeException(nameof(operation), operation, "Invalid operation")
             };
+
+            return UpdateDisplayValueAndGetAdjustedResult(result);
         }
 
-        protected static decimal CalculatePercentage(decimal firstOperand, OperationType operation, decimal secondOperand)
+        protected decimal CalculatePercentage(decimal firstOperand, OperationType operation, decimal secondOperand)
         {
             var percentage = secondOperand / 100;
-            return operation switch
+            var result = operation switch
             {
                 OperationType.Add => firstOperand + firstOperand * percentage,
                 OperationType.Subtract => firstOperand - firstOperand * percentage,
@@ -98,9 +100,11 @@ namespace ClassicCalculator.CalculatorState
                 OperationType.Divide => firstOperand / percentage,
                 _ => throw new ArgumentOutOfRangeException(nameof(operation), operation, "Invalid operation")
             };
+
+            return UpdateDisplayValueAndGetAdjustedResult(result);
         }
 
-        protected static decimal CalculateSquareRoot(decimal value)
+        protected decimal CalculateSquareRoot(decimal value)
         {
             if (value < 0)
             {
@@ -108,7 +112,16 @@ namespace ClassicCalculator.CalculatorState
             }
 
             var result = DecimalEx.Sqrt(value);
-            return result;
+            return UpdateDisplayValueAndGetAdjustedResult(result);
+        }
+
+        private decimal UpdateDisplayValueAndGetAdjustedResult(decimal result)
+        {
+            UpdateDisplayValue(result);
+
+            // Some results may have to be adjusted to fit the display length
+            var adjustedResult = ConvertDisplayValueToNumber();
+            return adjustedResult;
         }
     }
 }
