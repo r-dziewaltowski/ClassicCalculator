@@ -30,6 +30,12 @@
 
         protected override void AppendDecimal()
         {
+            var numberOfDigits = GetNumberOfDigits(DisplayValue);
+            if (numberOfDigits == _calculator.DisplayLength)
+            {
+                return;
+            }
+
             if (!DisplayValue.Contains('.'))
             {
                 DisplayValue += ".";

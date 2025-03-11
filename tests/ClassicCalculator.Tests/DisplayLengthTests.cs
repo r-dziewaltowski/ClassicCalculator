@@ -8,13 +8,14 @@ namespace ClassicCalculator.Tests
         [InlineData(1)]
         [InlineData(10)]
         [InlineData(Calculator.MaxDisplayLength)]
-        public void ShouldIgnoreAnyDigitsExceedingDisplayLength(int displayLength)
+        public void ShouldIgnoreAnyDigitsAndDecimalPointAfterReachingDisplayLength(int displayLength)
         {
             // Arrange
             var calculator = CreateCalculator(displayLength);
 
             // Act
             PressButton(calculator, CalculatorButton.One, displayLength + 2);
+            calculator.PressButton(CalculatorButton.Decimal);
 
             // Assert
             var expectedDisplayValue = new string('1', displayLength);
@@ -22,7 +23,7 @@ namespace ClassicCalculator.Tests
         }
 
         [Theory]
-        [InlineData(1)]
+        [InlineData(2)]
         [InlineData(10)]
         [InlineData(Calculator.MaxDisplayLength)]
         public void ShouldNotCountMinusSignAndDecimalSignTowardsDisplayLength(int displayLength)
@@ -31,13 +32,14 @@ namespace ClassicCalculator.Tests
             var calculator = CreateCalculator(displayLength);
 
             // Act
-            PressButton(calculator, CalculatorButton.One, displayLength + 2);
+            calculator.PressButton(CalculatorButton.Zero);
             calculator.PressButton(CalculatorButton.Decimal);
+            PressButton(calculator, CalculatorButton.One, displayLength + 2);
             calculator.PressButton(CalculatorButton.ToggleSign);
 
             // Assert
-            var digits = new string('1', displayLength);
-            var expectedDisplayValue = $"-{digits}.";
+            var digits = new string('1', displayLength - 1);
+            var expectedDisplayValue = $"-0.{digits}";
             Assert.Equal(expectedDisplayValue, calculator.DisplayValue);
         }
 
