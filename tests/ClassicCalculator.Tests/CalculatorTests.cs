@@ -28,6 +28,7 @@ namespace ClassicCalculator.Tests
         [InlineData("9 / 3 * 3 =", "9")]
         [InlineData("9 + 3 - 3 =", "9")]
         [InlineData("-1 + 2.5 - 0.5 * 2 / 4 * 200 % + 9 SR =", "4")]
+        [InlineData("3 + 2 = +/- * 2 =", "-10")]
         public void ShouldShowCorrectDisplayValue(string input, string expectedDisplayValue)
         {
             // Arrange

@@ -21,6 +21,13 @@
             _calculator.State = new FirstOperandInputInProgressState(_calculator, "0.");
         }
 
+        protected override void ToggleSign()
+        {
+            base.ToggleSign();
+
+            _firstOperand = ConvertDisplayValueToNumber();
+        }
+
         protected override void SetOperation(OperationType operation)
         {
             _calculator.State = new FirstOperandAndOperationState(

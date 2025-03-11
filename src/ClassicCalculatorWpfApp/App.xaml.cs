@@ -11,7 +11,7 @@ namespace ClassicCalculatorWpfApp
         {
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
-                    .AddTransient<ICalculator, Calculator>()
+                    .AddTransient<ICalculator, Calculator>(provider => new Calculator(displayLength: 10))
                     .AddTransient<CalculatorViewModel>()
                     .BuildServiceProvider());
         }

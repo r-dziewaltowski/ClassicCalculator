@@ -25,6 +25,13 @@
                 _calculator, _firstOperand!.Value, _currentOperation!.Value, "0.");
         }
 
+        protected override void ToggleSign()
+        {
+            base.ToggleSign();
+
+            _secondOperand = ConvertDisplayValueToNumber();
+        }
+
         protected override void SetOperation(OperationType operation)
         {
             var result = PerformOperation(_firstOperand!.Value, _currentOperation!.Value, _secondOperand!.Value);
