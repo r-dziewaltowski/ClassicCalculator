@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Diagnostics.CodeAnalysis;
+﻿using ClassicCalculator.CalculatorState.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace ClassicCalculator.CalculatorState
 {
@@ -7,20 +7,20 @@ namespace ClassicCalculator.CalculatorState
     {
         public string DisplayValue { get; set; }
 
-        public abstract void AppendDigit(int digit);
-        public abstract void AppendDecimal();
-        public abstract void SetOperation(OperationType operation);
-        public abstract void Calculate();
-        public abstract void CalculatePercentage();
-        public abstract void CalculateSquareRoot();
-        public abstract void ToggleSign();
+        protected abstract void AppendDigit(int digit);
+        protected abstract void AppendDecimal();
+        protected abstract void SetOperation(OperationType operation);
+        protected abstract void Calculate();
+        protected abstract void CalculatePercentage();
+        protected abstract void CalculateSquareRoot();
+        protected abstract void ToggleSign();
 
         protected readonly Calculator _calculator;
         protected decimal? _firstOperand;
         protected OperationType? _currentOperation;
         protected decimal? _secondOperand;
 
-        public CalculatorStateBase(
+        protected CalculatorStateBase(
             Calculator calculator,
             decimal? firstOperand,
             OperationType? currentOperation,
@@ -34,7 +34,11 @@ namespace ClassicCalculator.CalculatorState
             _secondOperand = secondOperand;
 
             _calculator.Logger.LogDebug(
-                "Calculator state initialized with first operand: {FirstOperand}, current operation: {CurrentOperation}, second operand: {SecondOperand}, display value: {DisplayValue}",
+                "Calculator state initialized with " +
+                "first operand: {FirstOperand}, " +
+                "current operation: {CurrentOperation}, " +
+                "second operand: {SecondOperand}, " +
+                "display value: {DisplayValue}",
                 _firstOperand,
                 _currentOperation,
                 _secondOperand,
@@ -45,98 +49,89 @@ namespace ClassicCalculator.CalculatorState
         {
             try
             {
-                switch (button)
-                {
-                    case CalculatorButton.Zero:
-                    case CalculatorButton.One:
-                    case CalculatorButton.Two:
-                    case CalculatorButton.Three:
-                    case CalculatorButton.Four:
-                    case CalculatorButton.Five:
-                    case CalculatorButton.Six:
-                    case CalculatorButton.Seven:
-                    case CalculatorButton.Eight:
-                    case CalculatorButton.Nine:
-                        HandleDigit((int)button);
-                        break;
-                    case CalculatorButton.Decimal:
-                        AppendDecimal();
-                        break;
-                    case CalculatorButton.Add:
-                        SetOperation(OperationType.Add);
-                        break;
-                    case CalculatorButton.Subtract:
-                        SetOperation(OperationType.Subtract);
-                        break;
-                    case CalculatorButton.Multiply:
-                        SetOperation(OperationType.Multiply);
-                        break;
-                    case CalculatorButton.Divide:
-                        SetOperation(OperationType.Divide);
-                        break;
-                    case CalculatorButton.Equals:
-                        Calculate();
-                        break;
-                    case CalculatorButton.Clear:
-                        Clear();
-                        break;
-                    case CalculatorButton.Percentage:
-                        CalculatePercentage();
-                        break;
-                    case CalculatorButton.SquareRoot:
-                        CalculateSquareRoot();
-                        break;
-                    case CalculatorButton.ToggleSign:
-                        ToggleSign();
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(button), button, "Invalid calculator button.");
-                }
+                HandleButton(button);
+            }
+            catch (DisplayLengthExceededException ex)
+            {
+                HandleException(LogLevel.Warning, ex, "Display length exceeded", "Display length exceeded");
+            }
+            catch (InvalidInputException ex)
+            {
+                HandleException(LogLevel.Warning, ex, "Invalid input provided", "Invalid input");
+            }
+            catch (DivideByZeroException ex)
+            {
+                HandleException(LogLevel.Warning, ex, "Divide by 0 occurred", "Divide by 0");
             }
             catch (OverflowException ex)
             {
-                _calculator.Logger.LogWarning(ex, "Overflow occurred");
-                SetInvalidState("Overflow");
+                HandleException(LogLevel.Warning, ex, "Overflow occurred", "Overflow");
             }
-            //catch (DivideByZeroException ex)
-            //{
-            //    _calculator.Logger.LogError(ex, "Divide by zero occurred");
-            //    _calculator.State = new InvalidState(_calculator, "Divide by zero");
-            //}
             catch (Exception ex)
             {
-                _calculator.Logger.LogError(ex, "Unexpected error occurred");
-                SetInvalidState("Unexpected error");
+                HandleException(LogLevel.Error, ex, "Unexpected error occurred", "Unexpected error");
             }
         }
 
-        public void Clear()
+        private void HandleButton(CalculatorButton button)
+        {
+            switch (button)
+            {
+                case CalculatorButton.Zero:
+                case CalculatorButton.One:
+                case CalculatorButton.Two:
+                case CalculatorButton.Three:
+                case CalculatorButton.Four:
+                case CalculatorButton.Five:
+                case CalculatorButton.Six:
+                case CalculatorButton.Seven:
+                case CalculatorButton.Eight:
+                case CalculatorButton.Nine:
+                    HandleDigit((int)button);
+                    break;
+                case CalculatorButton.Decimal:
+                    AppendDecimal();
+                    break;
+                case CalculatorButton.Add:
+                    SetOperation(OperationType.Add);
+                    break;
+                case CalculatorButton.Subtract:
+                    SetOperation(OperationType.Subtract);
+                    break;
+                case CalculatorButton.Multiply:
+                    SetOperation(OperationType.Multiply);
+                    break;
+                case CalculatorButton.Divide:
+                    SetOperation(OperationType.Divide);
+                    break;
+                case CalculatorButton.Equals:
+                    Calculate();
+                    break;
+                case CalculatorButton.Clear:
+                    Clear();
+                    break;
+                case CalculatorButton.Percentage:
+                    CalculatePercentage();
+                    break;
+                case CalculatorButton.SquareRoot:
+                    CalculateSquareRoot();
+                    break;
+                case CalculatorButton.ToggleSign:
+                    ToggleSign();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(button), button, "Invalid calculator button");
+            }
+        }
+
+        private void Clear()
         {
             _calculator.State = new InitialState(_calculator);
         }
 
-        [MemberNotNullWhen(true, nameof(_firstOperand), nameof(_currentOperation))]
-        protected bool FirstOperandAndOperationProvided()
+        private void HandleException(LogLevel logLevel, Exception ex, string logMessage, string displayValue)
         {
-            return _firstOperand != null && _currentOperation != null;
-        }
-
-        [MemberNotNullWhen(true, nameof(_firstOperand), nameof(_currentOperation), nameof(_secondOperand))]
-        protected bool OperandsAndOperationProvided()
-        {
-            return FirstOperandAndOperationProvided() && _secondOperand != null;
-        }
-
-        [MemberNotNull(nameof(_firstOperand))]
-        protected void SetFirstOperand(decimal value)
-        {
-            _firstOperand = value;
-            _currentOperation = null;
-            _secondOperand = null;
-        }
-
-        protected void SetInvalidState(string displayValue)
-        {
+            _calculator.Logger.Log(logLevel, ex, logMessage);
             _calculator.State = new InvalidState(_calculator, displayValue);
         }
 

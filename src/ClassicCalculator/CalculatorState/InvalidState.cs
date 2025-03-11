@@ -3,37 +3,44 @@
     internal class InvalidState(Calculator calculator, string displayValue)
         : CalculatorStateBase(
             calculator,
-            null,
-            null,
-            null,
+            firstOperand: null,
+            currentOperation: null,
+            secondOperand: null,
             displayValue)
     {
-        public override void AppendDecimal()
+        protected override void AppendDecimal()
         {
+            // Ignore
         }
 
-        public override void AppendDigit(int digit)
+        protected override void AppendDigit(int digit)
         {
+            // Ignore
         }
 
-        public override void Calculate()
+        protected override void Calculate()
         {
+            // Ignore
         }
 
-        public override void CalculatePercentage()
+        protected override void CalculatePercentage()
         {
+            // Ignore
         }
 
-        public override void CalculateSquareRoot()
+        protected override void CalculateSquareRoot()
         {
+            // Ignore
         }
 
-        public override void SetOperation(OperationType operation)
+        protected override void SetOperation(OperationType operation)
         {
+            // Ignore
         }
 
-        public override void ToggleSign()
+        protected override void ToggleSign()
         {
+            // Ignore
         }
     }
 }

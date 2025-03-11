@@ -1,0 +1,63 @@
+﻿namespace ClassicCalculator.CalculatorState
+{
+    internal class FirstOperandAndOperationState(
+        Calculator calculator,
+        decimal firstOperand,
+        OperationType operation,
+        string displayValue) :
+        ValidStateBase(
+            calculator,
+            firstOperand,
+            operation,
+            secondOperand: null,
+            displayValue)
+    {
+        protected override void AppendDigit(int digit)
+        {
+            _calculator.State = new SecondOperandInputInProgressState(
+                _calculator, _firstOperand!.Value, _currentOperation!.Value, digit.ToString());
+        }
+
+        protected override void AppendDecimal()
+        {
+            _calculator.State = new SecondOperandInputInProgressState(
+                _calculator, _firstOperand!.Value, _currentOperation!.Value, "0.");
+        }
+
+        protected override void ToggleSign()
+        {
+            base.ToggleSign();
+
+            var secondOperand = ConvertDisplayValueToNumber();
+            _calculator.State = new BothOperandsAndOperationState(
+                _calculator, _firstOperand!.Value, _currentOperation!.Value, secondOperand, DisplayValue);
+        }
+
+        protected override void SetOperation(OperationType operation)
+        {
+            _currentOperation = operation;
+        }
+
+        protected override void Calculate()
+        {
+            var result = PerformOperation(_firstOperand!.Value, _currentOperation!.Value, _firstOperand!.Value);
+            UpdateDisplayValue(result);
+            _calculator.State = new FirstOperandState(_calculator, result, DisplayValue);
+        }
+
+        protected override void CalculatePercentage()
+        {
+            var result = CalculatePercentage(_firstOperand!.Value, _currentOperation!.Value, _firstOperand!.Value);
+            UpdateDisplayValue(result);
+            _calculator.State = new FirstOperandState(_calculator, result, DisplayValue);
+        }
+
+        protected override void CalculateSquareRoot()
+        {
+            var result = CalculateSquareRoot(_firstOperand!.Value);
+            UpdateDisplayValue(result);
+            _calculator.State = new BothOperandsAndOperationState(
+                _calculator, _firstOperand!.Value, _currentOperation!.Value, result, DisplayValue);
+        }
+    }
+}

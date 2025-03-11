@@ -1,4 +1,5 @@
-﻿using DecimalMath;
+﻿using ClassicCalculator.CalculatorState.Exceptions;
+using DecimalMath;
 using System.Globalization;
 
 namespace ClassicCalculator.CalculatorState
@@ -16,62 +17,8 @@ namespace ClassicCalculator.CalculatorState
             secondOperand,
             displayValue)
     {
-        public override void SetOperation(OperationType operation)
+        protected override void ToggleSign()
         {
-            SetOperationOrCalculate(operation);
-        }
-
-        public override void Calculate()
-        {
-            SetOperationOrCalculate(operation: null);
-        }
-
-        public override void CalculatePercentage()
-        {
-            decimal result = 0;
-            if (!FirstOperandAndOperationProvided())
-            {
-                SetFirstOperand(result);
-            }
-            else
-            {
-                result = CalculatePercentage(_firstOperand.Value, _currentOperation.Value, ConvertDisplayValueToNumber());
-                _secondOperand = result;
-            }
-
-            UpdateDisplayValueAndSetOperandInputNotInProgressState(result);
-        }
-
-        public override void CalculateSquareRoot()
-        {
-            var operand = ConvertDisplayValueToNumber();
-            if (operand < 0)
-            {
-                SetInvalidState("Invalid input");
-                return;
-            }
-
-            var result = DecimalEx.Sqrt(operand);
-            if (!FirstOperandAndOperationProvided())
-            {
-                SetFirstOperand(result);
-            }
-            else
-            {
-                _secondOperand = result;
-
-            }
-
-            UpdateDisplayValueAndSetOperandInputNotInProgressState(result);
-        }
-
-        public override void ToggleSign()
-        {
-            if (ConvertDisplayValueToNumber() == 0)
-            {
-                return;
-            }
-
             DisplayValue = DisplayValue.StartsWith('-') ?
                 DisplayValue[1..] :
                 "-" + DisplayValue;
@@ -83,13 +30,26 @@ namespace ClassicCalculator.CalculatorState
             return decimal.Parse(formattedDisplayValue, CultureInfo.InvariantCulture);
         }
 
+        protected void UpdateDisplayValue(decimal value)
+        {
+            var newValue = value.ToString("0.#############################", CultureInfo.InvariantCulture);
+            var numberOfDigits = GetNumberOfDigits(newValue);
+
+            if (numberOfDigits > _calculator.DisplayLength)
+            {
+                throw new DisplayLengthExceededException($"Value {newValue} exceeds display length");
+            }
+
+            DisplayValue = newValue;
+        }
+
         protected static int GetNumberOfDigits(string value)
         {
             var numberOfDigits = value.Count(char.IsDigit);
             return numberOfDigits;
         }
 
-        private static decimal PerformOperation(decimal firstOperand, OperationType operation, decimal secondOperand)
+        protected static decimal PerformOperation(decimal firstOperand, OperationType operation, decimal secondOperand)
         {
             return operation switch
             {
@@ -97,11 +57,11 @@ namespace ClassicCalculator.CalculatorState
                 OperationType.Subtract => firstOperand - secondOperand,
                 OperationType.Multiply => firstOperand * secondOperand,
                 OperationType.Divide => secondOperand != 0 ? firstOperand / secondOperand : throw new DivideByZeroException(),
-                _ => throw new InvalidOperationException("Invalid operation type")
+                _ => throw new ArgumentOutOfRangeException(nameof(operation), operation, "Invalid operation")
             };
         }
 
-        private static decimal CalculatePercentage(decimal firstOperand, OperationType operation, decimal secondOperand)
+        protected static decimal CalculatePercentage(decimal firstOperand, OperationType operation, decimal secondOperand)
         {
             var percentage = secondOperand / 100;
             return operation switch
@@ -110,48 +70,19 @@ namespace ClassicCalculator.CalculatorState
                 OperationType.Subtract => firstOperand - firstOperand * percentage,
                 OperationType.Multiply => firstOperand * percentage,
                 OperationType.Divide => firstOperand / percentage,
-                _ => throw new InvalidOperationException("Invalid operation type"),
+                _ => throw new ArgumentOutOfRangeException(nameof(operation), operation, "Invalid operation")
             };
         }
 
-        private void UpdateDisplayValueAndSetOperandInputNotInProgressState(decimal value)
+        protected static decimal CalculateSquareRoot(decimal value)
         {
-            var newValue = value.ToString("0.#############################", CultureInfo.InvariantCulture);
-            var numberOfDigits = GetNumberOfDigits(newValue);
-
-            if (numberOfDigits > _calculator.DisplayLength)
+            if (value < 0)
             {
-                SetInvalidState("Number exceeds display length");
-                return;
+                throw new InvalidInputException($"Square root of a negative number {value} is not a valid operation");
             }
 
-            DisplayValue = newValue;
-            _calculator.State = new OperandInputNotInProgressState(
-                _calculator, _firstOperand, _currentOperation, _secondOperand, DisplayValue);
-        }
-
-        private void SetOperationOrCalculate(OperationType? operation)
-        {
-            try
-            {
-                var value = OperandsAndOperationProvided() ?
-                    PerformOperation(_firstOperand.Value, _currentOperation.Value, ConvertDisplayValueToNumber()) :
-                    ConvertDisplayValueToNumber();
-                SetFirstOperand(value);
-            }
-            catch (DivideByZeroException)
-            {
-                SetInvalidState("Cannot divide by 0");
-                return;
-            }
-
-            if (operation != null)
-            {
-                _currentOperation = operation;
-            }
-
-            _secondOperand = null;
-            UpdateDisplayValueAndSetOperandInputNotInProgressState(_firstOperand.Value);
+            var result = DecimalEx.Sqrt(value);
+            return result;
         }
     }
 }

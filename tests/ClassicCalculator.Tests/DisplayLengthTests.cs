@@ -55,7 +55,7 @@ namespace ClassicCalculator.Tests
             PressButtons(calculator, "* 10 =");
 
             // Assert
-            VerifyStateAndDisplayValue<InvalidState>(calculator, "Number exceeds display length");
+            VerifyStateAndDisplayValue<InvalidState>(calculator, "Display length exceeded");
         }
     }
 }

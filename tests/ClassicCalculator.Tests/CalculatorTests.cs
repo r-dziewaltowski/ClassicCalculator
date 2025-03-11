@@ -58,7 +58,7 @@ namespace ClassicCalculator.Tests
         }
 
         [Theory]
-        [InlineData("5 / 0 =", "Cannot divide by 0")]
+        [InlineData("5 / 0 =", "Divide by 0")]
         [InlineData("-9 SR", "Invalid input")]
         [InlineData("10000000000000000000000000000 * 10 =", "Overflow")]
         public void ShouldHandleInvalidOperations(string input, string expectedDisplayValue)
