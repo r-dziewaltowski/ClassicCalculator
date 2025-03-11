@@ -82,7 +82,7 @@ namespace ClassicCalculator.CalculatorState
                 OperationType.Add => firstOperand + secondOperand,
                 OperationType.Subtract => firstOperand - secondOperand,
                 OperationType.Multiply => firstOperand * secondOperand,
-                OperationType.Divide => secondOperand != 0 ? firstOperand / secondOperand : throw new DivideByZeroException(),
+                OperationType.Divide => firstOperand / secondOperand,
                 _ => throw new ArgumentOutOfRangeException(nameof(operation), operation, "Invalid operation")
             };
 
