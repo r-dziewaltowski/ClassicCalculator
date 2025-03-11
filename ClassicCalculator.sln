@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicCalculatorWpfApp.Tests", "ClassicCalculatorWpfApp.Tests\ClassicCalculatorWpfApp.Tests.csproj", "{CD5F40A7-F976-43F1-A03B-21D22DCE4552}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicCalculatorWpfApp.Tests", "tests\ClassicCalculatorWpfApp.Tests\ClassicCalculatorWpfApp.Tests.csproj", "{F7CC7C02-180D-0A59-597C-43A7D95F1DEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +50,10 @@ Global
 		{AF5C1675-CF6F-458D-B5F3-419BC5F3B81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF5C1675-CF6F-458D-B5F3-419BC5F3B81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF5C1675-CF6F-458D-B5F3-419BC5F3B81C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD5F40A7-F976-43F1-A03B-21D22DCE4552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD5F40A7-F976-43F1-A03B-21D22DCE4552}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD5F40A7-F976-43F1-A03B-21D22DCE4552}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD5F40A7-F976-43F1-A03B-21D22DCE4552}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7CC7C02-180D-0A59-597C-43A7D95F1DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7CC7C02-180D-0A59-597C-43A7D95F1DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7CC7C02-180D-0A59-597C-43A7D95F1DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7CC7C02-180D-0A59-597C-43A7D95F1DEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +64,6 @@ Global
 		{07F34BF0-8341-4E53-A7E5-8CA2E8EF813E} = {17219DE5-F127-43A3-BD1A-614F6330CF73}
 		{95118EF5-72EA-42EC-ABF6-D9DF387930CB} = {3DAC9083-A7F5-48FB-A1B0-FC1602BB9966}
 		{AF5C1675-CF6F-458D-B5F3-419BC5F3B81C} = {3DAC9083-A7F5-48FB-A1B0-FC1602BB9966}
-		{CD5F40A7-F976-43F1-A03B-21D22DCE4552} = {3DAC9083-A7F5-48FB-A1B0-FC1602BB9966}
+		{F7CC7C02-180D-0A59-597C-43A7D95F1DEE} = {3DAC9083-A7F5-48FB-A1B0-FC1602BB9966}
 	EndGlobalSection
 EndGlobal
