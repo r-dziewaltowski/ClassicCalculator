@@ -33,12 +33,38 @@ namespace ClassicCalculator.CalculatorState
         protected void UpdateDisplayValue(decimal value)
         {
             var newValue = value.ToString("0.#############################", CultureInfo.InvariantCulture);
-            var numberOfDigits = GetNumberOfDigits(newValue);
+            var parts = newValue.Split('.'); // Split by the decimal point
+            var numberOfIntegerDigits = GetNumberOfDigits(parts[0]); // Count the number of digits before the decimal point
 
-            if (numberOfDigits > _calculator.DisplayLength)
+            // Check if the number of digits before the decimal point exceeds the display length
+            if (numberOfIntegerDigits > _calculator.DisplayLength)
             {
                 throw new DisplayLengthExceededException($"Value {newValue} exceeds display length");
             }
+
+            // If there is a fractional part, we may have to trim it to fit the display length
+            if (parts.Length == 2)
+            {
+                // Calculate the number of digits that can be displayed after the decimal point
+                var remainingLength = _calculator.DisplayLength - numberOfIntegerDigits;
+
+                // Trim the fractional part to fit the display length if necessary
+                var fractionalPart = parts[1];
+                var fractionalPartTrimmed = fractionalPart.Length > remainingLength
+                    ? fractionalPart[..remainingLength]
+                    : fractionalPart;
+
+                // If the trimmed fractional part is not zero, include it in the display value
+                if (fractionalPartTrimmed.Length > 0 && fractionalPartTrimmed.Any(digit => digit != '0'))
+                {
+                    newValue = $"{parts[0]}.{fractionalPartTrimmed}";
+                }
+                // If the trimmed fractional part is zero, exclude it from the display value
+                else
+                {
+                    newValue = parts[0];
+                }
+            } 
 
             DisplayValue = newValue;
         }
