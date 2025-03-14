@@ -1,75 +1,55 @@
 # Classic Calculator
-It's a simple calculator giving a feel of using an old school physical calculator device.
+A classic calculator engine that responds to pressing buttons and provides output including display value.
 
 ## Table of Contents
 - [Description](#description)
 - [Features](#features)
-- [Purpose](#purpose)
 - [Usage](#usage)
 - [License](#license)
 
 ## Description
-The solution consists of 3 projects:
-- ClassicCalculator - a class library containing all the busines logic of the calculator that is shared by the applications
-- ClassicCalculatorBlazorApp - a Blazor SPA web calculator application which is also a Progressive Web Application (PWA) which means that it can be installed on any device (e.g. Windows desktop, Android mobile) like a native app
-- ClassicCalculatorWpfApp - a WPF desktop calculator application
-
-The business logic is completely decoupled from the presentation layer provided by the applications. Any new application (e.g. a mobile app) can just reuse the existing logic. Also, the logic implementation could be easily replaced as long as an alternative adheres to the same interface.
-
-Unfortunately the project requires more work to make the results always correct, e.g.:
-- It doesn't support big numbers both in terms of calculations and display
-- It is prone to numerical problems
+It's a simple library that enables the user to create a calculator application or functionality without implementing any of the internal logic on their own. All they have to provide is a user interface that calls the library in response to user actions (e.g. pressing buttons) and presents the display value.
 
 ## Features
-Both applications provide the functionality of a simple calculator with a display showing just one number and the following buttons:
-- Digits
-- Decimal point
-- Toggle sign
-- Add
-- Subtract
-- Multiply
-- Divide
-- Calculate
-- Percent
-- Sqaure root
-- Clear
+The following actions/buttons are currently supported:
+- Digits (0-9)
+- Decimal point (.)
+- Toggle sign (+/-)
+- Add (+)
+- Subtract (-)
+- Multiply (*)
+- Divide (/)
+- Calculate/Equals (=)
+- Percent (%)
+- Sqaure root (√)
+- Clear (C)
 
-The behaviour follows quite closely my own physical calculator device.
+At the moment the only output is the display value but more details will be returned in the future versions.
+
+When creating the calculator object, the user must provide the display length in the constructor which specifies how many digits can be displayed. This will affect the calculator in the same way as it normally does on the physical devices:
+1) User input is limited to the display length
+2) An error occurs when the integer part of the display value is too large to fit in the display
+3) The least meaningful digits of the decimal part of the display value are truncated to fit in the display 
+
+The user can also provide a logger object in the constructor that will be used internally by the library.
 
 Missing functionality:
 - Memory features (M+, M-, etc.)
 - CE (clear last entry)
 - Other features of more advanced calculators
-- There's no OFF button... :)
 
 ## Usage
-```bash
-git clone https://github.com/r-dziewaltowski/ClassicCalculator.git
-cd .\ClassicCalculator\
+An example usage:
+```csharp
+var calculator = new Calculator(9); // Display can show up to 9 digits (DisplayValue = 0)
+calculator.PressButton(CalculatorButton.One) // (DisplayValue = 1)
+calculator.PressButton(CalculatorButton.Add) // (DisplayValue = 1)
+calculator.PressButton(CalculatorButton.Five) // (DisplayValue = 5)
+calculator.PressButton(CalculatorButton.Equals) // (DisplayValue = 6)
+var displayValue = calculator.DisplayValue; 
 ```
-All the commands below should be run from the root folder.
 
-<h3>Web application</h3>
-
-The application is deployed and avaialble at the following address: https://classiccalculator.onrender.com/. Plase note that when you try to access it it may be asleep and needs around a minute to wake up. It's a Progressive Web Application (PWA) which means that it can be installed on any device (e.g. Windows desktop, Android mobile) like a native app.
-
-If you prefer to run it locally there's two options:
-- Run in Docker container:
-```bash
-docker-compose up --build
-```
-Access via http://localhost/ in your browser
-- Run directly:
-```bash
-dotnet run --project ClassicCalculatorBlazorApp\
-```
-Access via http://localhost:5116/ or https://localhost:7201 in your browser
-
-<h3>Desktop application</h3>
-
-```bash
-dotnet run --project .\ClassicCalculatorWpfApp\
-```
+For more details, please refer to the provided documentation.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
