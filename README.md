@@ -28,8 +28,8 @@ At the moment the only output is the display value but more details will be retu
 
 When creating the calculator object, the user must provide the display length in the constructor which specifies how many digits can be displayed. This will affect the calculator in the same way as it normally does on the physical devices:
 1) User input is limited to the display length
-2) An error occurs when the integer part of the result is too large to fit in the display
-3) The least meaningful digits of the decimal part of the result are truncated to fit in the display 
+2) An error occurs when the integer part of the display value is too large to fit in the display
+3) The least meaningful digits of the decimal part of the display value are truncated to fit in the display 
 
 The user can also provide a logger object in the constructor that will be used internally by the library.
 
@@ -42,10 +42,10 @@ Missing functionality:
 An example usage:
 ```csharp
 var calculator = new Calculator(9); // Display can show up to 9 digits (DisplayValue = 0)
-calculator.PressButton(CalculatorButton.One) // Simulates pressing a button (DisplayValue = 1)
-calculator.PressButton(CalculatorButton.Add) (DisplayValue = 1)
-calculator.PressButton(CalculatorButton.Five) (DisplayValue = 5)
-calculator.PressButton(CalculatorButton.Equals) (DisplayValue = 6)
+calculator.PressButton(CalculatorButton.One) // (DisplayValue = 1)
+calculator.PressButton(CalculatorButton.Add) // (DisplayValue = 1)
+calculator.PressButton(CalculatorButton.Five) // (DisplayValue = 5)
+calculator.PressButton(CalculatorButton.Equals) // (DisplayValue = 6)
 var displayValue = calculator.DisplayValue; 
 ```
 
