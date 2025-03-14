@@ -1,5 +1,5 @@
 # Classic Calculator
-A classic calculator engine simulating pressing buttons and producing output including display value.
+A classic calculator engine that responds to pressing buttons and provides output including display value.
 
 ## Table of Contents
 - [Description](#description)
@@ -8,7 +8,7 @@ A classic calculator engine simulating pressing buttons and producing output inc
 - [License](#license)
 
 ## Description
-It's a simple library that enables the user to create a calculator app without implementing any of the internal logic on their own. All they have to provide is a user interface that calls the library in response to user actions (e.g. pressing buttons) and displays the returned result in whatever form they wish.
+It's a simple library that enables the user to create a calculator application or functionality without implementing any of the internal logic on their own. All they have to provide is a user interface that calls the library in response to user actions (e.g. pressing buttons) and presents the display value.
 
 ## Features
 The following actions/buttons are currently supported:
@@ -31,7 +31,7 @@ When creating the calculator object, the user must provide the display length in
 2) An error occurs when the integer part of the result is too large to fit in the display
 3) The least meaningful digits of the decimal part of the result are truncated to fit in the display 
 
-User can provide a logger object to the constructor that will be used by the library.
+The user can also provide a logger object in the constructor that will be used internally by the library.
 
 Missing functionality:
 - Memory features (M+, M-, etc.)
@@ -40,12 +40,16 @@ Missing functionality:
 
 ## Usage
 An example usage:
-var calculator = new Calculator(9);
-calculator.PressButton(CalculatorButton.One)
-calculator.PressButton(CalculatorButton.Add)
-calculator.PressButton(CalculatorButton.Five)
-calculator.PressButton(CalculatorButton.Equals)
-var result = calculator.DisplayValue;
+```csharp
+var calculator = new Calculator(9); // Display can show up to 9 digits (DisplayValue = 0)
+calculator.PressButton(CalculatorButton.One) // Simulates pressing a button (DisplayValue = 1)
+calculator.PressButton(CalculatorButton.Add) (DisplayValue = 1)
+calculator.PressButton(CalculatorButton.Five) (DisplayValue = 5)
+calculator.PressButton(CalculatorButton.Equals) (DisplayValue = 6)
+var displayValue = calculator.DisplayValue; 
+```
+
+For more details, please refer to the provided documentation.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
