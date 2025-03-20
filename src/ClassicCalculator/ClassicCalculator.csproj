@@ -9,12 +9,12 @@
     <Authors>r-dziewaltowski</Authors>
     <Description>A classic calculator engine that responds to pressing buttons and provides output including display value.</Description>
     <Copyright>Copyright © 2025 Rafal Dziewaltowski-Gintowt. All rights reserved.</Copyright>
-    <PackageProjectUrl>https://github.com/r-dziewaltowski/ClassicCalculator</PackageProjectUrl>
+    <PackageProjectUrl>https://r-dziewaltowski.github.io/ClassicCalculator</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/r-dziewaltowski/ClassicCalculator</RepositoryUrl>
-    <PackageTags>dotnet; nuget; csharp; library; calculator; math; arithmetic; algorithms</PackageTags>
-    <PackageReleaseNotes>Initial version</PackageReleaseNotes>
+    <PackageTags>dotnet; nuget; csharp; library; calculator; math; arithmetic</PackageTags>
+    <PackageReleaseNotes>Initial version of the library.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
