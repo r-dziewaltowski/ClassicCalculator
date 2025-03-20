@@ -1,7 +1,6 @@
 name: Publish to NuGet
 
 on:
-  workflow_dispatch:  # Enables manual execution
   release:
     types: [published]
 
@@ -25,7 +24,7 @@ jobs:
         run: dotnet build ./src/ClassicCalculator/ --configuration Release --no-restore
 
       - name: Pack the project
-        run: dotnet pack ./src/ClassicCalculator/ --configuration Release --no-build --output nupkg
+        run: dotnet pack ./src/ClassicCalculator/ --configuration Release --no-build --output nupkg /p:Version=${{ github.event.release.tag_name }}
 
       - name: Publish to NuGet
-        run: dotnet nuget push nupkg/*.nupkg --api-key oy2baf35rjxhw4uyyumaduv7qvic6eneheafkivhmdmw6i --source https://int.nugettest.org/ --skip-duplicate
+        run: dotnet nuget push nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
