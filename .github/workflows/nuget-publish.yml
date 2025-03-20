@@ -17,6 +17,20 @@ jobs:
         with:
           dotnet-version: '8.0.x' # Change to your target version
 
+      - name: Update .csproj Version
+        run: |
+          VERSION=${{ github.event.release.tag_name }}
+          VERSION=${VERSION#v}  # Remove 'v' prefix if present
+          echo "Setting .csproj version to: $VERSION"
+          
+          # Update <Version> inside the .csproj file
+          sed -i 's|<Version>.*</Version>|<Version>'"$VERSION"'</Version>|' ./src/ClassicCalculator/ClassicCalculator.csproj
+
+      - name: Commit Version Update
+        run: |
+          git commit -m "Update version to $VERSION"
+          git push
+
       - name: Restore dependencies
         run: dotnet restore ./src/ClassicCalculator/
 
@@ -24,7 +38,7 @@ jobs:
         run: dotnet build ./src/ClassicCalculator/ --configuration Release --no-restore
 
       - name: Pack the project
-        run: dotnet pack ./src/ClassicCalculator/ --configuration Release --no-build --output nupkg /p:Version=${{ github.event.release.tag_name }}
+        run: dotnet pack ./src/ClassicCalculator/ --configuration Release --no-build --output nupkg
 
       - name: Publish to NuGet
         run: dotnet nuget push nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
