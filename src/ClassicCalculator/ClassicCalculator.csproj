@@ -16,6 +16,8 @@
     <PackageTags>dotnet; nuget; csharp; library; calculator; math; arithmetic</PackageTags>
     <PackageReleaseNotes>Initial version of the library.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
