@@ -17,6 +17,11 @@ jobs:
         with:
           dotnet-version: '8.0.x' # Change to your target version
 
+      - name: Configure Git user
+        run: |
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "${{ github.actor }}"
+
       - name: Update .csproj Version
         run: |
           VERSION=${{ github.event.release.tag_name }}
