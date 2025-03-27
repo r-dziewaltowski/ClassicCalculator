@@ -55,7 +55,7 @@ calculator.PressButton(CalculatorButton.Equals) // (DisplayValue = 6)
 var displayValue = calculator.DisplayValue; 
 ```
 
-For more details, please refer to the provided documentation.
+For more details, please refer to the provided documentation at https://r-dziewaltowski.github.io/ClassicCalculator.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
