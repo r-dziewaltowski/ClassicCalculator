@@ -30,12 +30,12 @@ jobs:
 
       - name: Update .csproj Version and Release Notes
         run: |
-          VERSION='v1.0.2'
+          VERSION='v1.0.1'
           VERSION=${VERSION#v}  # Remove 'v' prefix if present
           echo "Setting .csproj version to: $VERSION"        
           # Update <Version> inside the .csproj file
-          sed -i 's|<Version>.*</Version>|<Version>'"$VERSION"'</Version>|' ./src/ClassicCalculator/ClassicCalculator.csproj
-          sed -i 's|<PackageReleaseNotes>.*</PackageReleaseNotes>|<PackageReleaseNotes>See release notes: https://github.com/${{ github.repository }}/releases/tag/v${VERSION}</PackageReleaseNotes>|' ./src/ClassicCalculator/ClassicCalculator.csproj
+          sed -i "s|<Version>.*</Version>|<Version>${VERSION}</Version>|" ./src/ClassicCalculator/ClassicCalculator.csproj
+          sed -i "s|<PackageReleaseNotes>.*</PackageReleaseNotes>|<PackageReleaseNotes>See release notes: https://github.com/${{ github.repository }}/releases/tag/v${VERSION}</PackageReleaseNotes>|" ./src/ClassicCalculator/ClassicCalculator.csproj
 
       - name: Commit Version and Release Notes Update
         run: |
