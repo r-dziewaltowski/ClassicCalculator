@@ -12,8 +12,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+
+    env:
+      SOLUTION_FILE: ./ClassicCalculator.sln
 
     steps:
     - name: Checkout repository
@@ -25,13 +27,13 @@ jobs:
         dotnet-version: 8.0.x
         
     - name: Restore dependencies
-      run: dotnet restore ./ClassicCalculator.sln
+      run: dotnet restore $SOLUTION_FILE
       
     - name: Build
-      run: dotnet build --no-restore ./ClassicCalculator.sln
+      run: dotnet build --no-restore $SOLUTION_FILE
       
     - name: Test with coverage
-      run: dotnet test --no-build --collect:"XPlat Code Coverage" ./ClassicCalculator.sln
+      run: dotnet test --no-build --collect:"XPlat Code Coverage" $SOLUTION_FILE
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
