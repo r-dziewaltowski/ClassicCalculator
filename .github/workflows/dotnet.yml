@@ -25,13 +25,13 @@ jobs:
         dotnet-version: 8.0.x
         
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./ClassicCalculator.sln
       
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore ./ClassicCalculator.sln
       
     - name: Test with coverage
-      run: dotnet test --no-build --collect:"XPlat Code Coverage"
+      run: dotnet test --no-build --collect:"XPlat Code Coverage" ./ClassicCalculator.sln
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
