@@ -11,6 +11,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
 
+    env:
+      PROJECT_FILE: ./src/ClassicCalculator/ClassicCalculator.csproj
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,25 +34,26 @@ jobs:
         run: |
           VERSION=${{ github.event.release.tag_name }}
           VERSION=${VERSION#v}  # Remove 'v' prefix if present
-          echo "Setting .csproj version to: $VERSION"        
-          # Update <Version> inside the .csproj file
-          sed -i "s|<Version>.*</Version>|<Version>${VERSION}</Version>|" ./src/ClassicCalculator/ClassicCalculator.csproj
-          sed -i "s|<PackageReleaseNotes>.*</PackageReleaseNotes>|<PackageReleaseNotes>See release notes: https://github.com/${{ github.repository }}/releases/tag/v${VERSION}</PackageReleaseNotes>|" ./src/ClassicCalculator/ClassicCalculator.csproj
+          RELEASE_NOTES = "See release notes: https://github.com/${{ github.repository }}/releases/tag/v${VERSION}"
+          echo "Setting .csproj version to: $VERSION"
+          echo "Setting .csproj release notes to: $RELEASE_NOTES"
+          sed -i "s|<Version>.*</Version>|<Version>${VERSION}</Version>|" $PROJECT_FILE
+          sed -i "s|<PackageReleaseNotes>.*</PackageReleaseNotes>|<PackageReleaseNotes>${RELEASE_NOTES}</PackageReleaseNotes>|" $PROJECT_FILE
 
       - name: Commit Version and Release Notes Update
         run: |
-          git add src/ClassicCalculator/ClassicCalculator.csproj
-          git commit -m "Update version to $VERSION and release notes"
+          git add $PROJECT_FILE
+          git commit -m "Update version and release notes"
           git push
 
       - name: Restore dependencies
-        run: dotnet restore ./src/ClassicCalculator/
+        run: dotnet restore $PROJECT_FILE
 
       - name: Build the project
-        run: dotnet build ./src/ClassicCalculator/ --configuration Release --no-restore
+        run: dotnet build $PROJECT_FILE --configuration Release --no-restore
 
       - name: Pack the project
-        run: dotnet pack ./src/ClassicCalculator/ --configuration Release --no-build --output nupkg
+        run: dotnet pack $PROJECT_FILE --configuration Release --no-build --output nupkg
 
       - name: Publish .nupkg to NuGet
         run: dotnet nuget push nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
