@@ -14,7 +14,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/r-dziewaltowski/ClassicCalculator</RepositoryUrl>
     <PackageTags>dotnet; nuget; csharp; library; calculator; math; arithmetic</PackageTags>
-    <PackageReleaseNotes>See release notes: https://github.com/r-dziewaltowski/ClassicCalculator/releases/tag/v1.0.1</PackageReleaseNotes>
+    <PackageReleaseNotes>See release notes: https://github.com/r-dziewaltowski/ClassicCalculator/releases/tag/v.1.0.2</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -23,7 +23,7 @@
     <DebugType>portable</DebugType>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <Version>1.0.1</Version>
+    <Version>.1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
