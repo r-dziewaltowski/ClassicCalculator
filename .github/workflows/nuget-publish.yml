@@ -3,7 +3,6 @@ name: Publish to NuGet
 on:
   release:
     types: [published]
-  workflow_dispatch:
     
 permissions:
   contents: write
@@ -33,10 +32,9 @@ jobs:
 
       - name: Update .csproj Version and Release Notes
         run: |
-          # VERSION=${{ github.event.release.tag_name }}
-          VERSION='v1.0.2'
+          VERSION=${{ github.event.release.tag_name }}
           VERSION=${VERSION#v}  # Remove 'v' prefix if present
-          RELEASE_NOTES="See release notes: https://github.com/${{ github.repository }}/releases/tag/v${VERSION}"
+          RELEASE_NOTES = "See release notes: https://github.com/${{ github.repository }}/releases/tag/v${VERSION}"
           echo "Setting .csproj version to: $VERSION"
           echo "Setting .csproj release notes to: $RELEASE_NOTES"
           sed -i "s|<Version>.*</Version>|<Version>${VERSION}</Version>|" $PROJECT_FILE
@@ -57,8 +55,8 @@ jobs:
       - name: Pack the project
         run: dotnet pack $PROJECT_FILE --configuration Release --no-build --output nupkg
 
-      # - name: Publish .nupkg to NuGet
-      #   run: dotnet nuget push nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      - name: Publish .nupkg to NuGet
+        run: dotnet nuget push nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
 
-      # - name: Publish .snupkg to NuGet
-      #   run: dotnet nuget push nupkg/*.snupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      - name: Publish .snupkg to NuGet
+        run: dotnet nuget push nupkg/*.snupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
