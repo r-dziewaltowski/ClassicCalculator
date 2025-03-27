@@ -3,6 +3,7 @@
 [![NuGet Version](https://img.shields.io/nuget/v/ClassicCalculator.svg?style=flat)](https://www.nuget.org/packages/ClassicCalculator/)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/ClassicCalculator.svg?style=flat)](https://www.nuget.org/packages/ClassicCalculator/)
 [![Build](https://github.com/r-dziewaltowski/ClassicCalculator/actions/workflows/dotnet.yml/badge.svg)](https://github.com/r-dziewaltowski/ClassicCalculator/actions/workflows/dotnet.yml)
+[![codecov](https://codecov.io/gh/r-dziewaltowski/ClassicCalculator/branch/main/graph/badge.svg)](https://codecov.io/gh/r-dziewaltowski/ClassicCalculator)
 
 A classic calculator engine that responds to pressing buttons and provides output including display value.
 
