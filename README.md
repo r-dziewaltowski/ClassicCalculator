@@ -45,7 +45,9 @@ Missing functionality:
 - Other features of more advanced calculators
 
 ## Usage
-An example usage:
+The library is available as a Nuget package: https://www.nuget.org/packages/ClassicCalculator where you can find installation commands.
+
+An example usage after installing the package:
 ```csharp
 var calculator = new Calculator(9); // Display can show up to 9 digits (DisplayValue = 0)
 calculator.PressButton(CalculatorButton.One) // (DisplayValue = 1)
